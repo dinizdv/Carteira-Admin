@@ -1,0 +1,9 @@
+.container {
+    height: 100vh;
+}
+
+@media (max-width: 968px) {
+    .container {
+        flex-direction: column;
+    }
+}
