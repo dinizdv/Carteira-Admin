@@ -108,3 +108,31 @@ a.sidebar-link {
   width: 40px;
 }
 
+
+.theme-toggle {
+  position: fixed;
+  top: 50%;
+  transform: translate(-65%);
+  text-align: center;
+  z-index: 10;
+  right: 0;
+  left: auto;
+  border: none;
+  background-color: var(--bs-body-color);
+}
+
+html[data-bs-theme="dark"] .theme-toggle .fa-sun, html[data-bs-theme="light"] .theme-toggle .fa-moon {
+  cursor: pointer;
+  padding: .6rem;
+  display: block;
+  font-size: 1.25rem;
+  color: #fff;
+}
+
+html[data-bs-theme="dark"] .theme-toggle .fa-moon {
+  display: none;
+}
+
+html[data-bs-theme="light"] .theme-toggle .fa-sun {
+  display: none;
+}

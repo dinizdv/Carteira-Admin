@@ -16,9 +16,13 @@
 }
 
 body {
-  /* background: linear-gradient(var(--bg-start), var(--bg-end));
-  background-attachment: fixed; */
-  background-color: greenyellow;
+  background: linear-gradient(var(--bg-start), var(--bg-end));
+  background-attachment: fixed;
+}
+
+.container-login {
+  background-color: rgba(255, 255, 255, 0.144);
+  /* background-color: #1212125e; */
 }
 
 button {

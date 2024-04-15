@@ -1,7 +1,7 @@
 import React from 'react';
 // import { Link } from 'react-router-dom';
 import './home.css';
-import '../../App.css'
+import '../../App.css';
 import usuarios from '../../assets/usuarios.png'
 // import horarios from '../../assets/horarios.png'
 import cursos from '../../assets/cursos.png'
@@ -9,7 +9,7 @@ import cursos from '../../assets/cursos.png'
 // import senaiLogo from '../../assets/senai-logo.png'
 // import BarChart from './home'; 
 
-export default function Home(){
+export default function Home(){ 
 
 return(
   <div>
@@ -90,6 +90,11 @@ return(
             </ul>
           </div>
         </nav>
+
+        <a href="#" class="theme-toggle">
+          <i className="fa-regular fa-moon"></i>
+          <i className="fa-regular fa-sun"></i>
+        </a>
         {/* <main className="content px-3 py-2">
           <div className="container-fluid">
             <div className="mb-3">
@@ -121,8 +126,6 @@ return(
       </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="./js/script.js"></script>
         </div>
     )
 }
