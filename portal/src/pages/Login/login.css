@@ -31,27 +31,17 @@ input:focus {
     box-shadow: 0 0 0.150rem#fff;
 }
 
-button {
-    border-radius: .3rem;
-    background: dodgerblue;
-    color: var(--color-light);
-    text-decoration: none;
-    padding:8px 0;
-    transition: all .4s;
-}
-
-a {
+#btn {
     text-decoration: none;
     padding: 8px 0;
     color: #fff;
     background-color: dodgerblue!important;
     border-radius: .3rem;
-    transition: all .4s;
+    transition: all .3s;
 }
 
-a:hover {
+#btn:hover {
     background-color: rgba(30, 143, 255, 0.75)!important;
-    color: #fff;
 }
 
 /* responsive interface */

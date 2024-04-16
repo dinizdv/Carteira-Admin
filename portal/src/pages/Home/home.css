@@ -19,6 +19,7 @@ a {
     text-decoration: none;
     font-family: 'Poppins', sans-serif;
     background-color: transparent!important;
+    transition: all .4s ease;
 }
 
 li {
@@ -99,7 +100,7 @@ a.sidebar-link {
     background-color: transparent!important;
 }
 
-a:hover:not(#logo) {
+a:hover {
   background-color: #ffffff2a!important;
 }
 
@@ -145,11 +146,14 @@ strong {
 
 /* [Usuários, Cursos, ..., Notificações] */
 .card-info {
-  background-color: #e9ecef!important;
+  /* background-color: #e9ecef!important; */
+  transition: all .2s ease-in-out;
+  cursor: pointer;
 }
 
 .card-info:hover {
   /* background-color: dodgerblue!important; */
+  opacity: .8;
 }
 
 .content {

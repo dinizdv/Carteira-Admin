@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom' // for login button
 import './login.css'
-import '../../App.css'
-import logoSenai from '../../assets/senai-logo.png'
+
 
 export default function Login(){
     return (
@@ -10,7 +9,7 @@ export default function Login(){
         <input type="email" placeholder="Insira seu e-mail..." class="mb-3 px-2"/>
         <input type="email" placeholder="Insira sua senha..." class="mb-3 px-2"/>
         {/* <img src={logoSenai}/> */}
-        <Link to={"/Home"} class="text-center fs-4">Fazer Login</Link>
+        <Link to={"/Home"} class="text-center fs-4" id="btn">Fazer Login</Link>
     </div> 
     )
 }

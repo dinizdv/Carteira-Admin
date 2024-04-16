@@ -1,39 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import React from 'react';
 // import { Link } from 'react-router-dom';
 import './home.css';
 import '../../App.css';
 
-import usuarios from '../../assets/usuarios.png'
-// import horarios from '../../assets/horarios.png'
-import cursos from '../../assets/cursos.png'
-// import notificacoes from '../../assets/notificacoes.png'
-// import senaiLogo from '../../assets/senai-logo.png'
-// import BarChart from './home'; 
-
 
 export default function Home(){ 
-
-  // const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
-  // const [theme, setTheme] = useState(localStorage.getItem('light') ? 'light' : 'dark');
-
-  // useEffect(() => {
-  //     const currentTheme = document.documentElement.getAttribute('data-bs-theme');
-  //     if (currentTheme !== theme) {
-  //         document.documentElement.setAttribute('data-bs-theme', theme);
-  //     }
-  // }, [theme]);
-
-  // const toggleSidebar = () => {
-  //     setIsSidebarCollapsed(!isSidebarCollapsed);
-  // };
-
-  // const toggleTheme = () => {
-  //     const newTheme = theme === 'light' ? 'dark' : 'light';
-  //     setTheme(newTheme);
-  //     localStorage.setItem('light', newTheme === 'light' ? 'set' : null);
-  // };
-      
  
 return(
   
@@ -133,15 +105,14 @@ return(
         <div class="main">
             <nav class="navbar navbar-expand">
               {/* button -> responsive sidebar */}
-              <button className="btn py-1 px-2" id="sidebar-toggle" type="button" onClick={() => document.getElementById('sidebar').classList.toggle('collapsed')}>
+              <button className="btn py-1 px-2 mt-3" id="sidebar-toggle" type="button" onClick={() => document.getElementById('sidebar').classList.toggle('collapsed')}>
                   <span className="navbar-toggler-icon"></span>
               </button>
 
-                <div class="navbar-collapse navbar">
+                {/* <div class="navbar-collapse navbar">
                     <ul class="navbar-nav">
                         <li class="nav-item dropdown">
                             <a href="#" data-bs-toggle="dropdown" class="nav-icon pe-md-0">
-                                {/* <img src="image/profile.jpg" class="avatar img-fluid rounded" alt=""> */}
                             </a>
                             <div class="dropdown-menu dropdown-menu-end">
                                 <a href="#" class="dropdown-item">Profile</a>
@@ -150,7 +121,7 @@ return(
                             </div>
                         </li>
                     </ul>
-                </div>
+                </div> */}
             </nav>
             <main class="content px-3 py-2">
                 <div class="container-fluid">
@@ -159,18 +130,16 @@ return(
                     </div>
                     <div class="row">
                         <div class="col-12 col-md-6 col-xl-3 d-flex">
-                            <div class="card flex-fill border-0 illustration card-info">
+                            <div class="card flex-fill border-0 illustration card-info bg-primary text-light">
                                 <div class="card-body p-0 d-flex flex-fill">
                                     <div class="row g-0 w-100">
                                         <div class="col-9">
                                             <div class="p-3 m-1">
-                                                <h3>Usuários</h3>
+                                                <h3><i class="fa-solid fa-user"></i> Usuários</h3>
                                                 <p class="mb-0">Editar, adicionar, excluir</p>
                                             </div>
                                         </div>
                                         <div class="col-6 align-self-end text-end">
-                                            {/* <img src="image/customer-support.jpg" class="img-fluid illustration-img" */}
-                                                {/* alt=""> */}
                                         </div>
                                     </div>
                                 </div>
@@ -178,18 +147,16 @@ return(
                         </div>
 
                         <div class="col-12 col-md-6 col-xl-3 d-flex">
-                            <div class="card flex-fill border-0 illustration card-info">
+                            <div class="card flex-fill border-0 illustration card-info bg-success text-light">
                                 <div class="card-body p-0 d-flex flex-fill">
                                     <div class="row g-0 w-100">
                                         <div class="col-9">
                                             <div class="p-3 m-1">
-                                                <h3>Cursos</h3>
+                                            <h3><i class="fa-solid fa-book"></i> Cursos</h3>
                                                 <p class="mb-0">Nome, horário</p>
                                             </div>
                                         </div>
                                         <div class="col-6 align-self-end text-end">
-                                            {/* <img src="image/customer-support.jpg" class="img-fluid illustration-img" */}
-                                                {/* alt=""> */}
                                         </div>
                                     </div>
                                 </div>
@@ -197,31 +164,29 @@ return(
                         </div>
 
                         <div class="col-12 col-md-6 col-xl-3 d-flex">
-                            <div class="card flex-fill border-0 illustration card-info">
+                            <div class="card flex-fill border-0 illustration card-info bg-warning text-light">
                                 <div class="card-body p-0 d-flex flex-fill">
                                     <div class="row g-0 w-100">
                                         <div class="col-9">
                                             <div class="p-3 m-1">
-                                                <h3>Undefined</h3>
-                                                <p class="mb-0">Nome, horário</p>
+                                            <h3><i class="fa-solid fa-x"></i> Undefined</h3>
+                                                <p class="mb-0">Undefined</p>
                                             </div>
                                         </div>
                                         <div class="col-6 align-self-end text-end">
-                                            {/* <img src="image/customer-support.jpg" class="img-fluid illustration-img" */}
-                                                {/* alt=""> */}
-                                        </div>
+                                            </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
                         <div class="col-12 col-md-6 col-xl-3 d-flex">
-                            <div class="card flex-fill border-0 illustration card-info">
+                            <div class="card flex-fill border-0 illustration card-info bg-danger text-light">
                                 <div class="card-body p-0 d-flex flex-fill">
                                     <div class="row g-0 w-100">
                                         <div class="col-9">
                                             <div class="p-3 m-1">
-                                                <h3>Notificações</h3>
+                                            <h3><i class="fa-solid fa-bell"></i> Notificações</h3>
                                                 <p class="mb-0">Notificações gerais, notificações individuais</p>
                                             </div>
                                         </div>
