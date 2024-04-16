@@ -143,6 +143,15 @@ strong {
     color: #e9ecef!important;
 }
 
+/* [Usuários, Cursos, ..., Notificações] */
+.card-info {
+  background-color: #e9ecef!important;
+}
+
+.card-info:hover {
+  /* background-color: dodgerblue!important; */
+}
+
 .content {
     flex: 1;
     max-width: 100vw;
