@@ -18,7 +18,7 @@ a {
     cursor: pointer;
     text-decoration: none;
     font-family: 'Poppins', sans-serif;
-    background-color: transparent;
+    background-color: transparent!important;
 }
 
 li {
@@ -43,7 +43,13 @@ h4 {
     max-width: 264px;
     min-width: 264px;
     transition: all 0.35s ease-in-out;
-    border-right: 1px solid #fff;
+    border-right: 1px solid #ffffffab;
+}
+
+/* hamburguer btn */
+#sidebar-toggle {
+    background-color: #efe9ee;
+    margin-left: 27px;
 }
 
 .main {
@@ -70,10 +76,6 @@ h4 {
     font-weight: 600;
 }
 
-#sidebar-toggle {
-  background-color: #888888;
-}
-
 .sidebar-nav {
     flex-grow: 1;
     list-style: none;
@@ -90,10 +92,20 @@ h4 {
 
 a.sidebar-link {
     padding: .625rem 1.625rem;
-    color: #e9ecef;
+    color: #efe9ee;
     position: relative;
     display: block;
     font-size: 0.875rem;
+    background-color: transparent!important;
+}
+
+a:hover:not(#logo) {
+  background-color: #ffffff2a!important;
+}
+
+/* fixing the bug */
+#logo:hover {
+  background-color: #ffffff00!important;
 }
 
 .sidebar-link[data-bs-toggle="collapse"]::after {
@@ -121,6 +133,14 @@ a.sidebar-link {
 
 .navbar-expand .navbar-nav {
     margin-left: auto;
+}
+
+.list-inline-item a {
+    color: #cececf!important;
+}
+
+strong {
+    color: #e9ecef!important;
 }
 
 .content {
@@ -173,20 +193,6 @@ a.sidebar-link {
     footer {
         width: 100vw;
     }
-}
-
-/* Theme Toggler */
-
-.theme-toggle {
-    position: fixed;
-    top: 50%;
-    transform: translateY(-65%);
-    text-align: center;
-    z-index: 10;
-    right: 0;
-    left: auto;
-    border: none;
-    background-color: var(--bs-body-color);
 }
 
 html[data-bs-theme="dark"] .theme-toggle .fa-sun,

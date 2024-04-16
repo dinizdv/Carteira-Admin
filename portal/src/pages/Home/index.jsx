@@ -14,25 +14,25 @@ import cursos from '../../assets/cursos.png'
 
 export default function Home(){ 
 
-  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
-  const [theme, setTheme] = useState(localStorage.getItem('light') ? 'light' : 'dark');
+  // const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
+  // const [theme, setTheme] = useState(localStorage.getItem('light') ? 'light' : 'dark');
 
-  useEffect(() => {
-      const currentTheme = document.documentElement.getAttribute('data-bs-theme');
-      if (currentTheme !== theme) {
-          document.documentElement.setAttribute('data-bs-theme', theme);
-      }
-  }, [theme]);
+  // useEffect(() => {
+  //     const currentTheme = document.documentElement.getAttribute('data-bs-theme');
+  //     if (currentTheme !== theme) {
+  //         document.documentElement.setAttribute('data-bs-theme', theme);
+  //     }
+  // }, [theme]);
 
-  const toggleSidebar = () => {
-      setIsSidebarCollapsed(!isSidebarCollapsed);
-  };
+  // const toggleSidebar = () => {
+  //     setIsSidebarCollapsed(!isSidebarCollapsed);
+  // };
 
-  const toggleTheme = () => {
-      const newTheme = theme === 'light' ? 'dark' : 'light';
-      setTheme(newTheme);
-      localStorage.setItem('light', newTheme === 'light' ? 'set' : null);
-  };
+  // const toggleTheme = () => {
+  //     const newTheme = theme === 'light' ? 'dark' : 'light';
+  //     setTheme(newTheme);
+  //     localStorage.setItem('light', newTheme === 'light' ? 'set' : null);
+  // };
       
  
 return(
@@ -44,7 +44,7 @@ return(
             {/* <!-- Content For Sidebar --> */}
             <div class="h-100">
                 <div class="sidebar-logo">
-                    <a href="#">CodzSword</a>
+                    <a href="#" id="logo" class="text-uppercase text-danger">senai-sp</a>
                 </div>
                 <ul class="sidebar-nav">
                     <li class="sidebar-header">
@@ -131,9 +131,9 @@ return(
             </div>
         </aside>
         <div class="main">
-            <nav class="navbar navbar-expand px-3 border-bottom">
+            <nav class="navbar navbar-expand">
               {/* button -> responsive sidebar */}
-              <button className="btn" id="sidebar-toggle" type="button" onClick={() => document.getElementById('sidebar').classList.toggle('collapsed')}>
+              <button className="btn py-1 px-2" id="sidebar-toggle" type="button" onClick={() => document.getElementById('sidebar').classList.toggle('collapsed')}>
                   <span className="navbar-toggler-icon"></span>
               </button>
 
@@ -247,12 +247,12 @@ return(
                 </div>
             </main>
             {/* dark mode */}
-            <a href="#" class="theme-toggle" onClick={toggleTheme}>
+            {/* <a href="#" class="theme-toggle" onClick={toggleTheme}>
                 {theme === 'light' ? (
                 <i class="fa-regular fa-moon"></i>
                 ) : (
                 <i class="fa-regular fa-sun"></i> )}
-            </a>
+            </a> */}
                   
 
             <footer class="footer">
@@ -261,23 +261,23 @@ return(
                         <div class="col-6 text-start">
                             <p class="mb-0">
                                 <a href="#" class="text-muted">
-                                    <strong>CodzSwod</strong>
+                                    <strong class="px-2">CodzSwod</strong>
                                 </a>
                             </p>
                         </div>
                         <div class="col-6 text-end">
                             <ul class="list-inline">
                                 <li class="list-inline-item">
-                                    <a href="#" class="text-muted">Contact</a>
+                                    <a href="#" class="text-muted px-2">Contact</a>
                                 </li>
                                 <li class="list-inline-item">
-                                    <a href="#" class="text-muted">About Us</a>
+                                    <a href="#" class="text-muted px-2">About Us</a>
                                 </li>
                                 <li class="list-inline-item">
-                                    <a href="#" class="text-muted">Terms</a>
+                                    <a href="#" class="text-muted px-2">Terms</a>
                                 </li>
-                                <li class="list-inline-item">
-                                    <a href="#" class="text-muted">Booking</a>
+                                <li class="list-inline-item px-2">
+                                    <a href="#" class="text-muted px-2">Booking</a>
                                 </li>
                             </ul>
                         </div>
