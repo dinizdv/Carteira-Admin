@@ -149,11 +149,15 @@ strong {
   /* background-color: #e9ecef!important; */
   transition: all .2s ease-in-out;
   cursor: pointer;
+  /* background-color: rgba(219, 219, 219, 0.103)!important; */
+  /* background: linear-gradient(180deg, rgba(255, 0, 0, 0.377), rgba(219, 219, 219, 0.103))!important; */
+  background: linear-gradient(180deg, transparent, rgba(255, 0, 0, 0.3))!important;
+  border: 2px solid #dedede!important;
 }
 
 .card-info:hover {
-  /* background-color: dodgerblue!important; */
-  opacity: .8;
+    background-color: inherit!important; /* fixing the bug */
+    opacity: .7;
 }
 
 .content {

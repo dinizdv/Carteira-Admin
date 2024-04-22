@@ -1,8 +1,10 @@
 import { useEffect } from 'react';
 import React from 'react';
+import { Link } from 'react-router-dom'
 // import { Link } from 'react-router-dom';
 import './home.css';
 import '../../App.css';
+
 
 export default function Home(){ 
  
@@ -129,7 +131,7 @@ return(
                     </div>
                     <div class="row">
                         <div class="col-12 col-md-6 col-xl-3 d-flex">
-                            <div class="card flex-fill border-0 illustration card-info bg-primary text-light">
+                            <Link to="editarUsuarios" class="card flex-fill border-0 illustration card-info bg-primary text-light">
                                 <div class="card-body p-0 d-flex flex-fill">
                                     <div class="row g-0 w-100">
                                         <div class="col-9">
@@ -142,11 +144,11 @@ return(
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </Link>
                         </div>
 
                         <div class="col-12 col-md-6 col-xl-3 d-flex">
-                            <div class="card flex-fill border-0 illustration card-info bg-success text-light">
+                            <Link to="editarUsuarios" class="card flex-fill border-0 illustration card-info bg-primary text-light">
                                 <div class="card-body p-0 d-flex flex-fill">
                                     <div class="row g-0 w-100">
                                         <div class="col-9">
@@ -159,11 +161,11 @@ return(
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </Link>
                         </div>
 
                         <div class="col-12 col-md-6 col-xl-3 d-flex">
-                            <div class="card flex-fill border-0 illustration card-info bg-warning text-light">
+                            <Link to="editarUsuarios" class="card flex-fill border-0 illustration card-info bg-primary text-light">
                                 <div class="card-body p-0 d-flex flex-fill">
                                     <div class="row g-0 w-100">
                                         <div class="col-9">
@@ -176,11 +178,11 @@ return(
                                             </div>
                                     </div>
                                 </div>
-                            </div>
+                            </Link>
                         </div>
 
                         <div class="col-12 col-md-6 col-xl-3 d-flex">
-                            <div class="card flex-fill border-0 illustration card-info bg-danger text-light">
+                            <Link to="editarUsuarios" class="card flex-fill border-0 illustration card-info bg-primary text-light">
                                 <div class="card-body p-0 d-flex flex-fill">
                                     <div class="row g-0 w-100">
                                         <div class="col-9">
@@ -195,7 +197,7 @@ return(
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </Link>
                         </div>
 
 
