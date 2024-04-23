@@ -24,8 +24,8 @@ const Testing = () => {
 
  const fetchData = async () => {    
     try {
-      // Ajuste a URL conforme necessário
-      const apiUrl = 'https://api-controle-acesso-latest.onrender.com/usuario/1';
+      const apiUrl = 'https://api-controle-acesso-latest.onrender.com';
+      
 
       const response = await axios.get(apiUrl);
       setResponse(response.data);
