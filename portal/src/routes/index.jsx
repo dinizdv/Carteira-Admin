@@ -4,7 +4,7 @@ import Home from '../pages/Home';
 import Testing from '../pages/Testing';
 import EditUsers from '../pages/editarUsuarios';
 import EditCourses from '../pages/editarCursos';
-import Notificacoes from '../pages/notificacoes';
+import Notifications from '../pages/notificacoes';
 
 function RoutesApp() {
     return (
@@ -13,7 +13,7 @@ function RoutesApp() {
             <Route path="/home" element={<Home />} />
             <Route path="/home/editarUsuarios" element={<EditUsers />} />
             <Route path="/home/editarCursos" element={<EditCourses />} />
-            <Route path="/home/notificacoes" element={<Notificacoes/>} />
+            <Route path="/home/notificacoes" element={<Notifications/>} />
             <Route path="/testing" element={<Testing />} /> {/* testing page */}
         </Routes>
     );

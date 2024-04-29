@@ -250,6 +250,7 @@ export default function EditUsers(){
                                         <td><i class="fa-solid fa-trash icon-user"></i></td>
                                     </tr>
 
+
                                 </tbody>
                             </table>
                         </div>

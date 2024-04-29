@@ -35,175 +35,139 @@ export default function EditUsers(){
                                         <td><i class="fa-solid fa-trash"></i></td>                                        
                                     </tr>
                                     <tr>
-                                        <td scope="col" class="course">Desenvolvimento </td>
+                                        <td scope="col" class="course">Desenvolvimento de Sistemas</td>
                                         <td scope="col">2023 - 2024</td>
-                                        <td scope="col">7h30 - 17h30</td>
-                                        <td><i class="fa-solid fa-pen-to-square"></i></td>
-                                        <td><i class="fa-solid fa-trash"></i></td>                                        
-                                    </tr>                                    <tr>
-                                    <td scope="col" class="course">Desenvolvimento de Sistemas</td>
-
-                                        <td scope="col">Duração</td>
-                                        <td scope="col">Horários</td>
-                                        <td><i class="fa-solid fa-pen-to-square"></i></td>
-                                        <td><i class="fa-solid fa-trash"></i></td>                                        
-                                    </tr>                                    <tr>
-                                        <td scope="col" class="course">Curso</td>
-                                        <td scope="col">Duração</td>
-                                        <td scope="col">Horários</td>
-                                        <td><i class="fa-solid fa-pen-to-square"></i></td>
-                                        <td><i class="fa-solid fa-trash"></i></td>                                        
-                                    </tr>                                    <tr>
-                                        <td scope="col" class="course">Curso</td>
-                                        <td scope="col">Duração</td>
-                                        <td scope="col">Horários</td>
-                                        <td><i class="fa-solid fa-pen-to-square"></i></td>
-                                        <td><i class="fa-solid fa-trash"></i></td>                                        
-                                    </tr>                                    <tr>
-                                        <td scope="col" class="course">Curso</td>
-                                        <td scope="col">Duração</td>
-                                        <td scope="col">Horários</td>
-                                        <td><i class="fa-solid fa-pen-to-square"></i></td>
-                                        <td><i class="fa-solid fa-trash"></i></td>                                        
-                                    </tr>                                    <tr>
-                                        <td scope="col" class="course">Curso</td>
-                                        <td scope="col">Duração</td>
-                                        <td scope="col">Horários</td>
-                                        <td><i class="fa-solid fa-pen-to-square"></i></td>
-                                        <td><i class="fa-solid fa-trash"></i></td>                                        
-                                    </tr>                                    <tr>
-                                        <td scope="col" class="course">Curso</td>
-                                        <td scope="col">Duração</td>
-                                        <td scope="col">Horários</td>
-                                        <td><i class="fa-solid fa-pen-to-square"></i></td>
-                                        <td><i class="fa-solid fa-trash"></i></td>                                        
-                                    </tr>                                    <tr>
-                                        <td scope="col" class="course">Curso</td>
-                                        <td scope="col">Duração</td>
-                                        <td scope="col">Horários</td>
-                                        <td><i class="fa-solid fa-pen-to-square"></i></td>
-                                        <td><i class="fa-solid fa-trash"></i></td>                                        
-                                    </tr>                                    <tr>
-                                        <td scope="col" class="course">Curso</td>
-                                        <td scope="col">Duração</td>
-                                        <td scope="col">Horários</td>
-                                        <td><i class="fa-solid fa-pen-to-square"></i></td>
-                                        <td><i class="fa-solid fa-trash"></i></td>                                        
-                                    </tr>                                    <tr>
-                                        <td scope="col" class="course">Curso</td>
-                                        <td scope="col">Duração</td>
-                                        <td scope="col">Horários</td>
-                                        <td><i class="fa-solid fa-pen-to-square"></i></td>
-                                        <td><i class="fa-solid fa-trash"></i></td>                                        
-                                    </tr>                                    <tr>
-                                        <td scope="col" class="course">Curso</td>
-                                        <td scope="col">Duração</td>
-                                        <td scope="col">Horários</td>
-                                        <td><i class="fa-solid fa-pen-to-square"></i></td>
-                                        <td><i class="fa-solid fa-trash"></i></td>                                        
-                                    </tr>                                    <tr>
-                                        <td scope="col" class="course">Curso</td>
-                                        <td scope="col">Duração</td>
-                                        <td scope="col">Horários</td>
-                                        <td><i class="fa-solid fa-pen-to-square"></i></td>
-                                        <td><i class="fa-solid fa-trash"></i></td>                                        
-                                    </tr>                                    <tr>
-                                        <td scope="col" class="course">Curso</td>
-                                        <td scope="col">Duração</td>
-                                        <td scope="col">Horários</td>
-                                        <td><i class="fa-solid fa-pen-to-square"></i></td>
-                                        <td><i class="fa-solid fa-trash"></i></td>                                        
-                                    </tr>                                    <tr>
-                                        <td scope="col" class="course">Curso</td>
-                                        <td scope="col">Duração</td>
-                                        <td scope="col">Horários</td>
-                                        <td><i class="fa-solid fa-pen-to-square"></i></td>
-                                        <td><i class="fa-solid fa-trash"></i></td>                                        
-                                    </tr>                                    <tr>
-                                        <td scope="col" class="course">Curso</td>
-                                        <td scope="col">Duração</td>
-                                        <td scope="col">Horários</td>
-                                        <td><i class="fa-solid fa-pen-to-square"></i></td>
-                                        <td><i class="fa-solid fa-trash"></i></td>                                        
-                                    </tr>                                    <tr>
-                                        <td scope="col" class="course">Curso</td>
-                                        <td scope="col">Duração</td>
-                                        <td scope="col">Horários</td>
-                                        <td><i class="fa-solid fa-pen-to-square"></i></td>
-                                        <td><i class="fa-solid fa-trash"></i></td>                                        
-                                    </tr>                                    <tr>
-                                        <td scope="col" class="course">Curso</td>
-                                        <td scope="col">Duração</td>
-                                        <td scope="col">Horários</td>
-                                        <td><i class="fa-solid fa-pen-to-square"></i></td>
-                                        <td><i class="fa-solid fa-trash"></i></td>                                        
-                                    </tr>                                    <tr>
-                                        <td scope="col" class="course">Curso</td>
-                                        <td scope="col">Duração</td>
-                                        <td scope="col">Horários</td>
-                                        <td><i class="fa-solid fa-pen-to-square"></i></td>
-                                        <td><i class="fa-solid fa-trash"></i></td>                                        
-                                    </tr>                                    <tr>
-                                        <td scope="col" class="course">Curso</td>
-                                        <td scope="col">Duração</td>
-                                        <td scope="col">Horários</td>
-                                        <td><i class="fa-solid fa-pen-to-square"></i></td>
-                                        <td><i class="fa-solid fa-trash"></i></td>                                        
-                                    </tr>                                    <tr>
-                                        <td scope="col" class="course">Curso</td>
-                                        <td scope="col">Duração</td>
-                                        <td scope="col">Horários</td>
-                                        <td><i class="fa-solid fa-pen-to-square"></i></td>
-                                        <td><i class="fa-solid fa-trash"></i></td>                                        
-                                    </tr>                                    <tr>
-                                        <td scope="col" class="course">Curso</td>
-                                        <td scope="col">Duração</td>
-                                        <td scope="col">Horários</td>
-                                        <td><i class="fa-solid fa-pen-to-square"></i></td>
-                                        <td><i class="fa-solid fa-trash"></i></td>                                        
-                                    </tr>                                    <tr>
-                                        <td scope="col" class="course">Curso</td>
-                                        <td scope="col">Duração</td>
-                                        <td scope="col">Horários</td>
-                                        <td><i class="fa-solid fa-pen-to-square"></i></td>
-                                        <td><i class="fa-solid fa-trash"></i></td>                                        
-                                    </tr>                                    <tr>
-                                        <td scope="col" class="course">Curso</td>
-                                        <td scope="col">Duração</td>
-                                        <td scope="col">Horários</td>
-                                        <td><i class="fa-solid fa-pen-to-square"></i></td>
-                                        <td><i class="fa-solid fa-trash"></i></td>                                        
-                                    </tr>                                    <tr>
-                                        <td scope="col" class="course">Curso</td>
-                                        <td scope="col">Duração</td>
-                                        <td scope="col">Horários</td>
-                                        <td><i class="fa-solid fa-pen-to-square"></i></td>
-                                        <td><i class="fa-solid fa-trash"></i></td>                                        
-                                    </tr>                                    <tr>
-                                        <td scope="col" class="course">Curso</td>
-                                        <td scope="col">Duração</td>
-                                        <td scope="col">Horários</td>
-                                        <td><i class="fa-solid fa-pen-to-square"></i></td>
-                                        <td><i class="fa-solid fa-trash"></i></td>                                        
-                                    </tr>                                    <tr>
-                                        <td scope="col" class="course">Curso</td>
-                                        <td scope="col">Duração</td>
-                                        <td scope="col">Horários</td>
-                                        <td><i class="fa-solid fa-pen-to-square"></i></td>
-                                        <td><i class="fa-solid fa-trash"></i></td>                                        
-                                    </tr>                                    <tr>
-                                        <td scope="col" class="course">Curso</td>
-                                        <td scope="col">Duração</td>
-                                        <td scope="col">Horários</td>
-                                        <td><i class="fa-solid fa-pen-to-square"></i></td>
-                                        <td><i class="fa-solid fa-trash"></i></td>                                        
-                                    </tr>                                    <tr>
-                                        <td scope="col" class="course">Curso</td>
-                                        <td scope="col">Duração</td>
-                                        <td scope="col">Horários</td>
+                                        <td scope="col">7h30 - 11h30 | 13h30 - 17h30</td>
                                         <td><i class="fa-solid fa-pen-to-square"></i></td>
                                         <td><i class="fa-solid fa-trash"></i></td>                                        
                                     </tr>
+                                    <tr>
+                                        <td scope="col" class="course">Desenvolvimento de Sistemas</td>
+                                        <td scope="col">2023 - 2024</td>
+                                        <td scope="col">7h30 - 11h30 | 13h30 - 17h30</td>
+                                        <td><i class="fa-solid fa-pen-to-square"></i></td>
+                                        <td><i class="fa-solid fa-trash"></i></td>                                        
+                                    </tr>
+                                    <tr>
+                                        <td scope="col" class="course">Desenvolvimento de Sistemas</td>
+                                        <td scope="col">2023 - 2024</td>
+                                        <td scope="col">7h30 - 11h30 | 13h30 - 17h30</td>
+                                        <td><i class="fa-solid fa-pen-to-square"></i></td>
+                                        <td><i class="fa-solid fa-trash"></i></td>                                        
+                                    </tr>
+                                    <tr>
+                                        <td scope="col" class="course">Desenvolvimento de Sistemas</td>
+                                        <td scope="col">2023 - 2024</td>
+                                        <td scope="col">7h30 - 11h30 | 13h30 - 17h30</td>
+                                        <td><i class="fa-solid fa-pen-to-square"></i></td>
+                                        <td><i class="fa-solid fa-trash"></i></td>                                        
+                                    </tr>
+                                    <tr>
+                                        <td scope="col" class="course">Desenvolvimento de Sistemas</td>
+                                        <td scope="col">2023 - 2024</td>
+                                        <td scope="col">7h30 - 11h30 | 13h30 - 17h30</td>
+                                        <td><i class="fa-solid fa-pen-to-square"></i></td>
+                                        <td><i class="fa-solid fa-trash"></i></td>                                        
+                                    </tr>
+                                    <tr>
+                                        <td scope="col" class="course">Desenvolvimento de Sistemas</td>
+                                        <td scope="col">2023 - 2024</td>
+                                        <td scope="col">7h30 - 11h30 | 13h30 - 17h30</td>
+                                        <td><i class="fa-solid fa-pen-to-square"></i></td>
+                                        <td><i class="fa-solid fa-trash"></i></td>                                        
+                                    </tr>
+                                    <tr>
+                                        <td scope="col" class="course">Desenvolvimento de Sistemas</td>
+                                        <td scope="col">2023 - 2024</td>
+                                        <td scope="col">7h30 - 11h30 | 13h30 - 17h30</td>
+                                        <td><i class="fa-solid fa-pen-to-square"></i></td>
+                                        <td><i class="fa-solid fa-trash"></i></td>                                        
+                                    </tr>
+                                    <tr>
+                                        <td scope="col" class="course">Desenvolvimento de Sistemas</td>
+                                        <td scope="col">2023 - 2024</td>
+                                        <td scope="col">7h30 - 11h30 | 13h30 - 17h30</td>
+                                        <td><i class="fa-solid fa-pen-to-square"></i></td>
+                                        <td><i class="fa-solid fa-trash"></i></td>                                        
+                                    </tr>
+                                    <tr>
+                                        <td scope="col" class="course">Desenvolvimento de Sistemas</td>
+                                        <td scope="col">2023 - 2024</td>
+                                        <td scope="col">7h30 - 11h30 | 13h30 - 17h30</td>
+                                        <td><i class="fa-solid fa-pen-to-square"></i></td>
+                                        <td><i class="fa-solid fa-trash"></i></td>                                        
+                                    </tr>
+                                    <tr>
+                                        <td scope="col" class="course">Desenvolvimento de Sistemas</td>
+                                        <td scope="col">2023 - 2024</td>
+                                        <td scope="col">7h30 - 11h30 | 13h30 - 17h30</td>
+                                        <td><i class="fa-solid fa-pen-to-square"></i></td>
+                                        <td><i class="fa-solid fa-trash"></i></td>                                        
+                                    </tr>
+                                    <tr>
+                                        <td scope="col" class="course">Desenvolvimento de Sistemas</td>
+                                        <td scope="col">2023 - 2024</td>
+                                        <td scope="col">7h30 - 11h30 | 13h30 - 17h30</td>
+                                        <td><i class="fa-solid fa-pen-to-square"></i></td>
+                                        <td><i class="fa-solid fa-trash"></i></td>                                        
+                                    </tr>
+                                    <tr>
+                                        <td scope="col" class="course">Desenvolvimento de Sistemas</td>
+                                        <td scope="col">2023 - 2024</td>
+                                        <td scope="col">7h30 - 11h30 | 13h30 - 17h30</td>
+                                        <td><i class="fa-solid fa-pen-to-square"></i></td>
+                                        <td><i class="fa-solid fa-trash"></i></td>                                        
+                                    </tr>
+                                    <tr>
+                                        <td scope="col" class="course">Desenvolvimento de Sistemas</td>
+                                        <td scope="col">2023 - 2024</td>
+                                        <td scope="col">7h30 - 11h30 | 13h30 - 17h30</td>
+                                        <td><i class="fa-solid fa-pen-to-square"></i></td>
+                                        <td><i class="fa-solid fa-trash"></i></td>                                        
+                                    </tr>
+                                    <tr>
+                                        <td scope="col" class="course">Desenvolvimento de Sistemas</td>
+                                        <td scope="col">2023 - 2024</td>
+                                        <td scope="col">7h30 - 11h30 | 13h30 - 17h30</td>
+                                        <td><i class="fa-solid fa-pen-to-square"></i></td>
+                                        <td><i class="fa-solid fa-trash"></i></td>                                        
+                                    </tr>
+                                    <tr>
+                                        <td scope="col" class="course">Desenvolvimento de Sistemas</td>
+                                        <td scope="col">2023 - 2024</td>
+                                        <td scope="col">7h30 - 11h30 | 13h30 - 17h30</td>
+                                        <td><i class="fa-solid fa-pen-to-square"></i></td>
+                                        <td><i class="fa-solid fa-trash"></i></td>                                        
+                                    </tr>
+                                    <tr>
+                                        <td scope="col" class="course">Desenvolvimento de Sistemas</td>
+                                        <td scope="col">2023 - 2024</td>
+                                        <td scope="col">7h30 - 11h30 | 13h30 - 17h30</td>
+                                        <td><i class="fa-solid fa-pen-to-square"></i></td>
+                                        <td><i class="fa-solid fa-trash"></i></td>                                        
+                                    </tr>
+                                    <tr>
+                                        <td scope="col" class="course">Desenvolvimento de Sistemas</td>
+                                        <td scope="col">2023 - 2024</td>
+                                        <td scope="col">7h30 - 11h30 | 13h30 - 17h30</td>
+                                        <td><i class="fa-solid fa-pen-to-square"></i></td>
+                                        <td><i class="fa-solid fa-trash"></i></td>                                        
+                                    </tr>
+                                    <tr>
+                                        <td scope="col" class="course">Desenvolvimento de Sistemas</td>
+                                        <td scope="col">2023 - 2024</td>
+                                        <td scope="col">7h30 - 11h30 | 13h30 - 17h30</td>
+                                        <td><i class="fa-solid fa-pen-to-square"></i></td>
+                                        <td><i class="fa-solid fa-trash"></i></td>                                        
+                                    </tr>
+                                    <tr>
+                                        <td scope="col" class="course">Desenvolvimento de Sistemas</td>
+                                        <td scope="col">2023 - 2024</td>
+                                        <td scope="col">7h30 - 11h30 | 13h30 - 17h30</td>
+                                        <td><i class="fa-solid fa-pen-to-square"></i></td>
+                                        <td><i class="fa-solid fa-trash"></i></td>                                        
+                                    </tr>
+
 
                                 </tbody>
                             </table>
