@@ -7,6 +7,10 @@
     flex-direction: column;
 }
 
+#back:hover {
+    background-color: transparent!important;
+}
+
 .card-table {
     width: 100%;
     max-width: auto; /*  Bootstrap5 .container class*/
