@@ -3,9 +3,15 @@ import axios from 'axios';
 
 const Testing = () => {
 
-    axios.get('https://api-controle-acesso-latest.onrender.com/usuario/1', {
+    const data = {
+      "matricula": "12345678",
+      "senha": "123"
+    }
+
+    axios.post('https://apicontroleacesso-1.onrender.com/login', data, {
         headers: {
-           'Accept-Encoding': 'gzip, deflate, br'
+           'Accept': '*/*',
+           'Content-Type': 'application/json'
         }
        })
        .then(response => {
