@@ -134,7 +134,7 @@ return(
                             <Link to="editarUsuarios" class="card flex-fill border-0 illustration card-info bg-primary text-light">
                                 <div class="card-body p-0 d-flex flex-fill">
                                     <div class="row g-0 w-100">
-                                        <div class="col-9">
+                                        <div class="col-10">
                                             <div class="p-3 m-1">
                                                 <h3><i class="fa-solid fa-user"></i> Usuários</h3>
                                                 <p class="mb-0">Editar, adicionar, excluir</p>
@@ -151,7 +151,7 @@ return(
                             <Link to="editarCursos" class="card flex-fill border-0 illustration card-info bg-primary text-light">
                                 <div class="card-body p-0 d-flex flex-fill">
                                     <div class="row g-0 w-100">
-                                        <div class="col-9">
+                                        <div class="col-10">
                                             <div class="p-3 m-1">
                                             <h3><i class="fa-solid fa-book"></i> Cursos</h3>
                                                 <p class="mb-0">Nome, horário</p>
@@ -168,7 +168,7 @@ return(
                             <Link to="editarUsuarios" class="card flex-fill border-0 illustration card-info bg-primary text-light">
                                 <div class="card-body p-0 d-flex flex-fill">
                                     <div class="row g-0 w-100">
-                                        <div class="col-9">
+                                        <div class="col-10">
                                             <div class="p-3 m-1">
                                             <h3><i class="fa-solid fa-x"></i> Undefined</h3>
                                                 <p class="mb-0">Undefined</p>
@@ -185,7 +185,7 @@ return(
                             <Link to="notificacoes" class="card flex-fill border-0 illustration card-info bg-primary text-light">
                                 <div class="card-body p-0 d-flex flex-fill">
                                     <div class="row g-0 w-100">
-                                        <div class="col-9">
+                                        <div class="col-10">
                                             <div class="p-3 m-1">
                                             <h3><i class="fa-solid fa-bell"></i> Notificações</h3>
                                                 <p class="mb-0">Notificações gerais, notificações individuais</p>

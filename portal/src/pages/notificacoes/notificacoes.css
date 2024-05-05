@@ -1,0 +1,27 @@
+.container-textarea {
+    width: 100%;
+}
+
+textarea {
+    width: inherit;
+    height: 140px;
+    resize: none;
+    outline: none;
+    padding: 12px;
+    border-radius: .35rem;
+    font-family: Poppins;
+}
+
+#btn-notification {
+    padding: 8px 16px;
+    font-family: Poppins;
+    border-radius: .3rem;
+    border: 0;
+    background-color: #2bfdb7;
+    color: #006147;
+    transition: all .3s;
+}
+
+#btn-notification:hover {
+    opacity: .8;
+}

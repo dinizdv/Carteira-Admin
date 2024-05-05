@@ -5,7 +5,7 @@ export default function EditUsers(){
     return (
     <div>
         <div class="container container-editUsers">
-            <Link to={"/Home"} class="text-center fs-4 mb-2 ms-auto text-danger">Voltar à Home<i class="fa-solid fa-house ps-2 text-danger"></i></Link>
+            <Link to={"/Home"} class="text-center fs-4 mb-2 ms-auto text-danger px-2" id="back">Voltar à Home<i class="fa-solid fa-house ps-2 text-danger"></i></Link>
 
             {/* table users */}
             <div class="card card-table border-0">
