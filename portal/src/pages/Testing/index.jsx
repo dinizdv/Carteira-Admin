@@ -1,46 +1,36 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
+const url = 'https://apicontroleacesso-1.onrender.com';
+
 const Testing = () => {
 
-    const data = {
-      "matricula": "12345678",
-      "senha": "123"
-    }
+  const [response, setResponse] = useState(null);
 
-    axios.post('https://apicontroleacesso-1.onrender.com/login', data, {
-        headers: {
-           'Accept': '*/*',
-           'Content-Type': 'application/json'
-        }
-       })
-       .then(response => {
-        console.log(response.data);
-       })
-       .catch(error => {
-        console.error('Error fetching data:', error);
-       });
-          
+  // data => email, senha = ls
+  const data = {
+    "matricula": "12345678",
+    "senha": "123"
+  };
 
- const [response, setResponse] = useState(null);
-
- useEffect(() => {
-    fetchData();
- }, []);
-
- const fetchData = async () => {    
-    try {
-      const apiUrl = 'https://api-controle-acesso-latest.onrender.com';
-      
-
-      const response = await axios.get(apiUrl);
+  useEffect(() => {
+    axios.post(url + '/login', data, {
+      headers: {
+         'Accept': '*/*',
+         'Content-Type': 'application/json',
+         //'Authorization': 'Bearer {}' 
+      }
+     })
+    .then(response => {
       setResponse(response.data);
-    } catch (error) {
+      console.log(response.data);
+     })
+    .catch(error => {
       console.error('Error fetching data:', error);
-    }
- };
-
- return (
+     });
+  }, []); 
+  
+  return (
     <div>
       <h1 className="text-light">Testing page</h1>
       {response ? (
@@ -54,6 +44,26 @@ const Testing = () => {
     </div>
  );
 };
+
+
+          
+//  useEffect(() => {
+//     fetchData();
+//  }, []);
+
+//  const fetchData = async () => {    
+//     try {
+//       const apiUrl = url + '/';
+      
+
+//       const response = await axios.get(apiUrl);
+//       setResponse(response.data);
+//     } catch (error) {
+//       console.error('Error fetching data:', error);
+//     }
+//  };
+
+
 
 export default Testing;
 
