@@ -45,7 +45,7 @@ const Testing = () => {
 
   return (
     <div>
-      {loading && <p className="text-light">Carregando...</p>}
+      {loading && <p className="text-light"></p>}
       {error && <p className="text-danger">Erro ao carregar os dados: {error}</p>}
     </div>
   );
