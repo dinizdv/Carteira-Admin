@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './login.css';
 import Token from '../Functions'; // Ajuste o caminho conforme necessário
@@ -8,7 +8,8 @@ import axios from 'axios';
 export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const navigate = useNavigate();
+  const navigate = useNavigate(); // before http status code
+  const [token, setToken] = useState('')
 
   const handleEmailChange = (event) => {
     setEmail(event.target.value);
@@ -35,7 +36,11 @@ export default function Login() {
 
       if (response.status == 200) {
         console.log('Requisição bem-sucedida');
-        navigate('/home', {replace: true});
+        navigate('/home', {replace: true}); // automatically link
+        const tokenJWT = response.data.tokenJWT
+        
+        localStorage.setItem('keyToken', JSON.stringify(tokenJWT))
+        
       } 
     } catch (error) {
       toast.error(`Erro ao fazer login: ${error}`)
@@ -46,6 +51,15 @@ export default function Login() {
     event.preventDefault();
     fetchData();
   };
+
+  useEffect(() => {
+    // verify if exists token
+    const storedToken = localStorage.getItem('keyToken');
+    if (storedToken) {
+      setToken(storedToken);
+      navigate('/home',  { replace: true })
+    }
+  }, []);
 
   return (
     <div className="container-login">
