@@ -1,7 +1,7 @@
-import { Routes, Route, Outlet } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import Login from '../pages/Login';
 import Home from '../pages/Home';
-import Testing from '../pages/Testing';
+import Testing from '../pages/Functions';
 import EditUsers from '../pages/editarUsuarios';
 import EditCourses from '../pages/editarCursos';
 import Notifications from '../pages/notificacoes';

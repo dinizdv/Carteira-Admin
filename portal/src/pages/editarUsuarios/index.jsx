@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom' // for login button
 import './editarUsuarios.css'
+import {Test} from '../Functions'
 
 export default function EditUsers(){
     return (
@@ -14,6 +15,11 @@ export default function EditUsers(){
                                 Tabela de usuários
                             </h5>
                         </div>
+
+                        {/* <p>
+                            <Test />
+                        </p> */}
+
                         <div class="card-body">
                             <table class="table">
                                 <thead>
@@ -21,9 +27,7 @@ export default function EditUsers(){
                                         <th scope="col">N° de matrícula</th>
                                         <th scope="col">Nome</th>
                                         <th scope="col">Curso</th>
-                                        <th><i class="fa-solid fa-user-pen"></i></th>
                                         <th><i class="fa-solid fa-user-plus"></i></ th>
-                                        <th><i class="fa-solid fa-trash"></i></th>                                        
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -32,221 +36,6 @@ export default function EditUsers(){
                                         <td>Luisa Belo</td>
                                         <td>Desenvolvimento de Sistemas</td>
                                         <td><i class="fa-solid fa-user-pen icon-user"></i></td>
-                                        <td><i class="fa-solid fa-user-plus icon-user"></i></ td>
-                                        <td><i class="fa-solid fa-trash icon-user"></i></td>
-                                    </tr>
-
-                                    <tr>
-                                        <td>00000000</td>
-                                        <td>Luisa Belo</td>
-                                        <td>Mecatrônica</td>
-                                        <td><i class="fa-solid fa-user-pen icon-user"></i></td>
-                                        <td><i class="fa-solid fa-user-plus icon-user"></i></ td>
-                                        <td><i class="fa-solid fa-trash icon-user"></i></td>
-                                    </tr>
-
-                                    <tr>
-                                        <td>00000000</td>
-                                        <td>Luisa Belo</td>
-                                        <td>Mecatrônica</td>
-                                        <td><i class="fa-solid fa-user-pen icon-user"></i></td>
-                                        <td><i class="fa-solid fa-user-plus icon-user"></i></ td>
-                                        <td><i class="fa-solid fa-trash icon-user"></i></td>
-                                    </tr>                                    <tr>
-                                        <td>00000000</td>
-                                        <td>Luisa Belo</td>
-                                        <td>Mecatrônica</td>
-                                        <td><i class="fa-solid fa-user-pen icon-user"></i></td>
-                                        <td><i class="fa-solid fa-user-plus icon-user"></i></ td>
-                                        <td><i class="fa-solid fa-trash icon-user"></i></td>
-                                    </tr>                                    <tr>
-                                        <td>00000000</td>
-                                        <td>Luisa Belo</td>
-                                        <td>Mecatrônica</td>
-                                        <td><i class="fa-solid fa-user-pen icon-user"></i></td>
-                                        <td><i class="fa-solid fa-user-plus icon-user"></i></ td>
-                                        <td><i class="fa-solid fa-trash icon-user"></i></td>
-                                    </tr>                                    <tr>
-                                        <td>00000000</td>
-                                        <td>Luisa Belo</td>
-                                        <td>Mecatrônica</td>
-                                        <td><i class="fa-solid fa-user-pen icon-user"></i></td>
-                                        <td><i class="fa-solid fa-user-plus icon-user"></i></ td>
-                                        <td><i class="fa-solid fa-trash icon-user"></i></td>
-                                    </tr>                                    <tr>
-                                        <td>00000000</td>
-                                        <td>Luisa Belo</td>
-                                        <td>Mecatrônica</td>
-                                        <td><i class="fa-solid fa-user-pen icon-user"></i></td>
-                                        <td><i class="fa-solid fa-user-plus icon-user"></i></ td>
-                                        <td><i class="fa-solid fa-trash icon-user"></i></td>
-                                    </tr>                                    <tr>
-                                        <td>00000000</td>
-                                        <td>Luisa Belo</td>
-                                        <td>Mecatrônica</td>
-                                        <td><i class="fa-solid fa-user-pen icon-user"></i></td>
-                                        <td><i class="fa-solid fa-user-plus icon-user"></i></ td>
-                                        <td><i class="fa-solid fa-trash icon-user"></i></td>
-                                    </tr>                                    <tr>
-                                        <td>00000000</td>
-                                        <td>Luisa Belo</td>
-                                        <td>Mecatrônica</td>
-                                        <td><i class="fa-solid fa-user-pen icon-user"></i></td>
-                                        <td><i class="fa-solid fa-user-plus icon-user"></i></ td>
-                                        <td><i class="fa-solid fa-trash icon-user"></i></td>
-                                    </tr>                                    <tr>
-                                        <td>00000000</td>
-                                        <td>Luisa Belo</td>
-                                        <td>Mecatrônica</td>
-                                        <td><i class="fa-solid fa-user-pen icon-user"></i></td>
-                                        <td><i class="fa-solid fa-user-plus icon-user"></i></ td>
-                                        <td><i class="fa-solid fa-trash icon-user"></i></td>
-                                    </tr>                                    <tr>
-                                        <td>00000000</td>
-                                        <td>Luisa Belo</td>
-                                        <td>Mecatrônica</td>
-                                        <td><i class="fa-solid fa-user-pen icon-user"></i></td>
-                                        <td><i class="fa-solid fa-user-plus icon-user"></i></ td>
-                                        <td><i class="fa-solid fa-trash icon-user"></i></td>
-                                    </tr>                                    <tr>
-                                        <td>00000000</td>
-                                        <td>Luisa Belo</td>
-                                        <td>Mecatrônica</td>
-                                        <td><i class="fa-solid fa-user-pen icon-user"></i></td>
-                                        <td><i class="fa-solid fa-user-plus icon-user"></i></ td>
-                                        <td><i class="fa-solid fa-trash icon-user"></i></td>
-                                    </tr>                                    <tr>
-                                        <td>00000000</td>
-                                        <td>Luisa Belo</td>
-                                        <td>Mecatrônica</td>
-                                        <td><i class="fa-solid fa-user-pen icon-user"></i></td>
-                                        <td><i class="fa-solid fa-user-plus icon-user"></i></ td>
-                                        <td><i class="fa-solid fa-trash icon-user"></i></td>
-                                    </tr>                                    <tr>
-                                        <td>00000000</td>
-                                        <td>Luisa Belo</td>
-                                        <td>Mecatrônica</td>
-                                        <td><i class="fa-solid fa-user-pen icon-user"></i></td>
-                                        <td><i class="fa-solid fa-user-plus icon-user"></i></ td>
-                                        <td><i class="fa-solid fa-trash icon-user"></i></td>
-                                    </tr>                                    <tr>
-                                        <td>00000000</td>
-                                        <td>Luisa Belo</td>
-                                        <td>Mecatrônica</td>
-                                        <td><i class="fa-solid fa-user-pen icon-user"></i></td>
-                                        <td><i class="fa-solid fa-user-plus icon-user"></i></ td>
-                                        <td><i class="fa-solid fa-trash icon-user"></i></td>
-                                    </tr>                                    <tr>
-                                        <td>00000000</td>
-                                        <td>Luisa Belo</td>
-                                        <td>Mecatrônica</td>
-                                        <td><i class="fa-solid fa-user-pen icon-user"></i></td>
-                                        <td><i class="fa-solid fa-user-plus icon-user"></i></ td>
-                                        <td><i class="fa-solid fa-trash icon-user"></i></td>
-                                    </tr>                                    <tr>
-                                        <td>00000000</td>
-                                        <td>Luisa Belo</td>
-                                        <td>Mecatrônica</td>
-                                        <td><i class="fa-solid fa-user-pen icon-user"></i></td>
-                                        <td><i class="fa-solid fa-user-plus icon-user"></i></ td>
-                                        <td><i class="fa-solid fa-trash icon-user"></i></td>
-                                    </tr>                                    <tr>
-                                        <td>00000000</td>
-                                        <td>Luisa Belo</td>
-                                        <td>Mecatrônica</td>
-                                        <td><i class="fa-solid fa-user-pen icon-user"></i></td>
-                                        <td><i class="fa-solid fa-user-plus icon-user"></i></ td>
-                                        <td><i class="fa-solid fa-trash icon-user"></i></td>
-                                    </tr>                                    <tr>
-                                        <td>00000000</td>
-                                        <td>Luisa Belo</td>
-                                        <td>Mecatrônica</td>
-                                        <td><i class="fa-solid fa-user-pen icon-user"></i></td>
-                                        <td><i class="fa-solid fa-user-plus icon-user"></i></ td>
-                                        <td><i class="fa-solid fa-trash icon-user"></i></td>
-                                    </tr>                                    <tr>
-                                        <td>00000000</td>
-                                        <td>Luisa Belo</td>
-                                        <td>Mecatrônica</td>
-                                        <td><i class="fa-solid fa-user-pen icon-user"></i></td>
-                                        <td><i class="fa-solid fa-user-plus icon-user"></i></ td>
-                                        <td><i class="fa-solid fa-trash icon-user"></i></td>
-                                    </tr>                                    <tr>
-                                        <td>00000000</td>
-                                        <td>Luisa Belo</td>
-                                        <td>Mecatrônica</td>
-                                        <td><i class="fa-solid fa-user-pen icon-user"></i></td>
-                                        <td><i class="fa-solid fa-user-plus icon-user"></i></ td>
-                                        <td><i class="fa-solid fa-trash icon-user"></i></td>
-                                    </tr>                                    <tr>
-                                        <td>00000000</td>
-                                        <td>Luisa Belo</td>
-                                        <td>Mecatrônica</td>
-                                        <td><i class="fa-solid fa-user-pen icon-user"></i></td>
-                                        <td><i class="fa-solid fa-user-plus icon-user"></i></ td>
-                                        <td><i class="fa-solid fa-trash icon-user"></i></td>
-                                    </tr>                                    <tr>
-                                        <td>00000000</td>
-                                        <td>Luisa Belo</td>
-                                        <td>Mecatrônica</td>
-                                        <td><i class="fa-solid fa-user-pen icon-user"></i></td>
-                                        <td><i class="fa-solid fa-user-plus icon-user"></i></ td>
-                                        <td><i class="fa-solid fa-trash icon-user"></i></td>
-                                    </tr>                                    <tr>
-                                        <td>00000000</td>
-                                        <td>Luisa Belo</td>
-                                        <td>Mecatrônica</td>
-                                        <td><i class="fa-solid fa-user-pen icon-user"></i></td>
-                                        <td><i class="fa-solid fa-user-plus icon-user"></i></ td>
-                                        <td><i class="fa-solid fa-trash icon-user"></i></td>
-                                    </tr>                                    <tr>
-                                        <td>00000000</td>
-                                        <td>Luisa Belo</td>
-                                        <td>Mecatrônica</td>
-                                        <td><i class="fa-solid fa-user-pen icon-user"></i></td>
-                                        <td><i class="fa-solid fa-user-plus icon-user"></i></ td>
-                                        <td><i class="fa-solid fa-trash icon-user"></i></td>
-                                    </tr>                                    <tr>
-                                        <td>00000000</td>
-                                        <td>Luisa Belo</td>
-                                        <td>Mecatrônica</td>
-                                        <td><i class="fa-solid fa-user-pen icon-user"></i></td>
-                                        <td><i class="fa-solid fa-user-plus icon-user"></i></ td>
-                                        <td><i class="fa-solid fa-trash icon-user"></i></td>
-                                    </tr>                                    <tr>
-                                        <td>00000000</td>
-                                        <td>Luisa Belo</td>
-                                        <td>Mecatrônica</td>
-                                        <td><i class="fa-solid fa-user-pen icon-user"></i></td>
-                                        <td><i class="fa-solid fa-user-plus icon-user"></i></ td>
-                                        <td><i class="fa-solid fa-trash icon-user"></i></td>
-                                    </tr>                                    <tr>
-                                        <td>00000000</td>
-                                        <td>Luisa Belo</td>
-                                        <td>Mecatrônica</td>
-                                        <td><i class="fa-solid fa-user-pen icon-user"></i></td>
-                                        <td><i class="fa-solid fa-user-plus icon-user"></i></ td>
-                                        <td><i class="fa-solid fa-trash icon-user"></i></td>
-                                    </tr>                                    <tr>
-                                        <td>00000000</td>
-                                        <td>Luisa Belo</td>
-                                        <td>Mecatrônica</td>
-                                        <td><i class="fa-solid fa-user-pen icon-user"></i></td>
-                                        <td><i class="fa-solid fa-user-plus icon-user"></i></ td>
-                                        <td><i class="fa-solid fa-trash icon-user"></i></td>
-                                    </tr>                                    <tr>
-                                        <td>00000000</td>
-                                        <td>Luisa Belo</td>
-                                        <td>Mecatrônica</td>
-                                        <td><i class="fa-solid fa-user-pen icon-user"></i></td>
-                                        <td><i class="fa-solid fa-user-plus icon-user"></i></ td>
-                                        <td><i class="fa-solid fa-trash icon-user"></i></td>
-                                    </tr>                                    <tr>
-                                        <td>00000000</td>
-                                        <td>Luisa Belo</td>
-                                        <td>Mecatrônica</td>
-                                        <td><i class="fa-solid fa-user-pen icon-user"></i></td>
-                                        <td><i class="fa-solid fa-user-plus icon-user"></i></ td>
                                         <td><i class="fa-solid fa-trash icon-user"></i></td>
                                     </tr>
 
