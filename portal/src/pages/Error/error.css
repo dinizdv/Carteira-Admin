@@ -8,63 +8,6 @@ body {
     padding-bottom: 4%;
 }
 
-/* .container-top {
-    display: block;
-    text-align: end;
-    margin-top: 4%;
-}
-
-#link-backToHome {
-    font-size: 1.2rem;
-}
-
-#backToHome {
-    font-size: 1.6rem;
-}
-
-#link-backToHome:hover {
-    background-color: transparent!important;
-}
-
-.title-notFound {
-    color: #dedede;
-}
-#imgNotFound {
-    width: 40%;
-}
-
-@media (max-width: 1024px){
-    #imgNotFound {
-        width: 70%;
-    }
-}
-
-@media (max-width: 768px){
-    .container {
-        width: 90%;
-    }
-
-    .container-top {
-        margin-top: 0;
-    }
-
-    h1 {
-        font-size: 1.2rem;
-    }
-
-    #backToHome {
-        font-size: 1.2rem;
-    }
-
-    #backToHome:hover {
-        background-color: transparent;
-    }
-
-    #imgNotFound {
-        width: inherit;
-    }
-} */
-
 #title-404 {
     font-size: 16rem;
     font-family: consolas;

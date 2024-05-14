@@ -6,12 +6,14 @@ import EditUsers from '../pages/editarUsuarios';
 import EditCourses from '../pages/editarCursos';
 import Notifications from '../pages/notificacoes';
 import Error from '../pages/Error'
+import Private from './Private'
 
 function RoutesApp() {
     return (
         <Routes>
             <Route path="/" element={<Login />} /> {/* login page */}
-            <Route path="/home" element={<Home />} />
+            <Route path="/home" element={ <Private> <Home/> </Private>} />
+            {/* <Route path="/home" element={<Home />} /> */}
             <Route path="/home/editarUsuarios" element={<EditUsers />} />
             <Route path="/home/editarCursos" element={<EditCourses />} />
             <Route path="/home/notificacoes" element={<Notifications/>} />
