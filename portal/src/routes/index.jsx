@@ -5,6 +5,7 @@ import Testing from '../pages/Functions';
 import EditUsers from '../pages/editarUsuarios';
 import EditCourses from '../pages/editarCursos';
 import Notifications from '../pages/notificacoes';
+import Error from '../pages/Error'
 
 function RoutesApp() {
     return (
@@ -15,6 +16,7 @@ function RoutesApp() {
             <Route path="/home/editarCursos" element={<EditCourses />} />
             <Route path="/home/notificacoes" element={<Notifications/>} />
             <Route path="/testing" element={<Testing />} /> {/* testing page */}
+            <Route path="*" element={<Error />} />
         </Routes>
     );
 }
