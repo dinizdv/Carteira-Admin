@@ -27,13 +27,13 @@
 }
 
 #addUser-style {
-    background-color: #24fb20;
-    color: #0d5a11;
+    background-color: #20fb91;
+    color: #00954f;
 }
 
 #addUser-style:hover {
-    background-color: #00b505;    
-    color: #dedede;
+    background-color: #00bf60;    
+    color: #fefefe;
 }
 
 .editUser {
@@ -43,7 +43,7 @@
 
 .editUser:hover {
     background-color: #1b79f5;
-    color: #dedede;
+    color: #fefefe;
 
 }
 
@@ -54,7 +54,7 @@
 
 .deleteUser:hover {
     background-color: #ce071b;
-    color: #dedede;
+    color: #fefefe;
 }
 
 #addUser-style, .editUser, .deleteUser {
@@ -72,6 +72,38 @@
 
 .dialogTitle, .dialogContent {
     font-family: Poppins;
+}
+
+.modal-userDetails {
+    color: #2f97ff;
+    font-weight: bold;
+}
+
+.img-radius {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    background-color: #cacaca;
+    position: relative;
+    cursor: pointer;
+    transition: all .3s;
+}
+
+.img-radius i {
+    color: #fefefe;
+    position: absolute;
+    font-size: 3rem;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.img-radius:hover {
+    background-color: #2f97ff;
+}
+
+.modal-userDetails input {
+    color: #121212;
 }
 
 .container-btn-modal {
@@ -98,6 +130,20 @@
 .modal-btn-close:hover {    
     background-color: #c80d20!important;
 }
+
+/* delete modal */
+#p-delete {
+    font-family: poppins;
+}
+
+#modal-btn-save-delete {
+    background-color: #2f97ff;
+}
+
+#modal-btn-save-delete:hover {
+    background-color: #1b79f5!important;
+}
+
 /* responsive design */
 @media (max-width: 768px){
     .card {
