@@ -3,7 +3,6 @@ import axios from 'axios';
 
 const url = 'https://apicontroleacesso-1.onrender.com';
 
-// Mova a definição da função fetchData para fora do componente
 const fetchData = async () => {
   const data = {
     "email": "lucas.fonseca.sesisenaisp@gmail.com",
@@ -18,10 +17,10 @@ const fetchData = async () => {
       }
      });
 
-    return response.data; // Retorna os dados
+    return response.data;
   } catch (error) {
     console.error('Error fetching data:', error);
-    throw error; // Lança o erro para que ele possa ser tratado pelo chamador
+    throw error; 
   }
 };
 
@@ -32,7 +31,7 @@ const Testing = () => {
   useEffect(() => {
     fetchData()
     .then(data => {
-        console.log(data); // Aqui você pode usar os dados conforme necessário
+        console.log(data);
       })
     .catch(error => {
         console.error('Error fetching data:', error);
@@ -51,5 +50,5 @@ const Testing = () => {
   );
 };
 
-export { fetchData }; // Exporta a função fetchData
+export { fetchData }; 
 export default Testing;

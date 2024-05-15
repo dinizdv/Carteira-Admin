@@ -76,20 +76,3 @@ export default function Login() {
     </div>
   );
 }
-
-    // const data = await fetchData()
-
-
-
-    // if (email == data.email && password == data.password){
-    //     navigate('/home', { replace: true })
-    // }   else if (!email ||!password) {
-    //     toast.error('Preencha todos os campos.');
-    //   } else if (email!== data.email || password!== data.password) {
-    //     toast.error('E-mail e senha inválidos.');
-    //   } else {
-    //     toast.error('Error')
-    //   }
-    // };
-
-        // enviar dados para o servidor para verificar o código de status. Se retornar ok, pegue o token e redirecione à home; se der errado, exiba mensagem de erro na tela

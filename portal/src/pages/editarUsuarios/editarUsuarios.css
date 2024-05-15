@@ -16,9 +16,88 @@
     max-width: auto; /*  Bootstrap5 .container class*/
     height: 80vh;
     overflow-y: auto;
-    font-size: 1rem;
+    font-size: 1.1rem!important;
 }
 
+
+/* icon (thead) */
+#addUser {
+    display: flex;
+    justify-content: end;
+}
+
+#addUser-style {
+    background-color: #24fb20;
+    color: #0d5a11;
+}
+
+#addUser-style:hover {
+    background-color: #00b505;    
+    color: #dedede;
+}
+
+.editUser {
+    background-color: #2f97ff;
+    color: #19458f;
+}
+
+.editUser:hover {
+    background-color: #1b79f5;
+    color: #dedede;
+
+}
+
+.deleteUser {
+    background-color: #ff2d42;
+    color: #4d020a;
+}
+
+.deleteUser:hover {
+    background-color: #ce071b;
+    color: #dedede;
+}
+
+#addUser-style, .editUser, .deleteUser {
+    transition: all .2s;
+    font-size: .9rem;
+}
+
+.td-buttons {
+    display: flex;
+    justify-content: end;
+}
+
+
+/* modals */
+
+.dialogTitle, .dialogContent {
+    font-family: Poppins;
+}
+
+.container-btn-modal {
+    display: flex;
+    justify-content: flex-end;
+}
+.modal-btn-save, .modal-btn-close {
+    transition: all .3s!important;
+}
+.modal-btn-save {
+    background-color: #00b505;
+    color: #fefefe!important;
+    font-weight: bold;
+}
+.modal-btn-save:hover {
+    background-color: #049109!important;    
+}
+
+.modal-btn-close {
+    background-color: #ff2d42!important;
+    color: #fefefe!important;
+    font-weight: bold;
+}
+.modal-btn-close:hover {    
+    background-color: #c80d20!important;
+}
 /* responsive design */
 @media (max-width: 768px){
     .card {
