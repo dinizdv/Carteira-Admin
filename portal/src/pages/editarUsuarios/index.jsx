@@ -13,6 +13,8 @@ export default function EditUsers() {
   const [userDetails, setUserDetails] = useState([]);
   const [selectedUser, setSelectedUser] = useState(null);
 
+  console.log(userDetails);
+
   function useToken() {
     const token = localStorage.getItem("keyToken");
     if (token) {
@@ -43,7 +45,6 @@ export default function EditUsers() {
         }
       );
 
-      // because the map function needs to return a array
       if (!Array.isArray(response.data.content)) {
         console.error("A resposta da API não contém um array");
         return;
@@ -55,7 +56,7 @@ export default function EditUsers() {
     }
   };
 
-  // modals
+  // Modals
   const handleClickOpenAddUser = () => setOpenAddUser(true);
   const handleCloseAddUser = () => setOpenAddUser(false);
 
@@ -77,25 +78,21 @@ export default function EditUsers() {
     setOpenDeleteUser(false);
   };
 
-  // delete function
-  // userId = receive the id
+  // Delete function
   const handleDeleteUser = async (userId) => {
     try {
       await axios.delete(
         `https://apicontroleacesso-1.onrender.com/usuario/${userId}`,
         {
           headers: {
-            Accept: '*/*',
+            Accept: "*/*",
             Authorization: `Bearer ${token}`,
           },
         }
       );
 
-      console.log(userId)
-      // prevDetails = current state = (users)
+      console.log(userId);
       setUserDetails((prevDetails) =>
-        // user = each user of the array
-        // filter = return values that pass in test
         prevDetails.filter((user) => user.id !== userId)
       );
       handleCloseDeleteUser();
@@ -104,6 +101,47 @@ export default function EditUsers() {
     }
   };
 
+  const saveEditedUser = async (event) => {
+    event.preventDefault();
+    try {
+      const editedUser = {
+       ...selectedUser,
+        nome: selectedUser.nome,
+        dataNascimento: selectedUser.dataNascimento,
+        cpf: selectedUser.cpf,
+        email: selectedUser.email,
+        curso: selectedUser.curso? selectedUser.curso.nome : "",
+        nivel: selectedUser.nivel,
+      };
+  
+      const response = await axios.put(
+        `https://apicontroleacesso-1.onrender.com/usuario/${selectedUser.id}`,
+        editedUser,
+        {
+          headers: {
+            Accept: "*/*",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+  
+      console.log("Usuário atualizado com sucesso:", response.data);
+      // Atualize o estado com o objeto editedUser, assumindo que a resposta da API retorna o objeto atualizado
+      setUserDetails((prevDetails) =>
+        prevDetails.map((user) =>
+          user.id === selectedUser.id? editedUser : user
+        )
+      );
+      handleCloseEditUser();
+    } catch (error) {
+      console.log("Erro ao atualizar o usuário:", error);
+      // Trate o erro aqui, por exemplo, informando ao usuário
+    
+    }
+
+  };
+
+   
   return (
     <div className="container container-editUsers">
       <Link
@@ -140,35 +178,42 @@ export default function EditUsers() {
               </tr>
             </thead>
             <tbody>
-              {Array.isArray(userDetails) &&
-                userDetails.map((user) => (
-                  <tr key={user.id} className="tr-users">
-                    <td className="details">{user.matricula}</td>
-                    <td className="details">{user.nome}</td>
-                    <td className="details">{user.curso ? user.curso.nome : ""}</td>
-                    <td className="td-buttons">
-                      <button
-                        className="btn btn-sm editUser"
-                        variant="contained"
-                        onClick={() => handleClickOpenEditUser(user)}
-                      >
-                        <i className="fa-solid fa-user-pen"></i>
-                      </button>
-                      <button
-                        className="btn btn-sm ms-2 deleteUser"
-                        onClick={() => handleClickOpenDeleteUser(user)}
-                      >
-                        <i className="fa-solid fa-trash"></i>
-                      </button>
-                    </td>
-                  </tr>
-                ))}
+            {Array.isArray(userDetails) &&
+  userDetails.map((user) => (
+    <tr key={user.id} className="tr-users">
+      <td className="details">{user.matricula}</td>
+      <td className="details">{user.nome}</td>
+      <td className="details">
+        {user.curso? user.curso.nome : ""}
+      </td>
+      <td className="td-buttons">
+        <button
+          className="btn btn-sm editUser"
+          variant="contained"
+          onClick={() => handleClickOpenEditUser(user)}
+        >
+          <i className="fa-solid fa-user-pen"></i>
+        </button>
+        <button
+          className="btn btn-sm ms-2 deleteUser"
+          onClick={() => handleClickOpenDeleteUser(user)}
+        >
+          <i className="fa-solid fa-trash"></i>
+        </button>
+      </td>
+    </tr>
+))}
+
             </tbody>
           </table>
         </div>
       </div>
 
-      <Dialog className="modal-open" open={openAddUser} onClose={handleCloseAddUser}>
+      <Dialog
+        className="modal-open"
+        open={openAddUser}
+        onClose={handleCloseAddUser}
+      >
         <DialogTitle className="dialogTitle text-center">
           <h4>Adicionar usuário</h4>
         </DialogTitle>
@@ -216,15 +261,21 @@ export default function EditUsers() {
         </DialogContent>
         <div className="container-btn-modal mb-3 me-3">
           <button className="btn modal-btn-save">Salvar</button>
-          <button onClick={handleCloseAddUser} className="btn modal-btn-close ms-2">
+          <button
+            onClick={handleCloseAddUser}
+            className="btn modal-btn-close ms-2"
+          >
             Fechar
           </button>
         </div>
       </Dialog>
 
-      {/* if selectedUser != null */}
       {selectedUser && (
-        <Dialog className="modal-open" open={openEditUser} onClose={handleCloseEditUser}>
+        <Dialog
+          className="modal-open"
+          open={openEditUser}
+          onClose={handleCloseEditUser}
+        >
           <DialogTitle className="dialogTitle text-center">
             <h4>Editar usuário</h4>
           </DialogTitle>
@@ -236,101 +287,152 @@ export default function EditUsers() {
             </div>
             <section className="modal-userDetails">
               <div className="container-group">
-                <label htmlFor="matricula">N° de matrícula:</label>
+                <label htmlFor="aluno">Aluno(a):</label>
                 <input
-                  className="ps-2"
+                  className="input-editUser"
                   type="text"
-                  name="matricula"
-                  id="matricula"
-                  value={selectedUser.matricula}
+                  name="aluno"
+                  id="aluno"
+                  value={selectedUser.nome || ""}
                   onChange={(e) =>
-                    setSelectedUser((prevState) => ({
-                      ...prevState,
-                      matricula: e.target.value,
-                    }))
+                    setSelectedUser({
+                      ...selectedUser,
+                      nome: e.target.value,
+                    })
                   }
                 />
               </div>
               <div className="container-group">
-                <label htmlFor="aluno">Aluno:</label>
+                <label htmlFor="nascimento">Data de nascimento:</label>
                 <input
-                  className="ps-2"
-                  type="text"
-                  name="aluno"
-                  id="aluno"
-                  value={selectedUser.nome}
+                  className="input-editUser"
+                  type="date"
+                  name="nascimento"
+                  id="nascimento"
+                  value={selectedUser.dataNascimento || ""}
                   onChange={(e) =>
-                    setSelectedUser((prevState) => ({
-                      ...prevState,
-                      nome: e.target.value,
-                    }))
+                    setSelectedUser({
+                      ...selectedUser,
+                      dataNascimento: e.target.value,
+                    })
+                  }
+                />
+              </div>
+              <div className="container-group">
+                <label htmlFor="cpf">CPF:</label>
+                <input
+                  className="input-editUser"
+                  type="text"
+                  name="cpf"
+                  id="cpf"
+                  value={selectedUser.cpf || ""}
+                  onChange={(e) =>
+                    setSelectedUser({
+                      ...selectedUser,
+                      cpf: e.target.value,
+                    })
+                  }
+                />
+              </div>
+              <div className="container-group">
+                <label htmlFor="email">Email:</label>
+                <input
+                  className="input-editUser"
+                  type="email"
+                  name="email"
+                  id="email"
+                  value={selectedUser.email || ""}
+                  onChange={(e) =>
+                    setSelectedUser({
+                      ...selectedUser,
+                      email: e.target.value,
+                    })
                   }
                 />
               </div>
               <div className="container-group">
                 <label htmlFor="curso">Curso:</label>
                 <input
-                  className="ps-2"
+                  className="input-editUser"
                   type="text"
                   name="curso"
-                  id="curso-input"
-                  value={selectedUser.curso ? selectedUser.curso.nome : ""}
+                  id="curso"
+                  value={selectedUser.curso?.nome || ""}
                   onChange={(e) =>
-                    setSelectedUser((prevState) => ({
-                      ...prevState,
-                      curso: {
-                        ...prevState.curso,
-                        nome: e.target.value,
-                      },
-                    }))
+                    setSelectedUser({
+                      ...selectedUser,
+                      curso: { ...selectedUser.curso, nome: e.target.value },
+                    })
+                  }
+                />
+              </div>
+              <div className="container-group">
+                <label htmlFor="nivel">Nível:</label>
+                <input
+                  className="input-editUser"
+                  type="text"
+                  name="nivel"
+                  id="nivel"
+                  value={selectedUser.nivel || ""}
+                  onChange={(e) =>
+                    setSelectedUser({
+                      ...selectedUser,
+                      nivel: e.target.value,
+                    })
                   }
                 />
               </div>
             </section>
           </DialogContent>
           <div className="container-btn-modal mb-3 me-3">
-            <button className="btn modal-btn-save">Salvar</button>
-            <button onClick={handleCloseEditUser} className="btn modal-btn-close ms-2">
+            <button
+              onClick={saveEditedUser}
+              className="btn modal-btn-save"
+            >
+              Salvar
+            </button>
+            <button
+              onClick={handleCloseEditUser}
+              className="btn modal-btn-close ms-2"
+            >
               Fechar
             </button>
           </div>
         </Dialog>
       )}
 
-      {selectedUser && (
-        <Dialog
-          className="modal-open"
-          open={openDeleteUser}
-          onClose={handleCloseDeleteUser}
-        >
-          <DialogTitle className="dialogTitle text-center">
-            <h4>Deletar usuário</h4>
-          </DialogTitle>
-          <DialogContent className="dialogContent">
-            <div className="container-img-radius mb-4 d-flex justify-content-center">
-              <div className="img-radius">
-                <i className="fa-solid fa-user"></i>
-              </div>
-            </div>
-            <section className="modal-userDetails">
-              <div className="container-group d-flex flex-column text-center">
-                <p>Tem certeza de que deseja deletar o usuário {selectedUser.nome} do curso {selectedUser.curso ? selectedUser.curso.nome : ""}?</p>
-              </div>
-            </section>
-          </DialogContent>
-          <div className="container-btn-modal mb-3 me-3">
-            <button
-              className="btn modal-btn-delete"
-              onClick={() => handleDeleteUser(selectedUser.id)} // send id of the user
-            >
-              Deletar
-            </button>
-            <button onClick={handleCloseDeleteUser} className="btn modal-btn-close ms-2">
-              Fechar
-            </button>
+      <Dialog
+        className="modal-open"
+        open={openDeleteUser}
+        onClose={handleCloseDeleteUser}
+      >
+        <DialogTitle className="dialogTitle text-center">
+          <h4>Excluir usuário</h4>
+        </DialogTitle>
+        <DialogContent className="dialogContent">
+          <div className="text-center">
+            <i
+              className="fa-solid fa-circle-exclamation text-danger"
+              style={{ fontSize: "4rem" }}
+            ></i>
+            <p>Deseja excluir o usuário {selectedUser?.nome}?</p>
           </div>
-        </Dialog>
-      )}
+        </DialogContent>
+        <div className="container-btn-modal mb-3 me-3">
+          <button
+            onClick={() => handleDeleteUser(selectedUser.id)}
+            className="btn modal-btn-delete"
+          >
+            Excluir
+          </button>
+          <button
+            onClick={handleCloseDeleteUser}
+            className="btn modal-btn-close ms-2"
+          >
+            Fechar
+          </button>
+        </div>
+      </Dialog>
     </div>
   );
 }

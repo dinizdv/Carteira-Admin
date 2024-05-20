@@ -7,6 +7,10 @@
     flex-direction: column;
 }
 
+.input-editUser {
+    width: 100%;
+}
+
 #back:hover {
     background-color: transparent!important;
 }
@@ -19,13 +23,13 @@
     font-size: 1.1rem!important;
 }
 
-
 /* icon (thead) */
 #addUser {
     display: flex;
     justify-content: end;
 }
 
+/* colors style */
 #addUser-style {
     background-color: #20fb91;
     color: #00954f;
