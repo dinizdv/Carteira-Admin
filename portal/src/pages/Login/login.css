@@ -12,6 +12,14 @@
     background-color: rgba(226, 209, 209, 0.158);
     }
 
+#img-radius-userLogin{
+    transition: all .3s;
+}
+
+#img-radius-userLogin:hover {
+    box-shadow: inset 0 0 8px #dedede;
+}
+
 .container-login h1 {
     color: var(--color-light);
     font-size: 2.5rem;

@@ -12,7 +12,18 @@ export default function EditUsers() {
   const [openDeleteUser, setOpenDeleteUser] = useState(false);
   const [userDetails, setUserDetails] = useState([]);
   const [selectedUser, setSelectedUser] = useState(null);
+  const [formValues, setFormValues] = useState({
+    curso: '',
+    nome: '',
+    matricula: '',
+    dataNascimento: '',
+    cpf: '',
+    email: '',
+    nivel: '',
+    senha: ''
+  })
 
+  
   console.log(userDetails);
 
   function useToken() {
@@ -78,13 +89,14 @@ export default function EditUsers() {
     setOpenDeleteUser(false);
   };
 
-  // Delete function
+  // delete function
   const handleDeleteUser = async (userId) => {
     try {
       await axios.delete(
         `https://apicontroleacesso-1.onrender.com/usuario/${userId}`,
         {
           headers: {
+            "Content-Type": "application/json",
             Accept: "*/*",
             Authorization: `Bearer ${token}`,
           },
@@ -101,22 +113,34 @@ export default function EditUsers() {
     }
   };
 
-  const saveEditedUser = async (event) => {
+  // update values function
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormValues({
+     ...formValues,
+      [name]: value,
+    });
+  };
+  
+
+  const addUser = async (event) => {
     event.preventDefault();
     try {
-      const editedUser = {
-       ...selectedUser,
-        nome: selectedUser.nome,
-        dataNascimento: selectedUser.dataNascimento,
-        cpf: selectedUser.cpf,
-        email: selectedUser.email,
-        curso: selectedUser.curso? selectedUser.curso.nome : "",
-        nivel: selectedUser.nivel,
-      };
-  
-      const response = await axios.put(
-        `https://apicontroleacesso-1.onrender.com/usuario/${selectedUser.id}`,
-        editedUser,
+      const response = await axios.post(
+        "https://apicontroleacesso-1.onrender.com/usuario",
+        {
+          nome: formValues.nome,
+          matricula: formValues.matricula,
+          email: formValues.email,
+          senha: formValues.senha,
+          cpf: formValues.cpf,
+          dataNascimento: formValues.dataNascimento,
+          nivel: formValues.nivel,
+          senha: formValues.senha,
+          curso: {
+            id: parseInt(formValues.curso)
+          }
+        },
         {
           headers: {
             Accept: "*/*",
@@ -125,21 +149,63 @@ export default function EditUsers() {
         }
       );
   
+      if (!response.status == 200 || !response.status == 201) {
+        throw new Error(`HTTP Error status: ${response.status}`);
+      }
+  
+      const newUser = response.data;
+      setUserDetails([...userDetails, newUser]);
+      console.log('Usuário adicionado com sucesso!');
+      handleCloseAddUser();
+    } catch (error) {
+      console.log('Erro ao adicionar usuário: ', error);
+    }
+  };
+  
+  // edit details function
+  const saveEditedUser = async (event) => {
+    event.preventDefault();
+    try {
+      const editedUser = {
+        ...selectedUser,
+        nome: selectedUser.nome,
+        dataNascimento: selectedUser.dataNascimento,
+        cpf: selectedUser.cpf,
+        email: selectedUser.email,
+        curso: selectedUser.curso ? selectedUser.curso.nome : "",
+        nivel: selectedUser.nivel,
+      };
+  
+      const response = await axios.put(
+        `https://apicontroleacesso-1.onrender.com/usuario/${selectedUser.id}`,
+        editedUser,
+        {
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`
+          },
+        }
+      );
+  
+      console.log(selectedUser.id);
+      console.log(editedUser); // user details (with modifies)
       console.log("Usuário atualizado com sucesso:", response.data);
-      // Atualize o estado com o objeto editedUser, assumindo que a resposta da API retorna o objeto atualizado
+  
+      // Use os dados retornados pela API para atualizar o estado
       setUserDetails((prevDetails) =>
         prevDetails.map((user) =>
-          user.id === selectedUser.id? editedUser : user
-        )
+          user.id === selectedUser.id ? { ...user, ...editedUser } : user
+    )
       );
+  
       handleCloseEditUser();
     } catch (error) {
       console.log("Erro ao atualizar o usuário:", error);
-      // Trate o erro aqui, por exemplo, informando ao usuário
-    
     }
-
   };
+
+  
 
    
   return (
@@ -178,98 +244,188 @@ export default function EditUsers() {
               </tr>
             </thead>
             <tbody>
-            {Array.isArray(userDetails) &&
-  userDetails.map((user) => (
-    <tr key={user.id} className="tr-users">
-      <td className="details">{user.matricula}</td>
-      <td className="details">{user.nome}</td>
-      <td className="details">
-        {user.curso? user.curso.nome : ""}
-      </td>
-      <td className="td-buttons">
-        <button
-          className="btn btn-sm editUser"
-          variant="contained"
-          onClick={() => handleClickOpenEditUser(user)}
-        >
-          <i className="fa-solid fa-user-pen"></i>
-        </button>
-        <button
-          className="btn btn-sm ms-2 deleteUser"
-          onClick={() => handleClickOpenDeleteUser(user)}
-        >
-          <i className="fa-solid fa-trash"></i>
-        </button>
-      </td>
-    </tr>
-))}
+  {Array.isArray(userDetails) &&
+    userDetails.map((user) => (
+      <tr key={user.id} className="tr-users">
+        <td className="details">{user.matricula}</td>
+        <td className="details">{user.nome}</td>
+        <td className="details">
+          {user.curso ? user.curso.nome : ""}
+        </td>
+        <td className="td-buttons">
+          <button
+            className="btn btn-sm editUser"
+            variant="contained"
+            onClick={() => handleClickOpenEditUser(user)}
+          >
+            <i className="fa-solid fa-user-pen"></i>
+          </button>
+          <button
+            className="btn btn-sm ms-2 deleteUser"
+            onClick={() => handleClickOpenDeleteUser(user)}
+          >
+            <i className="fa-solid fa-trash"></i>
+          </button>
+        </td>
+      </tr>
+    ))}
+</tbody>
 
-            </tbody>
+
           </table>
         </div>
       </div>
 
       <Dialog
-        className="modal-open"
-        open={openAddUser}
-        onClose={handleCloseAddUser}
-      >
-        <DialogTitle className="dialogTitle text-center">
-          <h4>Adicionar usuário</h4>
-        </DialogTitle>
-        <DialogContent className="dialogContent">
-          <div className="container-img-radius mb-4 d-flex justify-content-center">
-            <div className="img-radius">
-              <i className="fa-solid fa-user"></i>
-            </div>
-          </div>
-          <section className="modal-userDetails">
-            <div className="form-floating mt-3">
-              <input
-                type="email"
-                id="matricula-input"
-                className="form-control"
-                placeholder=""
-              />
-              <label htmlFor="matricula-input" className="form-label">
-                Matrícula
-              </label>
-            </div>
-            <div className="form-floating mt-3">
-              <input
-                type="text"
-                id="nome-input"
-                className="form-control"
-                placeholder=""
-              />
-              <label htmlFor="nome-input" className="form-label">
-                Nome
-              </label>
-            </div>
-            <div className="form-floating mt-3">
-              <input
-                type="text"
-                id="curso-input"
-                className="form-control"
-                placeholder=""
-              />
-              <label htmlFor="curso-input" className="form-label">
-                Curso
-              </label>
-            </div>
-          </section>
-        </DialogContent>
-        <div className="container-btn-modal mb-3 me-3">
-          <button className="btn modal-btn-save">Salvar</button>
+  className="modal-open"
+  open={openAddUser}
+  onClose={handleCloseAddUser}
+>
+  <DialogTitle className="dialogTitle text-center">
+    <h4>Adicionar usuário</h4>
+  </DialogTitle>
+  <DialogContent className="dialogContent">
+    <div className="container-img-radius mb-4 d-flex justify-content-center">
+      <div className="img-radius">
+        <i className="fa-solid fa-user"></i>
+      </div>
+    </div>
+    <section className="modal-userDetails">
+      <form onSubmit={addUser}>
+        <div className="form-floating mt-3">
+          <input
+            type="text"
+            id="matricula-input"
+            className="form-control"
+            placeholder=""
+            value={formValues.matricula}
+            onChange={handleInputChange}
+            name="matricula"
+          />
+          <label htmlFor="matricula-input" className="form-label">
+            Matrícula
+          </label>
+        </div>
+        <div className="form-floating mt-3">
+          <input
+            type="text"
+            id="nome-input"
+            className="form-control"
+            placeholder=""
+            value={formValues.nome}
+            onChange={handleInputChange}
+            name="nome"
+          />
+          <label htmlFor="nome-input" className="form-label">
+            Nome
+          </label>
+        </div>
+        <div className="form-floating mt-3">
+          <input
+            type="text"
+            id="curso-input"
+            className="form-control"
+            placeholder=""
+            value={formValues.curso}
+            onChange={handleInputChange}
+            name="curso"
+          />
+          <label htmlFor="curso-input" className="form-label">
+            Curso
+          </label>
+        </div>
+
+        <div className="form-floating mt-3">
+          <input
+            type="text"
+            id="dataNascimento-input"
+            className="form-control"
+            placeholder=""
+            value={formValues.dataNascimento}
+            onChange={handleInputChange}
+            name="dataNascimento"
+          />
+          <label htmlFor="dataNascimento-input" className="form-label">
+            Data de Nascimento
+          </label>
+        </div>
+        <div className="form-floating mt-3">
+          <input
+            type="text"
+            id="cpf-input"
+            className="form-control"
+            placeholder=""
+            value={formValues.cpf}
+            onChange={handleInputChange}
+            name="cpf"
+          />
+          <label htmlFor="cpf-input" className="form-label">
+            CPF
+          </label>
+        </div>
+        <div className="form-floating mt-3">
+          <input
+            type="text"
+            id="email-input"
+            className="form-control"
+            placeholder=""
+            value={formValues.email}
+            onChange={handleInputChange}
+            name="email"
+          />
+          <label htmlFor="email-input" className="form-label">
+            Email
+          </label>
+        </div>
+        <div className="form-floating mt-3">
+          <input
+            type="text"
+            id="nivel-input"
+            className="form-control"
+            placeholder=""
+            value={formValues.nivel}
+            onChange={handleInputChange}
+            name="nivel"
+          />
+          <label htmlFor="nivel-input" className="form-label">
+            Nível
+          </label>
+        </div>
+
+        <div className="form-floating mt-3">
+          <input
+            type="text"
+            id="senha-input"
+            className="form-control"
+            placeholder=""
+            value={formValues.senha}
+            onChange={handleInputChange}
+            name="senha"
+          />
+          <label htmlFor="senha-input" className="form-label">
+            Senha
+          </label>
+        </div>
+
+        <div className="container-btn-modal my-3 me-3">
+          <button className="btn modal-btn-save" type="submit">
+            Salvar
+          </button>
           <button
             onClick={handleCloseAddUser}
             className="btn modal-btn-close ms-2"
+            type="button"
           >
             Fechar
           </button>
         </div>
-      </Dialog>
+      </form>
+    </section>
+  </DialogContent>
+</Dialog>
 
+
+{/* editUser */}
       {selectedUser && (
         <Dialog
           className="modal-open"
