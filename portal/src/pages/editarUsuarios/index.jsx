@@ -407,7 +407,7 @@ export default function EditUsers() {
           </label>
         </div>
 
-        <div className="container-btn-modal my-3 me-3">
+        <div className="container-btn-modal my-3">
           <button className="btn modal-btn-save" type="submit">
             Salvar
           </button>
