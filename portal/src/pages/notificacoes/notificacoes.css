@@ -25,3 +25,15 @@ textarea {
 #btn-notification:hover {
     opacity: .8;
 }
+
+select {
+    padding: 8px 16px;
+    font-size: 1rem;
+    border: none;
+    outline: none;
+}
+
+select:hover {
+    cursor: pointer;
+}
+

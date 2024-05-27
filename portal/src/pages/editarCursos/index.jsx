@@ -229,7 +229,7 @@ export default function EditUsers() {
                     variant="contained"
                     onClick={handleClickOpenAddUser}
                   >
-                    <i className="fa-solid fa-user-plus"></i>
+                    <i class="fa-solid fa-plus"></i>
                   </button>
                 </th>
               </tr>
@@ -246,7 +246,7 @@ export default function EditUsers() {
             variant="contained"
             onClick={() => handleClickOpenEditUser(user)}
           >
-            <i className="fa-solid fa-user-pen"></i>
+            <i class="fa-solid fa-pen-to-square"></i>
           </button>
           <button
             className="btn btn-sm ms-2 deleteUser"
