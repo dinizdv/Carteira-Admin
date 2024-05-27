@@ -117,17 +117,19 @@ export default function EditUsers() {
   };
   
 
+  // addCourse
   const addUser = async (event) => {
     event.preventDefault();
     try {
       const response = await axios.post(
-        "https://apicontroleacesso-1.onrender.com/curso",
+        `https://apicontroleacesso-1.onrender.com/curso`,
         {
           nome: formValues.nome,
           duracao: formValues.duracao
         },
         {
           headers: {
+            "Content-Type": "application/json",
             Accept: "*/*",
             Authorization: `Bearer ${token}`,
           },
@@ -140,25 +142,33 @@ export default function EditUsers() {
   
       const newUser = response.data;
       setUserDetails([...userDetails, newUser]);
-      console.log('Usuário adicionado com sucesso!');
+      console.log('Curso adicionado com sucesso!');
       handleCloseAddUser();
     } catch (error) {
-      console.log('Erro ao adicionar usuário: ', error);
+      console.log('Erro ao adicionar curso ', error);
     }
   };
   
+
+
+
   // edit details function
   const saveEditedUser = async (event) => {
     event.preventDefault();
+    if (!selectedUser) {
+      console.log("No user selected for editing.");
+      return; // Exit the function early if no user is selected
+    }
+  
     try {
       const editedUser = {
-        ...selectedUser,
+      ...selectedUser,
         nome: selectedUser.nome,
         duracao: selectedUser.duracao
       };
   
       const response = await axios.put(
-        `https://apicontroleacesso-1.onrender.com/curso/${selectedUser.id}`,
+        `https://apicontroleacesso-1.onrender.com/curso`,
         editedUser,
         {
           headers: {
@@ -176,15 +186,16 @@ export default function EditUsers() {
       // Use os dados retornados pela API para atualizar o estado
       setUserDetails((prevDetails) =>
         prevDetails.map((user) =>
-          user.id === selectedUser.id ? { ...user, ...editedUser } : user
-    )
+          user.id === selectedUser.id? {...user,...editedUser } : user
+      )
       );
   
       handleCloseEditUser();
     } catch (error) {
-      console.log("Erro ao atualizar o usuário:", error);
+      console.log("Erro ao atualizar o curso:", error);
     }
   };
+  
 
   
 
@@ -202,7 +213,7 @@ export default function EditUsers() {
       <div className="card card-table border-0">
         <div className="card-header">
           <h5 className="card-title text-center m-0 fs-3 text-primary">
-            Tabela de usuários
+            Tabela de cursos
           </h5>
         </div>
         <div className="card-body">
@@ -259,49 +270,47 @@ export default function EditUsers() {
   onClose={handleCloseAddUser}
 >
   <DialogTitle className="dialogTitle text-center">
-    <h4>Adicionar usuário</h4>
+    <h4>Adicionar curso</h4>
   </DialogTitle>
   <DialogContent className="dialogContent">
-    <div className="container-img-radius mb-4 d-flex justify-content-center">
-      <div className="img-radius">
-        <i className="fa-solid fa-user"></i>
-      </div>
-    </div>
     <section className="modal-userDetails">
       <form onSubmit={addUser}>
-        <div className="form-floating mt-3">
+        <div className="form-floating">
           <input
             type="text"
-            id="matricula-input"
+            id="nome-input"
             className="form-control"
             placeholder=""
             value={formValues.nome}
             onChange={handleInputChange}
-            name="matricula"
+            name="nome"
           />
-          <label htmlFor="matricula-input" className="form-label">
+          <label htmlFor="nome-input" className="form-label">
             Nome do curso
           </label>
         </div>
         <div className="form-floating mt-3">
           <input
             type="text"
-            id="nome-input"
+            id="duracao-input"
             className="form-control"
             placeholder=""
             value={formValues.duracao}
             onChange={handleInputChange}
-            name="nome"
+            name="duracao"
           />
-          <label htmlFor="nome-input" className="form-label">
+          <label htmlFor="duracao-input" className="form-label">
             Duração do curso
           </label>
         </div>
 
         <div className="container-btn-modal my-3">
-          <button className="btn modal-btn-save" type="submit">
-            Salvar
-          </button>
+                    <button
+              onClick={addUser}
+              className="btn modal-btn-save"
+            >
+              Salvar
+            </button>
           <button
             onClick={handleCloseAddUser}
             className="btn modal-btn-close ms-2"
