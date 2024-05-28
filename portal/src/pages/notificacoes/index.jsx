@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import './notificacoes.css';
 import '../editarUsuarios/editarUsuarios.css';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 
 export default function Notifications() {
     const [textareaValue, setTextareaValue] = useState('');
@@ -60,14 +61,13 @@ export default function Notifications() {
 
     const sendNotification = async (event) => {
         event.preventDefault(); 
-        
+
         if (!selectedUserId) {
             alert('Por favor, selecione um usuário destinatário.');
             return;
         }
 
         try {
-            // Prepara os dados da notificação
             const notificationData = {
                 usuario: {
                     id: selectedUserId // current id
@@ -88,14 +88,15 @@ export default function Notifications() {
                 }
             );
 
-            console.log("Notificação enviada com sucesso:", response.data);
-            alert('Notificação enviada com sucesso');
 
-            // Limpa o textarea após o envio
+            console.log("Notificação enviada com sucesso:", response.data);
+            toast.success('Notificação enviada com sucesso');
+
+            // cleaning the textarea
             setTextareaValue('');
         } catch (error) {
             console.log("Erro ao enviar notificação:", error);
-            alert('Erro ao enviar notificação. Verifique se os dados estão corretos.');
+            toast.error('Erro ao enviar notificação. Verifique se os dados estão corretos.');
         }
     };
 
@@ -130,13 +131,16 @@ export default function Notifications() {
                     <div className="card-body">
                         <table className="table">
                             <thead>
-                                {/* <tr>
+                                <tr>
                                     <th scope="col" className="col-12">Texto da notificação</th>
-                                </tr> */}
+                                    <th scope="col" className="col-12">Destinatário</th>
+                                </tr>
                             </thead>
                             <tbody>
-                                <tr className="tr-users">
-                                    <td className="details"></td> {/* display notification */}
+                                {userDetails.map((user) => (
+                                <tr key={user.id} className="tr-users">
+                                    <td className="details">{user.mensagem}</td> {/* display notification */}
+                                    <td className="details">{user.nome}</td> {/* display notification */}
                                     <td className="td-buttons">
                                         <button
                                             className="btn btn-sm editUser"
@@ -151,6 +155,7 @@ export default function Notifications() {
                                         </button>
                                     </td>
                                 </tr>
+                                    ))}
                             </tbody>
                         </table>
                     </div>
