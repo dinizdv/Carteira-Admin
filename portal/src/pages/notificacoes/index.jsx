@@ -2,12 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './notificacoes.css';
 import '../editarUsuarios/editarUsuarios.css';
-import './lenght.js';
 import axios from 'axios';
 
 export default function Notifications() {
     const [textareaValue, setTextareaValue] = useState('');
-    const [userDetails, setUserDetails] = useState([]); // Estado para armazenar os detalhes dos usuários
+    const [userDetails, setUserDetails] = useState([]);
+    const [selectedUserId, setSelectedUserId] = useState(null);
 
     const handleTextareaChange = (event) => {
         setTextareaValue(event.target.value);
@@ -48,14 +48,57 @@ export default function Notifications() {
             return;
           }
 
-          console.log(userDetails)
           setUserDetails(response.data.content);
         } catch (error) {
           console.log("Erro ao buscar detalhes do usuário:", error);
         }
     };
-
     
+    const handleSelectChange = (event) => {
+        setSelectedUserId(event.target.value);
+    };
+
+    const sendNotification = async (event) => {
+        event.preventDefault(); 
+        
+        if (!selectedUserId) {
+            alert('Por favor, selecione um usuário destinatário.');
+            return;
+        }
+
+        try {
+            // Prepara os dados da notificação
+            const notificationData = {
+                usuario: {
+                    id: selectedUserId // current id
+                },
+                mensagem: textareaValue // notification text (title + message)
+            };
+
+            // post req
+            const response = await axios.post(
+                "https://apicontroleacesso-1.onrender.com/notificacao",
+                notificationData,
+                {
+                    headers: {
+                        Accept: "application/json",
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${token}` 
+                    }
+                }
+            );
+
+            console.log("Notificação enviada com sucesso:", response.data);
+            alert('Notificação enviada com sucesso');
+
+            // Limpa o textarea após o envio
+            setTextareaValue('');
+        } catch (error) {
+            console.log("Erro ao enviar notificação:", error);
+            alert('Erro ao enviar notificação. Verifique se os dados estão corretos.');
+        }
+    };
+
     return (
         <div>
             <div className="container container-editUsers py-5">
@@ -65,16 +108,16 @@ export default function Notifications() {
                     <textarea placeholder="Digite sua notificação aqui (estrutura: título : texto)" maxLength={300} value={textareaValue} onChange={handleTextareaChange}></textarea>
 
                     <div className="container-btn-not d-flex justify-content-end my-1">
-                        <select name="usuarios" id="usuarios" className="rounded">
-                        <option selected disabled>Aluno destinário</option>
-                        {userDetails.map((user) => (
+                        <select name="usuarios" id="usuarios" className="rounded" onChange={handleSelectChange}>
+                            <option selected disabled>Aluno destinatário</option>
+                            {userDetails.map((user) => (
                                 <option key={user.id} value={user.id}>{user.nome}</option>
                             ))}
                         </select>
                     </div>
 
                     <div className="container-btn-not d-flex justify-content-end mt-3">
-                        <button id="btn-notification">Enviar notificação</button>
+                        <button id="btn-notification" onClick={sendNotification}>Enviar notificação</button>
                     </div>
                 </section>
                 {/* table users */}
@@ -99,7 +142,7 @@ export default function Notifications() {
                                             className="btn btn-sm editUser"
                                             variant="contained"
                                         >
-                                            <i class="fa-solid fa-pen-to-square"></i>
+                                            <i className="fa-solid fa-pen-to-square"></i>
                                         </button>
                                         <button
                                             className="btn btn-sm ms-2 deleteUser"
