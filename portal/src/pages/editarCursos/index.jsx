@@ -87,8 +87,8 @@ export default function EditUsers() {
   // delete function
   const handleDeleteUser = async (userId) => {
     try {
-      await axios.delete(
-        `https://apicontroleacesso-1.onrender.com/usuario/${userId}`,
+      const response = await axios.delete(
+        `https://apicontroleacesso-1.onrender.com/curso/${userId}`,
         {
           headers: {
             "Content-Type": "application/json",
@@ -97,17 +97,22 @@ export default function EditUsers() {
           },
         }
       );
-
-      console.log(userId);
+  
+      if (response.status !== 200) {
+        throw new Error(`HTTP Error status: ${response.status}`);
+      }
+  
+      toast.success(`Curso ${selectedUser.nome} deletado com sucesso`);
       setUserDetails((prevDetails) =>
         prevDetails.filter((user) => user.id !== userId)
       );
       handleCloseDeleteUser();
     } catch (error) {
-      console.log("Erro ao deletar o usuário: ", error);
+      console.error("Erro ao deletar o curso:", error.response ? error.response.data : error.message);
+      toast.error("Erro ao deletar o curso: ", error.response ? error.response.data : error.message);
     }
   };
-
+  
   // update values function
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -401,7 +406,7 @@ export default function EditUsers() {
         onClose={handleCloseDeleteUser}
       >
         <DialogTitle className="dialogTitle text-center">
-          <h4>Excluir usuário</h4>
+          <h4>Excluir curso</h4>
         </DialogTitle>
         <DialogContent className="dialogContent">
           <div className="text-center">
@@ -409,7 +414,7 @@ export default function EditUsers() {
               className="fa-solid fa-circle-exclamation text-danger"
               style={{ fontSize: "4rem" }}
             ></i>
-            <p>Deseja excluir o usuário {selectedUser?.nome}?</p>
+            <p className="mt-3">Deseja excluir o curso <strong className="text-primary">{selectedUser?.nome}?</strong></p>
           </div>
         </DialogContent>
         <div className="container-btn-modal mb-3 me-3">

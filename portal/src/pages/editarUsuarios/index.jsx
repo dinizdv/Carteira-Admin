@@ -571,7 +571,7 @@ export default function EditUsers() {
               className="fa-solid fa-circle-exclamation text-danger"
               style={{ fontSize: "4rem" }}
             ></i>
-            <p>Deseja excluir o usuário {selectedUser?.nome}?</p>
+            <p className="mt-3 mb-1">Deseja excluir o usuário <strong className="text-primary">{selectedUser?.nome}</strong> (matrícula: {selectedUser?.matricula})?</p>
           </div>
         </DialogContent>
         <div className="container-btn-modal mb-3 me-3">

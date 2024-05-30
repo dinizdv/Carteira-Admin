@@ -148,6 +148,19 @@
     background-color: #1b79f5!important;
 }
 
+.modal-btn-delete {
+    background-color: transparent;
+    border: 2px solid #ff2d42!important;
+    transition: all .3s;
+    color: #ff2d42!important;
+    font-weight: bold;
+}
+
+.modal-btn-delete:hover {
+    border: 2px solid #c80d20!important;
+    color: #c80d20!important;
+}
+
 /* responsive design */
 @media (max-width: 768px){
     .card {
