@@ -98,14 +98,15 @@ export default function EditUsers() {
         }
       );
   
-      if (response.status !== 200) {
-        throw new Error(`HTTP Error status: ${response.status}`);
-      }
+      // if (response.status !== 200) {
+      //   throw new Error(`HTTP Error status: ${response.status}`);
+      // }
   
-      toast.success(`Curso ${selectedUser.nome} deletado com sucesso`);
       setUserDetails((prevDetails) =>
         prevDetails.filter((user) => user.id !== userId)
       );
+      toast.success(`Curso ${selectedUser.nome} deletado com sucesso`);
+
       handleCloseDeleteUser();
     } catch (error) {
       console.error("Erro ao deletar o curso:", error.response ? error.response.data : error.message);
@@ -154,6 +155,7 @@ export default function EditUsers() {
       const newUser = response.data;
       setUserDetails([...userDetails, newUser]);
       console.log('Curso adicionado com sucesso!');
+      toast.success(`Curso ${formValues.nome} adicionado com sucesso`)
       handleCloseAddUser();
     } catch (error) {
       console.log('Erro ao adicionar curso ', error.response ? error.response.data : error.message);
@@ -167,8 +169,8 @@ export default function EditUsers() {
   const saveEditedUser = async (event) => {
     event.preventDefault();
     if (!selectedUser) {
-      console.log("No course selected for editing.");
-      return; // Exit the function early if no user is selected
+      console.log("Sem curso selecionado para edição");
+      return; // exit the function early if no user is selected
     }
   
     try {
@@ -222,9 +224,9 @@ export default function EditUsers() {
 
       <div className="card card-table border-0">
         <div className="card-header">
-          <h5 className="card-title text-center m-0 fs-3 text-primary">
+          <h2 className="card-title text-center m-0 fs-3 text-primary">
             Tabela de cursos
-          </h5>
+          </h2>
         </div>
         <div className="card-body">
           <table className="table">

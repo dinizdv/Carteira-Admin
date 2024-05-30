@@ -5,6 +5,7 @@ import axios from "axios";
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
+import { toast } from 'react-toastify'
 
 export default function EditUsers() {
   const [openAddUser, setOpenAddUser] = useState(false);
@@ -23,7 +24,6 @@ export default function EditUsers() {
     senha: ''
   })
 
-  
   console.log(userDetails);
 
   function useToken() {
@@ -44,7 +44,7 @@ export default function EditUsers() {
       console.log("Token não encontrado...");
     }
   }, [token]);
-
+  
   const fetchUserDetails = async (token) => {
     try {
       const response = await axios.get(
@@ -55,18 +55,18 @@ export default function EditUsers() {
           },
         }
       );
-
+  
       if (!Array.isArray(response.data.content)) {
         console.error("A resposta da API não contém um array");
         return;
       }
-
-      setUserDetails(response.data.content);
+  
+      setUserDetails(response.data.content.filter(user => typeof user === 'object'));
     } catch (error) {
       console.log("Erro ao buscar detalhes do usuário:", error);
     }
   };
-
+  
   // Modals
   const handleClickOpenAddUser = () => setOpenAddUser(true);
   const handleCloseAddUser = () => setOpenAddUser(false);
@@ -104,6 +104,7 @@ export default function EditUsers() {
       );
 
       console.log(userId);
+      toast.success(`Usuário ${selectedUser.nome} (matrícula: ${selectedUser.matricula}) deletado com sucesso`);
       setUserDetails((prevDetails) =>
         prevDetails.filter((user) => user.id !== userId)
       );
@@ -123,6 +124,7 @@ export default function EditUsers() {
   };
   
 
+  // add user
   const addUser = async (event) => {
     event.preventDefault();
     try {
@@ -156,6 +158,7 @@ export default function EditUsers() {
       const newUser = response.data;
       setUserDetails([...userDetails, newUser]);
       console.log('Usuário adicionado com sucesso!');
+      toast.success(`Usuário ${formValues.nome} (matrícula: ${formValues.matricula}) adicionado com sucesso`);
       handleCloseAddUser();
     } catch (error) {
       console.log('Erro ao adicionar usuário: ', error);
@@ -163,47 +166,58 @@ export default function EditUsers() {
   };
   
   // edit details function
-  const saveEditedUser = async (event) => {
-    event.preventDefault();
-    try {
-      const editedUser = {
-        ...selectedUser,
-        nome: selectedUser.nome,
-        dataNascimento: selectedUser.dataNascimento,
-        cpf: selectedUser.cpf,
-        email: selectedUser.email,
-        curso: selectedUser.curso ? selectedUser.curso.nome : "",
-        nivel: selectedUser.nivel,
-      };
+// edit details function
+const saveEditedUser = async (event) => {
+  event.preventDefault();
+
+  if (!selectedUser) {
+    console.log("Nenhum usuário selecionado para edição");
+    return;
+  }
+
+  try {
+    const editedUser = {
+     ...selectedUser,
+      nome: formValues.nome,
+      dataNascimento: formValues.dataNascimento,
+      cpf: formValues.cpf,
+      email: formValues.email,
+      nivel: formValues.nivel,
+      curso: formValues.curso? { id: parseInt(formValues.curso) } : undefined, // Certifique-se de que o curso seja tratado corretamente
+      senha: formValues.senha, // Se necessário, dependendo da sua lógica de negócios
+    };
+
+    const response = await axios.put(
+      `https://apicontroleacesso-1.onrender.com/usuario/${selectedUser.id}`,
+      editedUser,
+      {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    console.log("Usuário atualizado com sucesso:", response.data);
+
+    // Atualizar o estado userDetails com os dados atualizados do usuário
+    setUserDetails((prevDetails) =>
+      prevDetails.map((user) =>
+        user.id === selectedUser.id? {...user,...editedUser } : user
+      )
+    );
+
+    // Fechar o modal de edição
+    handleCloseEditUser();
+  } catch (error) {
+    console.log("Erro ao atualizar o usuário:", error);
+  }
+};
+
   
-      const response = await axios.put(
-        `https://apicontroleacesso-1.onrender.com/usuario/${selectedUser.id}`,
-        editedUser,
-        {
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`
-          },
-        }
-      );
   
-      console.log(selectedUser.id);
-      console.log(editedUser); // user details (with modifies)
-      console.log("Usuário atualizado com sucesso:", response.data);
   
-      // Use os dados retornados pela API para atualizar o estado
-      setUserDetails((prevDetails) =>
-        prevDetails.map((user) =>
-          user.id === selectedUser.id ? { ...user, ...editedUser } : user
-    )
-      );
-  
-      handleCloseEditUser();
-    } catch (error) {
-      console.log("Erro ao atualizar o usuário:", error);
-    }
-  };
 
   
 
@@ -220,9 +234,9 @@ export default function EditUsers() {
 
       <div className="card card-table border-0">
         <div className="card-header">
-          <h5 className="card-title text-center m-0 fs-3 text-primary">
+          <h2 className="card-title text-center m-0 fs-3 text-primary">
             Tabela de usuários
-          </h5>
+          </h2>
         </div>
         <div className="card-body">
           <table className="table">
@@ -244,31 +258,30 @@ export default function EditUsers() {
               </tr>
             </thead>
             <tbody>
-  {Array.isArray(userDetails) &&
-    userDetails.map((user) => (
-      <tr key={user.id} className="tr-users">
-        <td className="details">{user.matricula}</td>
-        <td className="details">{user.nome}</td>
-        <td className="details">
-          {user.curso ? user.curso.nome : ""}
-        </td>
-        <td className="td-buttons">
-          <button
-            className="btn btn-sm editUser"
-            variant="contained"
-            onClick={() => handleClickOpenEditUser(user)}
-          >
-            <i className="fa-solid fa-user-pen"></i>
-          </button>
-          <button
-            className="btn btn-sm ms-2 deleteUser"
-            onClick={() => handleClickOpenDeleteUser(user)}
-          >
-            <i className="fa-solid fa-trash"></i>
-          </button>
-        </td>
-      </tr>
-    ))}
+  {Array.isArray(userDetails) && userDetails.map((user) => (
+    <tr key={user.id} className="tr-users">
+      <td className="details">{user.matricula}</td>
+      <td className="details">{user.nome}</td>
+      <td className="details">{user.curso ? user.curso.nome : ""}</td>
+      <td className="td-buttons">
+        <button
+          key={`edit-${user.id}`} // Adiciona uma chave única para o botão de edição
+          className="btn btn-sm editUser"
+          variant="contained"
+          onClick={() => handleClickOpenEditUser(user)}
+        >
+          <i className="fa-solid fa-user-pen"></i>
+        </button>
+        <button
+          key={`delete-${user.id}`} // Adiciona uma chave única para o botão de exclusão
+          className="btn btn-sm ms-2 deleteUser"
+          onClick={() => handleClickOpenDeleteUser(user)}
+        >
+          <i className="fa-solid fa-trash"></i>
+        </button>
+      </td>
+    </tr>
+  ))}
 </tbody>
 
 
