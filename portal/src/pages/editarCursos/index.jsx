@@ -5,6 +5,7 @@ import axios from "axios";
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
+import { toast } from "react-toastify";
 
 export default function EditUsers() {
   const [openAddUser, setOpenAddUser] = useState(false);
@@ -118,11 +119,14 @@ export default function EditUsers() {
   
 
   // addCourse
-  const addUser = async (event) => {
+  const addCourse = async (event) => {
     event.preventDefault();
+  
+    console.log('Tentativa de adicionar curso:', formValues);
+  
     try {
       const response = await axios.post(
-        `https://apicontroleacesso-1.onrender.com/curso`,
+        'https://apicontroleacesso-1.onrender.com/curso',
         {
           nome: formValues.nome,
           duracao: formValues.duracao
@@ -136,7 +140,9 @@ export default function EditUsers() {
         }
       );
   
-      if (!response.status == 200 || !response.status == 201) {
+      console.log('Server response:', response);
+  
+      if (response.status !== 200 && response.status !== 201) {
         throw new Error(`HTTP Error status: ${response.status}`);
       }
   
@@ -145,10 +151,10 @@ export default function EditUsers() {
       console.log('Curso adicionado com sucesso!');
       handleCloseAddUser();
     } catch (error) {
-      console.log('Erro ao adicionar curso ', error);
+      console.log('Erro ao adicionar curso ', error.response ? error.response.data : error.message);
     }
   };
-  
+    
 
 
 
@@ -156,7 +162,7 @@ export default function EditUsers() {
   const saveEditedUser = async (event) => {
     event.preventDefault();
     if (!selectedUser) {
-      console.log("No user selected for editing.");
+      console.log("No course selected for editing.");
       return; // Exit the function early if no user is selected
     }
   
@@ -179,9 +185,8 @@ export default function EditUsers() {
         }
       );
   
-      console.log(selectedUser.id);
       console.log(editedUser); // user details (with modifies)
-      console.log("Usuário atualizado com sucesso:", response.data);
+      toast.success(`Curso ${selectedUser.nome} (${selectedUser.duracao} horas de duração) atualizado com sucesso`);
   
       // Use os dados retornados pela API para atualizar o estado
       setUserDetails((prevDetails) =>
@@ -274,7 +279,7 @@ export default function EditUsers() {
   </DialogTitle>
   <DialogContent className="dialogContent">
     <section className="modal-userDetails">
-      <form onSubmit={addUser}>
+      <form onSubmit={addCourse}>
         <div className="form-floating">
           <input
             type="text"
@@ -306,7 +311,7 @@ export default function EditUsers() {
 
         <div className="container-btn-modal my-3">
                     <button
-              onClick={addUser}
+              onClick={addCourse}
               className="btn modal-btn-save"
             >
               Salvar
@@ -333,22 +338,17 @@ export default function EditUsers() {
           onClose={handleCloseEditUser}
         >
           <DialogTitle className="dialogTitle text-center">
-            <h4>Editar usuário</h4>
+            <h4>Editar curso</h4>
           </DialogTitle>
           <DialogContent className="dialogContent">
-            <div className="container-img-radius mb-4 d-flex justify-content-center">
-              <div className="img-radius">
-                <i className="fa-solid fa-user"></i>
-              </div>
-            </div>
             <section className="modal-userDetails">
               <div className="container-group">
-                <label htmlFor="aluno">Aluno(a):</label>
+                <label htmlFor="aluno">Nome do curso:</label>
                 <input
                   className="input-editUser"
                   type="text"
-                  name="aluno"
-                  id="aluno"
+                  name="nomeCurso"
+                  id="nomeCurso"
                   value={selectedUser.nome || ""}
                   onChange={(e) =>
                     setSelectedUser({
@@ -358,86 +358,24 @@ export default function EditUsers() {
                   }
                 />
               </div>
+
               <div className="container-group">
-                <label htmlFor="nascimento">Data de nascimento:</label>
-                <input
-                  className="input-editUser"
-                  type="date"
-                  name="nascimento"
-                  id="nascimento"
-                  value={selectedUser.dataNascimento || ""}
-                  onChange={(e) =>
-                    setSelectedUser({
-                      ...selectedUser,
-                      dataNascimento: e.target.value,
-                    })
-                  }
-                />
-              </div>
-              <div className="container-group">
-                <label htmlFor="cpf">CPF:</label>
+                <label htmlFor="duracaoCurso">Duração do curso:</label>
                 <input
                   className="input-editUser"
                   type="text"
-                  name="cpf"
-                  id="cpf"
-                  value={selectedUser.cpf || ""}
+                  name="duracaoCurso"
+                  id="duracaoCurso"
+                  value={selectedUser.duracao || ""}
                   onChange={(e) =>
                     setSelectedUser({
                       ...selectedUser,
-                      cpf: e.target.value,
+                      duracao: e.target.value,
                     })
                   }
                 />
               </div>
-              <div className="container-group">
-                <label htmlFor="email">Email:</label>
-                <input
-                  className="input-editUser"
-                  type="email"
-                  name="email"
-                  id="email"
-                  value={selectedUser.email || ""}
-                  onChange={(e) =>
-                    setSelectedUser({
-                      ...selectedUser,
-                      email: e.target.value,
-                    })
-                  }
-                />
-              </div>
-              <div className="container-group">
-                <label htmlFor="curso">Curso:</label>
-                <input
-                  className="input-editUser"
-                  type="text"
-                  name="curso"
-                  id="curso"
-                  value={selectedUser.curso?.nome || ""}
-                  onChange={(e) =>
-                    setSelectedUser({
-                      ...selectedUser,
-                      curso: { ...selectedUser.curso, nome: e.target.value },
-                    })
-                  }
-                />
-              </div>
-              <div className="container-group">
-                <label htmlFor="nivel">Nível:</label>
-                <input
-                  className="input-editUser"
-                  type="text"
-                  name="nivel"
-                  id="nivel"
-                  value={selectedUser.nivel || ""}
-                  onChange={(e) =>
-                    setSelectedUser({
-                      ...selectedUser,
-                      nivel: e.target.value,
-                    })
-                  }
-                />
-              </div>
+
             </section>
           </DialogContent>
           <div className="container-btn-modal mb-3 me-3">

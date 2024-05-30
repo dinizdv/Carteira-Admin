@@ -6,7 +6,7 @@ const url = 'https://apicontroleacesso-1.onrender.com';
 const fetchData = async () => {
   const data = {
     "email": "lucas.fonseca.sesisenaisp@gmail.com",
-    "senha": "1234"
+    "senha": "123"
   };
 
   try {
