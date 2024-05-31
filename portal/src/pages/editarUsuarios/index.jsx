@@ -6,8 +6,10 @@ import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
 import { toast } from 'react-toastify'
+import loadingImg from '../../assets/loading.png'
 
 export default function EditUsers() {
+  const [loading, setLoading] = useState(true) // carregando...
   const [openAddUser, setOpenAddUser] = useState(false);
   const [openEditUser, setOpenEditUser] = useState(false);
   const [openDeleteUser, setOpenDeleteUser] = useState(false);
@@ -45,6 +47,7 @@ export default function EditUsers() {
     }
   }, [token]);
   
+  // get users
   const fetchUserDetails = async (token) => {
     try {
       const response = await axios.get(
@@ -61,9 +64,11 @@ export default function EditUsers() {
         return;
       }
   
-      setUserDetails(response.data.content.filter(user => typeof user === 'object'));
+      setUserDetails(response.data.content.filter(user => typeof user === 'object'))
+      setLoading(false) // loading state
     } catch (error) {
       console.log("Erro ao buscar detalhes do usuário:", error);
+      setLoading(false) // loading state
     }
   };
   
@@ -124,8 +129,6 @@ export default function EditUsers() {
     });
   };
   
-
-  // add user
 // add user
 const addUser = async (event) => {
   event.preventDefault();
@@ -227,7 +230,13 @@ const addUser = async (event) => {
   
       
   
-  
+  // if (loading){
+  //   return (
+  //     <div className="container container-editUsers">
+  //       <p>carregando...</p>
+  //     </div>
+  //   )
+  // }
   
 
   
@@ -268,6 +277,16 @@ const addUser = async (event) => {
                 </th>
               </tr>
             </thead>
+
+            {/* loading animation */}
+            {loading && 
+                
+                <div className="container-fluid container-loadingData mt-0">
+                  <p className="loadingData">Carregando os dados...</p>
+                  <iframe src="https://lottie.host/embed/d40e20f0-b3d7-4c31-9c25-89a36ac33038/ZryRBBWA7J.json"></iframe>
+                </div>
+                }
+                
             <tbody>
   {Array.isArray(userDetails) && userDetails.map((user) => (
     <tr key={user.id} className="tr-users">
@@ -276,7 +295,7 @@ const addUser = async (event) => {
       <td className="details">{user.curso ? user.curso.nome : ""}</td>
       <td className="td-buttons">
         <button
-          key={`edit-${user.id}`} // Adiciona uma chave única para o botão de edição
+          key={`edit-${user.id}`} // adiciona uma chave única para o botão de edição
           className="btn btn-sm editUser"
           variant="contained"
           onClick={() => handleClickOpenEditUser(user)}
@@ -284,7 +303,7 @@ const addUser = async (event) => {
           <i className="fa-solid fa-user-pen"></i>
         </button>
         <button
-          key={`delete-${user.id}`} // Adiciona uma chave única para o botão de exclusão
+          key={`delete-${user.id}`} // adiciona uma chave única para o botão de exclusão
           className="btn btn-sm ms-2 deleteUser"
           onClick={() => handleClickOpenDeleteUser(user)}
         >

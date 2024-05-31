@@ -161,6 +161,32 @@
     color: #c80d20!important;
 }
 
+/* loading data customization (for editarCursos too) */
+.container-loadingData {
+    display: flex;
+    position: absolute;
+    height: 90%;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+.container-loadingData .loadingData {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #2F97FF;
+}
+
+iframe {
+    width: 70%;
+    height: 70%;
+    mix-blend-mode: multiply; /* remove bg */
+}
+
+/* .container-loadingData .loadingData {
+
+} */
+
 /* responsive design */
 @media (max-width: 768px){
     .card {

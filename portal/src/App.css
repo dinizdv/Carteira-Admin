@@ -12,12 +12,12 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: Nunito, Ubuntu;
+  font-family: Nunito, Ubuntu, Arial, Helvetica, sans-serif;
 }
 
 body {
   background: linear-gradient(var(--bg-start), var(--bg-end));
-  background-attachment: fixed;
+  background-attachment: fixed; /* fixing gradient bug */
 }
 
 button {

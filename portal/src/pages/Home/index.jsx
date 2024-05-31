@@ -1,13 +1,16 @@
-import { useEffect } from 'react';
 import React from 'react';
 import { Link } from 'react-router-dom'
-// import { Link } from 'react-router-dom';
 import './home.css';
 import '../../App.css';
 
 
 export default function Home(){ 
  
+function logout (){
+    localStorage.clear() // cleaning the token
+    window.location.href = '/' // redirect to login page
+}
+
 return(
   
   <div>
@@ -21,80 +24,69 @@ return(
                 </div>
                 <ul class="sidebar-nav">
                     <li class="sidebar-header">
-                        Admin Elements
+                        Recursos do admnistrador
                     </li>
                     <li class="sidebar-item">
                         <a href="#" class="sidebar-link">
                             <i class="fa-solid fa-list pe-2"></i>
-                            Dashboard
+                            Home
                         </a>
                     </li>
                     <li class="sidebar-item">
                         <a href="#" class="sidebar-link collapsed" data-bs-target="#pages" data-bs-toggle="collapse"
                             aria-expanded="false"><i class="fa-solid fa-file-lines pe-2"></i>
-                            Pages
+                            Páginas
                         </a>
                         <ul id="pages" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
                             <li class="sidebar-item">
-                                <a href="#" class="sidebar-link">Page 1</a>
+                                <Link to={"editarUsuarios"} class="sidebar-link">Usuários</Link>
                             </li>
                             <li class="sidebar-item">
-                                <a href="#" class="sidebar-link">Page 2</a>
+                                <Link to={"editarCursos"} class="sidebar-link">Cursos</Link>
+                            </li>
+                            <li class="sidebar-item">
+                                <a href="#" class="sidebar-link">Undefined</a>
+                            </li>
+                            <li class="sidebar-item">
+                                <Link to={"notificacoes"} class="sidebar-link">Notificações</Link>
                             </li>
                         </ul>
                     </li>
-                    <li class="sidebar-item">
-                        <a href="#" class="sidebar-link collapsed" data-bs-target="#posts" data-bs-toggle="collapse"
-                            aria-expanded="false"><i class="fa-solid fa-sliders pe-2"></i>
-                            Posts
-                        </a>
-                        <ul id="posts" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
-                            <li class="sidebar-item">
-                                <a href="#" class="sidebar-link">Post 1</a>
-                            </li>
-                            <li class="sidebar-item">
-                                <a href="#" class="sidebar-link">Post 2</a>
-                            </li>
-                            <li class="sidebar-item">
-                                <a href="#" class="sidebar-link">Post 3</a>
-                            </li>
-                        </ul>
-                    </li>
+
                     <li class="sidebar-item">
                         <a href="#" class="sidebar-link collapsed" data-bs-target="#auth" data-bs-toggle="collapse"
                             aria-expanded="false"><i class="fa-regular fa-user pe-2"></i>
-                            Auth
+                            Autenticação
                         </a>
+
                         <ul id="auth" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
                             <li class="sidebar-item">
-                                <a href="#" class="sidebar-link">Login</a>
-                            </li>
-                            <li class="sidebar-item">
-                                <a href="#" class="sidebar-link">Register</a>
-                            </li>
-                            <li class="sidebar-item">
-                                <a href="#" class="sidebar-link">Forgot Password</a>
+                                <a href="#" class="sidebar-link" onClick={logout}>Sair da conta</a>
                             </li>
                         </ul>
                     </li>
+                    <hr className="mb-0"/>
                     <li class="sidebar-header">
-                        Multi Level Menu
+                        SENAI - Guarulhos
                     </li>
                     <li class="sidebar-item">
                         <a href="#" class="sidebar-link collapsed" data-bs-target="#multi" data-bs-toggle="collapse"
                             aria-expanded="false"><i class="fa-solid fa-share-nodes pe-2"></i>
-                            Multi Dropdown
+                            Links
                         </a>
                         <ul id="multi" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
                             <li class="sidebar-item">
                                 <a href="#" class="sidebar-link collapsed" data-bs-target="#level-1"
-                                    data-bs-toggle="collapse" aria-expanded="false">Level 1</a>
+                                    data-bs-toggle="collapse" aria-expanded="false">Hermenegildo C. de Almeida</a>
                                 <ul id="level-1" class="sidebar-dropdown list-unstyled collapse">
                                     <li class="sidebar-item">
-                                        <a href="#" class="sidebar-link">Level 1.1</a>
+                                        <a href="https://sp.senai.br/cursos?unidade=122" className="sidebar-link" target='blank'>Cursos</a>
                                     </li>
                                     <li class="sidebar-item">
-                                        <a href="#" class="sidebar-link">Level 1.2</a>
+                                        <a href="https://sp.senai.br/unidade/guarulhos/horario-de-atendimento" className="sidebar-link" target='blank'>Atendimento</a>
+                                    </li>
+                                    <li class="sidebar-item">
+                                        <a href="https://www.instagram.com/senaihermenegildoguarulhos/" className="sidebar-link" target='blank'>Instagram</a>
                                     </li>
                                 </ul>
                             </li>
@@ -110,24 +102,11 @@ return(
                   <span className="navbar-toggler-icon"></span>
               </button>
 
-                {/* <div class="navbar-collapse navbar">
-                    <ul class="navbar-nav">
-                        <li class="nav-item dropdown">
-                            <a href="#" data-bs-toggle="dropdown" class="nav-icon pe-md-0">
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-end">
-                                <a href="#" class="dropdown-item">Profile</a>
-                                <a href="#" class="dropdown-item">Setting</a>
-                                <a href="#" class="dropdown-item">Logout</a>
-                            </div>
-                        </li>
-                    </ul>
-                </div> */}
             </nav>
             <main class="content px-3 py-2">
                 <div class="container-fluid">
                     <div class="mb-3">
-                        <h4 class="text-light">Admin Dashboard</h4>
+                        <h4 class="text-light">Dashboard do Administrador</h4>
                     </div>
                     <div class="row">
                         <div class="col-12 col-md-6 col-xl-3 d-flex">
@@ -192,18 +171,16 @@ return(
                                             </div>
                                         </div>
                                         <div class="col-6 align-self-end text-end">
-                                            {/* <img src="image/customer-support.jpg" class="img-fluid illustration-img" */}
-                                                {/* alt=""> */}
                                         </div>
                                     </div>
                                 </div>
                             </Link>
                         </div>
-
-
                     </div>
-                    {/* <!-- Table Element --> */}
-                    <div class="card border-0">
+
+                    
+
+                    {/* <div class="card border-0">
                         <div class="card-header">
                             <h5 class="card-title">
                                 Basic Table
@@ -213,6 +190,7 @@ return(
                                 necessitatibus reprehenderit itaque!
                             </h6>
                         </div>
+
                         <div class="card-body">
                             <table class="table">
                                 <thead>
@@ -244,18 +222,10 @@ return(
                                 </tbody>
                             </table>
                         </div>
-                    </div>
+                    </div> */}
                 </div>
             </main>
-            {/* dark mode */}
-            {/* <a href="#" class="theme-toggle" onClick={toggleTheme}>
-                {theme === 'light' ? (
-                <i class="fa-regular fa-moon"></i>
-                ) : (
-                <i class="fa-regular fa-sun"></i> )}
-            </a> */}
                   
-
             <footer class="footer">
                 <div class="container-fluid">
                     <div class="row text-muted">

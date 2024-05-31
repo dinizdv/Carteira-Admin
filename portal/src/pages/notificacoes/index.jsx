@@ -6,6 +6,7 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 
 export default function Notifications() {
+    const [loading, setLoading] = useState(true)
     const [textareaValue, setTextareaValue] = useState('');
     const [userDetails, setUserDetails] = useState([]);
     const [selectedUserId, setSelectedUserId] = useState(null);
@@ -33,6 +34,7 @@ export default function Notifications() {
         }
     }, [token]);
 
+    // get users
     const fetchUserDetails = async (token) => {
         try {
           const response = await axios.get(
@@ -50,6 +52,7 @@ export default function Notifications() {
           }
 
           setUserDetails(response.data.content);
+          setLoading(false)
         } catch (error) {
           console.log("Erro ao buscar detalhes do usuário:", error);
         }
@@ -136,6 +139,17 @@ export default function Notifications() {
                                     <th scope="col" className="col-12">Destinatário</th>
                                 </tr>
                             </thead>
+                            
+            {/* loading animation */}
+            {loading && 
+                
+                <div className="container-fluid container-loadingData mt-0">
+                  <p className="loadingData">Carregando os dados...</p>
+                  <iframe src="https://lottie.host/embed/d40e20f0-b3d7-4c31-9c25-89a36ac33038/ZryRBBWA7J.json"></iframe>
+                </div>
+                }
+                
+
                             <tbody>
                                 {userDetails.map((user) => (
                                 <tr key={user.id} className="tr-users">

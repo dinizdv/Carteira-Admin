@@ -87,7 +87,7 @@ h4 {
 
 .sidebar-header {
     color: #e9ecef;
-    font-size: .75rem;
+    font-size: 1rem;
     padding: 1.5rem 1.5rem .375rem;
 }
 
@@ -142,6 +142,11 @@ a:hover {
 
 strong {
     color: #e9ecef!important;
+}
+
+/* divisor in sidebar */
+hr {
+    border: 2px solid #fff;
 }
 
 /* [Usuários, Cursos, ..., Notificações] */

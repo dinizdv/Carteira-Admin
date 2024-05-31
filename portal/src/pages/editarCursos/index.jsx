@@ -8,6 +8,7 @@ import DialogContent from "@mui/material/DialogContent";
 import { toast } from "react-toastify";
 
 export default function EditUsers() {
+  const [loading, setLoading] = useState(true)
   const [openAddUser, setOpenAddUser] = useState(false);
   const [openEditUser, setOpenEditUser] = useState(false);
   const [openDeleteUser, setOpenDeleteUser] = useState(false);
@@ -40,6 +41,7 @@ export default function EditUsers() {
     }
   }, [token]);
 
+  // get courses
   const fetchUserDetails = async (token) => {
     try {
       const response = await axios.get(
@@ -57,6 +59,7 @@ export default function EditUsers() {
       }
 
       setUserDetails(response.data.content);
+      setLoading(false) // loading state
     } catch (error) {
       console.log("Erro ao buscar detalhes do usuário:", error);
     }
@@ -246,6 +249,16 @@ export default function EditUsers() {
                 </th>
               </tr>
             </thead>
+
+{/* loading animation */}
+            {loading && 
+                
+                <div className="container-fluid container-loadingData mt-0">
+                  <p className="loadingData">Carregando os dados...</p>
+                  <iframe src="https://lottie.host/embed/d40e20f0-b3d7-4c31-9c25-89a36ac33038/ZryRBBWA7J.json"></iframe>
+                </div>
+                }
+
             <tbody>
   {Array.isArray(userDetails) &&
     userDetails.map((user) => (

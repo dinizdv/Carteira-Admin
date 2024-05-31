@@ -40,7 +40,6 @@ export default function Login() {
         const tokenJWT = response.data.tokenJWT
         
         localStorage.setItem('keyToken', JSON.stringify(tokenJWT))
-        
       } 
     } catch (error) {
       toast.error(`Erro ao fazer login: ${error}`)
@@ -70,7 +69,7 @@ export default function Login() {
       <p class="mb-3 text-center">Realize seu login para acessar a plataforma</p>
       <input type="email" placeholder="Insira seu e-mail..." className="mb-3 px-2" value={email} onChange={handleEmailChange} required/>
       <input type="password" placeholder="Insira sua senha..." className="mb-3 px-2" value={password} onChange={handlePasswordChange} required/>
-      <Link to={"/Home"} className="text-center fs-5" id="btn" onClick={handleSubmit}>Fazer Login</Link>
+      <Link to={"/home"} className="text-center fs-5" id="btn" onClick={handleSubmit}>Fazer Login</Link>
       <Token email={email} password={password} />
     </div>
 
