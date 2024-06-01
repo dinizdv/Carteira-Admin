@@ -58,7 +58,7 @@ return(
                                 <Link to={"editarCursos"} class="sidebar-link">Cursos</Link>
                             </li>
                             <li class="sidebar-item">
-                                <a href="#" class="sidebar-link">Undefined</a>
+                                <Link to={"transacoes"} class="sidebar-link">Transações</Link>
                             </li>
                             <li class="sidebar-item">
                                 <Link to={"notificacoes"} class="sidebar-link">Notificações</Link>
@@ -157,13 +157,13 @@ return(
                         </div>
 
                         <div class="col-12 col-md-6 col-xl-3 d-flex">
-                            <Link to="editarUsuarios" class="card flex-fill border-0 illustration card-info bg-primary text-light">
+                            <Link to="transacoes" class="card flex-fill border-0 illustration card-info bg-primary text-light">
                                 <div class="card-body p-0 d-flex flex-fill">
                                     <div class="row g-0 w-100">
                                         <div class="col-10">
                                             <div class="p-3 m-1">
-                                            <h3><i class="fa-solid fa-x"></i> Undefined</h3>
-                                                <p class="mb-0">Undefined</p>
+                                            <h3><i class="fa-solid fa-x"></i> Transações</h3>
+                                                <p class="mb-0">Entradas e saídas</p>
                                             </div>
                                         </div>
                                         <div class="col-6 align-self-end text-end">

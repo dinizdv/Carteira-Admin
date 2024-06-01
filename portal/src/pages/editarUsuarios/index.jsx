@@ -229,18 +229,6 @@ const addUser = async (event) => {
   };
   
       
-  
-  // if (loading){
-  //   return (
-  //     <div className="container container-editUsers">
-  //       <p>carregando...</p>
-  //     </div>
-  //   )
-  // }
-  
-
-  
-
    
   return (
     <div className="container container-editUsers">
