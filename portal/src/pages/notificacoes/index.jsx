@@ -94,9 +94,7 @@ export default function Notifications() {
     };
 
 
-
-
-    
+    // send notification
     const handleSelectChange = (event) => {
         setSelectedUserId(event.target.value);
     };
@@ -183,7 +181,37 @@ export default function Notifications() {
             toast.error(`Erro ao atualizar a notificação do usuário ${selectedUser.usuario.nome}. Verifique se os dados estão corretos.`);
         }
     };  
+
+
+    // delete notification
+    const handleDeleteUser = async (userId) => {
+        try {
+          await axios.delete(
+            `https://apicontroleacesso-1.onrender.com/notificacao/${userId}`,
+            {
+              headers: {
+                "Content-Type": "application/json",
+                Accept: "*/*",
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
     
+          console.log(userId);
+          toast.success(`Notificação do usuário ${selectedUser.usuario.nome} deletada com sucesso`);
+          setUserDetails((prevDetails) =>
+            prevDetails.filter((user) => user.id !== userId)
+          );
+          handleCloseDeleteUser();
+          fetchNotificationDetails(token);
+
+        } catch (error) {
+            console.log(`Error: `, error)
+            toast.error(`Erro ao deletar o usuário ${selectedUser.usuario.nome} `);
+        }
+      };
+    
+
     // modals
       const handleClickOpenEditUser = (notification) => {
         setSelectedUser(notification);
@@ -342,6 +370,39 @@ export default function Notifications() {
           </div>
         </Dialog>
       )}
+
+{/* delete notification */}
+<Dialog
+        className="modal-open"
+        open={openDeleteUser}
+        onClose={handleCloseDeleteUser}
+      >
+        <DialogTitle className="dialogTitle text-center">
+          <h4>Excluir notificação</h4>
+        </DialogTitle>
+        <DialogContent className="dialogContent">
+          <div className="text-center">
+            <i
+              className="fa-solid fa-circle-exclamation text-danger"
+            ></i>
+            <p className="mt-3">Deseja excluir a notificação do usuário <strong className="text-primary">{selectedUser?.usuario.nome}?</strong></p>
+          </div>
+        </DialogContent>
+        <div className="container-btn-modal mb-3 me-3">
+          <button
+            onClick={() => handleDeleteUser(selectedUser.id)}
+            className="btn modal-btn-delete"
+          >
+            Excluir
+          </button>
+          <button
+            onClick={handleCloseDeleteUser}
+            className="btn modal-btn-close ms-2"
+          >
+            Fechar
+          </button>
+        </div>
+      </Dialog>
 
 
 

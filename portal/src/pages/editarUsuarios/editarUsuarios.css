@@ -183,6 +183,10 @@ iframe {
     mix-blend-mode: multiply; /* remove bg */
 }
 
+.fa-circle-exclamation {
+    font-size: 4rem!important;
+}
+
 /* .container-loadingData .loadingData {
 
 } */

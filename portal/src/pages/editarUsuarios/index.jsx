@@ -170,63 +170,66 @@ const addUser = async (event) => {
 };
   
   // edit details function
-  const saveEditedUser = async (event) => {
-    event.preventDefault();
-  
-    if (!selectedUser) {
-      console.log("Nenhum usuário selecionado para edição");
-      return;
-    }
-  
-    try {
-      const editedUser = {
-        nome: selectedUser.nome,
-        dataNascimento: selectedUser.dataNascimento,
-        cpf: selectedUser.cpf,
-        email: selectedUser.email,
-        nivel: selectedUser.nivel,
-        curso: {
-          id: parseInt(selectedUser.curso.id),
-          nome: selectedUser.curso.nome,
-          duracao: selectedUser.curso.duracao
-        }
-      };
-  
-      // adiciona a senha apenas se ela não for undefined
-      if (selectedUser.senha) {
-        editedUser.senha = selectedUser.senha;
+// edit details function
+const saveEditedUser = async (event) => {
+  event.preventDefault();
+
+  if (!selectedUser) {
+    console.log("Nenhum usuário selecionado para edição");
+    return;
+  }
+
+  try {
+    const editedUser = {
+      id: selectedUser.id,
+      nome: selectedUser.nome,
+      dataNascimento: selectedUser.dataNascimento,
+      cpf: selectedUser.cpf,
+      email: selectedUser.email,
+      nivel: selectedUser.nivel,
+      curso: {
+        id: parseInt(selectedUser.curso.id),
+        nome: selectedUser.curso.nome,
+        duracao: selectedUser.curso.duracao
       }
-  
-      const response = await axios.put(
-        `https://apicontroleacesso-1.onrender.com/usuario/${selectedUser.id}`,
-        editedUser,
-        {
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-  
-      if (response.status !== 200 && response.status !== 204) {
-        throw new Error(`HTTP Error status: ${response.status}`);
-      }
-  
-      console.log("Usuário atualizado com sucesso:", response.data);
-  
-      // atualiza o estado local dos usuários
-      setUserDetails((prevDetails) =>
-        prevDetails.map((user) =>
-          user.id === selectedUser.id ? { ...user, ...editedUser } : user
-        )
-      );
-  
-      handleCloseEditUser();
-    } catch (error) {
-      console.log("Erro ao atualizar o usuário:", error);
+    };
+
+    // adiciona a senha apenas se ela não for undefined
+    if (selectedUser.senha) {
+      editedUser.senha = selectedUser.senha;
     }
-  };
+
+    const response = await axios.put(
+      `https://apicontroleacesso-1.onrender.com/usuario/${selectedUser.id}`, 
+      editedUser,
+      {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    if (response.status!== 200 && response.status!== 204) {
+      throw new Error(`HTTP Error status: ${response.status}`);
+    }
+
+    console.log("Usuário atualizado com sucesso:", response.data);
+
+    // atualiza o estado local dos usuários
+    setUserDetails((prevDetails) =>
+      prevDetails.map((user) =>
+        user.id === selectedUser.id? {...user,...editedUser } : user
+      )
+    );
+
+    handleCloseEditUser();
+  } catch (error) {
+    console.log("Erro ao atualizar o usuário:", error);
+    console.error(error.response? error.response.data : error.message);
+  }
+};
   
       
    
@@ -618,7 +621,6 @@ const addUser = async (event) => {
           <div className="text-center">
             <i
               className="fa-solid fa-circle-exclamation text-danger"
-              style={{ fontSize: "4rem" }}
             ></i>
             <p className="mt-3 mb-1">Deseja excluir o usuário <strong className="text-primary">{selectedUser?.nome}</strong> (matrícula: {selectedUser?.matricula})?</p>
           </div>

@@ -411,6 +411,7 @@ export default function EditUsers() {
         </Dialog>
       )}
 
+{/* delete */}
       <Dialog
         className="modal-open"
         open={openDeleteUser}
@@ -423,7 +424,6 @@ export default function EditUsers() {
           <div className="text-center">
             <i
               className="fa-solid fa-circle-exclamation text-danger"
-              style={{ fontSize: "4rem" }}
             ></i>
             <p className="mt-3">Deseja excluir o curso <strong className="text-primary">{selectedUser?.nome}?</strong></p>
           </div>
