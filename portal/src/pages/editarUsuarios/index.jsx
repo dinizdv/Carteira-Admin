@@ -192,7 +192,7 @@ const addUser = async (event) => {
         }
       };
   
-      // Adiciona a senha apenas se ela não for undefined
+      // adiciona a senha apenas se ela não for undefined
       if (selectedUser.senha) {
         editedUser.senha = selectedUser.senha;
       }
@@ -215,7 +215,7 @@ const addUser = async (event) => {
   
       console.log("Usuário atualizado com sucesso:", response.data);
   
-      // Atualiza o estado local dos usuários
+      // atualiza o estado local dos usuários
       setUserDetails((prevDetails) =>
         prevDetails.map((user) =>
           user.id === selectedUser.id ? { ...user, ...editedUser } : user

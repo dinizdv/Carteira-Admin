@@ -101,10 +101,6 @@ export default function EditUsers() {
         }
       );
   
-      // if (response.status !== 200) {
-      //   throw new Error(`HTTP Error status: ${response.status}`);
-      // }
-  
       setUserDetails((prevDetails) =>
         prevDetails.filter((user) => user.id !== userId)
       );
@@ -198,7 +194,7 @@ export default function EditUsers() {
       console.log(editedUser); // user details (with modifies)
       toast.success(`Curso ${selectedUser.nome} (${selectedUser.duracao} horas de duração) atualizado com sucesso`);
   
-      // Use os dados retornados pela API para atualizar o estado
+      // use os dados retornados pela API para atualizar o estado
       setUserDetails((prevDetails) =>
         prevDetails.map((user) =>
           user.id === selectedUser.id? {...user,...editedUser } : user
