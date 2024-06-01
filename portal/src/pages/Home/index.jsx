@@ -1,15 +1,28 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom'
 import './home.css';
 import '../../App.css';
-
+import Dialog from "@mui/material/Dialog";
+import DialogTitle from "@mui/material/DialogTitle";
+import DialogContent from "@mui/material/DialogContent";
 
 export default function Home(){ 
- 
+    const [openModal, setOpenModal] = useState(false);
+
+    const openIntegrantes = () => {
+      setOpenModal(true); // open the modal
+    };
+  
+    const closeIntegrantes = () => {
+      setOpenModal(false); // close the modal
+    };
+
 function logout (){
     localStorage.clear() // cleaning the token
     window.location.href = '/' // redirect to login page
 }
+
+
 
 return(
   
@@ -232,23 +245,52 @@ return(
                         <div class="col-6 text-start">
                             <p class="mb-0">
                                 <a href="#" class="text-muted">
-                                    <strong class="px-2">CodzSwod</strong>
+                                    <strong class="px-2">Rocket Coding</strong>
                                 </a>
                             </p>
                         </div>
                         <div class="col-6 text-end">
                             <ul class="list-inline">
+                            <li class="list-inline-item px-2">
+                                    <a href="#" class="text-muted px-2" onClick={openIntegrantes}>Integrantes</a>
+                                </li>
+
+{/* modal */}
+                                <Dialog
+  className="modal-open"
+  open={openModal} // current state
+  onClose={closeIntegrantes}
+>
+  <DialogTitle className="dialogTitle text-center">
+    <h4 id="integrantesTitle">Integrantes da Rocket Coding</h4>
+  </DialogTitle>
+  <DialogContent className="dialogContent">
+        <li className="li-integrantes">Bruno Diniz</li>
+        <li className="li-integrantesEmail mb-4">bruno.diniz.sesisenaisp@gmail.com</li>
+        <li className="li-integrantes">Luisa Belo</li>
+        <li className="li-integrantesEmail mb-4">luisa.belo.sesisenaisp@gmail.com</li>
+        <li className="li-integrantes">Lucas Fonseca</li>
+        <li className="li-integrantesEmail mb-4">lucas.fonseca.sesisenaisp@gmail.com</li>
+        <li className="li-integrantes">Amanda Maldonado</li>
+        <li className="li-integrantesEmail mb-4">amanda.maldonado.sesisenaisp3@gmail.com</li>
+        <div className="container-btn-modal mt-4">
+          <button
+            onClick={closeIntegrantes}
+            className="btn modal-btn-close ms-2 mb-0"
+            type="button"
+          >
+            Fechar
+          </button>
+        </div>
+  </DialogContent>
+</Dialog>
+
+
                                 <li class="list-inline-item">
-                                    <a href="#" class="text-muted px-2">Contact</a>
+                                    <a href="https://www.instagram.com/rocket_coding/" target="blank" class="text-muted px-2">Instagram</a>
                                 </li>
                                 <li class="list-inline-item">
-                                    <a href="#" class="text-muted px-2">About Us</a>
-                                </li>
-                                <li class="list-inline-item">
-                                    <a href="#" class="text-muted px-2">Terms</a>
-                                </li>
-                                <li class="list-inline-item px-2">
-                                    <a href="#" class="text-muted px-2">Booking</a>
+                                    <a href="mailto:rocketcoding2023@gmail.com" target="blank" class="text-muted px-2">E-mail</a>
                                 </li>
                             </ul>
                         </div>
