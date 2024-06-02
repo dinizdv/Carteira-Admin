@@ -5,26 +5,24 @@ import axios from "axios";
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
-import { toast } from 'react-toastify'
-import loadingImg from '../../assets/loading.png'
+import { toast } from 'react-toastify';
 
 export default function EditUsers() {
-  const [loading, setLoading] = useState(true) // carregando...
+  const [loading, setLoading] = useState(true);
   const [openAddUser, setOpenAddUser] = useState(false);
   const [openEditUser, setOpenEditUser] = useState(false);
   const [openDeleteUser, setOpenDeleteUser] = useState(false);
   const [userDetails, setUserDetails] = useState([]);
   const [selectedUser, setSelectedUser] = useState(null);
   const [formValues, setFormValues] = useState({
-    curso: '',
     nome: '',
     matricula: '',
     dataNascimento: '',
     cpf: '',
     email: '',
     nivel: '',
-    senha: ''
-  })
+  });
+  
 
   console.log(userDetails);
 
@@ -47,7 +45,6 @@ export default function EditUsers() {
     }
   }, [token]);
   
-  // get users
   const fetchUserDetails = async (token) => {
     try {
       const response = await axios.get(
@@ -64,23 +61,30 @@ export default function EditUsers() {
         return;
       }
   
-      setUserDetails(response.data.content.filter(user => typeof user === 'object'))
-      setLoading(false) // loading state
+      setUserDetails(response.data.content.filter(user => typeof user === 'object'));
+      setLoading(false);
     } catch (error) {
       console.log("Erro ao buscar detalhes do usuário:", error);
-      setLoading(false) // loading state
+      setLoading(false);
     }
   };
   
-  
-  // Modals
   const handleClickOpenAddUser = () => setOpenAddUser(true);
   const handleCloseAddUser = () => setOpenAddUser(false);
 
   const handleClickOpenEditUser = (user) => {
     setSelectedUser(user);
+    setFormValues({
+      nome: user.nome,
+      matricula: user.matricula,
+      dataNascimento: user.dataNascimento,
+      cpf: user.cpf,
+      email: user.email,
+      nivel: user.nivel,
+    });
     setOpenEditUser(true);
   };
+  
   const handleCloseEditUser = () => {
     setSelectedUser(null);
     setOpenEditUser(false);
@@ -95,7 +99,6 @@ export default function EditUsers() {
     setOpenDeleteUser(false);
   };
 
-  // delete function
   const handleDeleteUser = async (userId) => {
     try {
       await axios.delete(
@@ -120,118 +123,141 @@ export default function EditUsers() {
     }
   };
 
-  // update values function
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormValues({
-     ...formValues,
+      ...formValues,
       [name]: value,
     });
   };
-  
-// add user
-const addUser = async (event) => {
-  event.preventDefault();
-  try {
-    const response = await axios.post(
-      "https://apicontroleacesso-1.onrender.com/usuario",
-      {
-        nome: formValues.nome,
-        matricula: formValues.matricula,
-        email: formValues.email,
-        senha: formValues.senha,
-        cpf: formValues.cpf,
-        dataNascimento: formValues.dataNascimento,
-        nivel: formValues.nivel,
-        curso: {
-          id: parseInt(formValues.curso)
+
+  const addUser = async (event) => {
+    event.preventDefault();
+    try {
+      const response = await axios.post(
+        "https://apicontroleacesso-1.onrender.com/usuario",
+        {
+          id: formValues.id,
+          nome: formValues.nome,
+          matricula: formValues.matricula,
+          email: formValues.email,
+          cpf: formValues.cpf,
+          dataNascimento: formValues.dataNascimento,
+          nivel: formValues.nivel,
+        },
+        {
+          headers: {
+            Accept: "*/*",
+            Authorization: `Bearer ${token}`,
+          },
         }
-      },
-      {
-        headers: {
-          Accept: "*/*",
-          Authorization: `Bearer ${token}`,
-        },
+      );
+
+      if (response.status !== 200 && response.status !== 201) {
+        throw new Error(`HTTP Error status: ${response.status}`);
       }
-    );
 
-    if (!response.status == 200 || !response.status == 201) {
-      throw new Error(`HTTP Error status: ${response.status}`);
+      const newUser = response.data;
+      setUserDetails([...userDetails, newUser]);
+      console.log('Usuário adicionado com sucesso!');
+      toast.success(`Usuário ${formValues.nome} (matrícula: ${formValues.matricula}) adicionado com sucesso`);
+      handleCloseAddUser();
+    } catch (error) {
+      console.log('Erro ao adicionar usuário: ', error);
     }
-
-    const newUser = response.data;
-    setUserDetails([...userDetails, newUser]);
-    console.log('Usuário adicionado com sucesso!');
-    toast.success(`Usuário ${formValues.nome} (matrícula: ${formValues.matricula}) adicionado com sucesso`);
-    handleCloseAddUser();
-  } catch (error) {
-    console.log('Erro ao adicionar usuário: ', error);
-  }
-};
+  };
   
-  // edit details function
-// edit details function
-const saveEditedUser = async (event) => {
-  event.preventDefault();
+  const saveEditedUser = async (event) => {
+    event.preventDefault();
 
-  if (!selectedUser) {
-    console.log("Nenhum usuário selecionado para edição");
-    return;
-  }
-
-  try {
-    const editedUser = {
-      id: selectedUser.id,
-      nome: selectedUser.nome,
-      dataNascimento: selectedUser.dataNascimento,
-      cpf: selectedUser.cpf,
-      email: selectedUser.email,
-      nivel: selectedUser.nivel,
-      curso: {
-        id: parseInt(selectedUser.curso.id),
-        nome: selectedUser.curso.nome,
-        duracao: selectedUser.curso.duracao
-      }
-    };
-
-    // adiciona a senha apenas se ela não for undefined
-    if (selectedUser.senha) {
-      editedUser.senha = selectedUser.senha;
+    if (!selectedUser) {
+      console.log("Nenhum usuário selecionado para edição");
+      return;
     }
 
-    const response = await axios.put(
-      `https://apicontroleacesso-1.onrender.com/usuario/${selectedUser.id}`, 
-      editedUser,
-      {
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
+    try {
+      const editedUser = {
+        id: selectedUser.id,
+        nome: selectedUser.nome,
+        dataNascimento: selectedUser.dataNascimento,
+        cpf: selectedUser.cpf,
+        email: selectedUser.email,
+        nivel: selectedUser.nivel,
+      };
+
+      if (selectedUser.senha) {
+        editedUser.senha = selectedUser.senha;
       }
-    );
 
-    if (response.status!== 200 && response.status!== 204) {
-      throw new Error(`HTTP Error status: ${response.status}`);
+      const response = await axios.put(
+        `https://apicontroleacesso-1.onrender.com/usuario`, 
+        editedUser,
+        {
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      console.log("Usuário editado com sucesso:", response.data);
+
+      setUserDetails((prevDetails) =>
+        prevDetails.map((user) =>
+          user.id === selectedUser.id ? { ...user, ...editedUser } : user
+        )
+      );
+
+      toast.success(`Usuário ${selectedUser.nome} atualizado com sucesso`);
+      handleCloseEditUser();
+    } catch (error) {
+      toast.error("Erro ao editar o usuário:", error);
+      console.error(error.response ? error.response.data : error.message);
     }
-
-    console.log("Usuário atualizado com sucesso:", response.data);
-
-    // atualiza o estado local dos usuários
-    setUserDetails((prevDetails) =>
-      prevDetails.map((user) =>
-        user.id === selectedUser.id? {...user,...editedUser } : user
-      )
-    );
-
-    handleCloseEditUser();
-  } catch (error) {
-    console.log("Erro ao atualizar o usuário:", error);
-    console.error(error.response? error.response.data : error.message);
-  }
-};
+  };
   
       
+async function obtenerImagenBase64(idUsuario, token) {
+  try {
+    const respuesta = await fetch(`https://apicontroleacesso-1.onrender.com/usuario/imagem/${idUsuario}`, {
+      method: 'GET',
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    
+    if (!respuesta.ok) {
+      throw new Error(`Error HTTP: ${respuesta.status}`);
+    }
+    
+    const datos = await respuesta.blob(); // Obtener los datos de la imagen como Blob
+    
+    // Convertir el Blob a una URL de objeto para visualización
+    const urlObjeto = URL.createObjectURL(datos);
+    
+    // Crear un elemento img y establecer su atributo src con la URL del objeto
+    const img = document.createElement('img');
+    img.src = urlObjeto;
+    
+    const reader = new FileReader();
+    reader.onloadend = function() {
+      const base64String = reader.result.replace('data:', '').replace(/^.+,/, '');
+      console.log(base64String); 
+    };
+    reader.readAsDataURL(datos);
+    
+    setTimeout(() => URL.revokeObjectURL(urlObjeto), 100);
+    
+  } catch (error) {
+    console.error('Error al obtener la imagen:', error);
+  }
+}
+
+obtenerImagenBase64('123', token); 
+
    
   return (
     <div className="container container-editUsers">
@@ -310,8 +336,10 @@ const saveEditedUser = async (event) => {
         </div>
       </div>
 
+{/* addUser */}
       <Dialog
   className="modal-open"
+  id="modal-addUser"
   open={openAddUser}
   onClose={handleCloseAddUser}
 >
@@ -325,123 +353,129 @@ const saveEditedUser = async (event) => {
       </div>
     </div>
     <section className="modal-userDetails">
-      <form onSubmit={addUser}>
-        <div className="form-floating mt-3">
-          <input
-            type="text"
-            id="matricula-input"
-            className="form-control"
-            placeholder=""
-            value={formValues.matricula}
-            onChange={handleInputChange}
-            name="matricula"
-          />
-          <label htmlFor="matricula-input" className="form-label">
-            Matrícula
-          </label>
+      <form onSubmit={addUser} id="form-addUser">
+        <div className="d-inline-flex">
+          <div className="form-floating mt-3">
+            <input
+              type="text"
+              id="matricula-input"
+              className="form-control"
+              placeholder="informe..."
+              value={formValues.matricula}
+              onChange={handleInputChange}
+              name="matricula"
+            />
+            <label htmlFor="matricula-input" className="form-label">
+              Matrícula
+            </label>
+          </div>
+          <div className="form-floating mt-3 ms-3">
+            <input
+              type="text"
+              id="nome-input"
+              className="form-control"
+              placeholder=""
+              value={formValues.nome}
+              onChange={handleInputChange}
+              name="nome"
+            />
+            <label htmlFor="nome-input" className="form-label">
+              Nome
+            </label>
+          </div>
         </div>
-        <div className="form-floating mt-3">
-          <input
-            type="text"
-            id="nome-input"
-            className="form-control"
-            placeholder=""
-            value={formValues.nome}
-            onChange={handleInputChange}
-            name="nome"
-          />
-          <label htmlFor="nome-input" className="form-label">
-            Nome
-          </label>
+        <div className="d-inline-flex">
+          <div className="form-floating mt-3">
+            <input
+              type="text"
+              id="curso-input"
+              className="form-control"
+              placeholder=""
+              value={formValues.curso}
+              onChange={handleInputChange}
+              name="curso"
+            />
+            <label htmlFor="curso-input" className="form-label">
+              Curso
+            </label>
+          </div>
+          <div className="form-floating mt-3 ms-3">
+            <input
+              type="text"
+              id="dataNascimento-input"
+              className="form-control"
+              placeholder=""
+              value={formValues.dataNascimento}
+              onChange={handleInputChange}
+              name="dataNascimento"
+            />
+            <label htmlFor="dataNascimento-input" className="form-label">
+              Data de Nascimento
+            </label>
+          </div>
         </div>
-        <div className="form-floating mt-3">
-          <input
-            type="text"
-            id="curso-input"
-            className="form-control"
-            placeholder=""
-            value={formValues.curso}
-            onChange={handleInputChange}
-            name="curso"
-          />
-          <label htmlFor="curso-input" className="form-label">
-            Curso
-          </label>
+        <div className="d-inline-flex">
+          <div className="form-floating mt-3">
+            <input
+              type="text"
+              id="cpf-input"
+              className="form-control"
+              placeholder=""
+              value={formValues.cpf}
+              onChange={handleInputChange}
+              name="cpf"
+            />
+            <label htmlFor="cpf-input" className="form-label">
+              CPF
+            </label>
+          </div>
+          <div className="form-floating mt-3 ms-3">
+            <input
+              type="text"
+              id="email-input"
+              className="form-control"
+              placeholder=""
+              value={formValues.email}
+              onChange={handleInputChange}
+              name="email"
+            />
+            <label htmlFor="email-input" className="form-label">
+              Email
+            </label>
+          </div>
+        </div>
+        <div className="d-inline-flex">
+          <div className="form-floating mt-3">
+            <input
+              type="text"
+              id="nivel-input"
+              className="form-control"
+              placeholder=""
+              value={formValues.nivel}
+              onChange={handleInputChange}
+              name="nivel"
+            />
+            <label htmlFor="nivel-input" className="form-label">
+              Nível
+            </label>
+          </div>
+          <div className="form-floating mt-3 ms-3">
+            <input
+              type="text"
+              id="senha-input"
+              className="form-control"
+              placeholder=""
+              value={formValues.senha}
+              onChange={handleInputChange}
+              name="senha"
+            />
+            <label htmlFor="senha-input" className="form-label">
+              Senha
+            </label>
+          </div>
         </div>
 
-        <div className="form-floating mt-3">
-          <input
-            type="text"
-            id="dataNascimento-input"
-            className="form-control"
-            placeholder=""
-            value={formValues.dataNascimento}
-            onChange={handleInputChange}
-            name="dataNascimento"
-          />
-          <label htmlFor="dataNascimento-input" className="form-label">
-            Data de Nascimento
-          </label>
-        </div>
-        <div className="form-floating mt-3">
-          <input
-            type="text"
-            id="cpf-input"
-            className="form-control"
-            placeholder=""
-            value={formValues.cpf}
-            onChange={handleInputChange}
-            name="cpf"
-          />
-          <label htmlFor="cpf-input" className="form-label">
-            CPF
-          </label>
-        </div>
-        <div className="form-floating mt-3">
-          <input
-            type="text"
-            id="email-input"
-            className="form-control"
-            placeholder=""
-            value={formValues.email}
-            onChange={handleInputChange}
-            name="email"
-          />
-          <label htmlFor="email-input" className="form-label">
-            Email
-          </label>
-        </div>
-        <div className="form-floating mt-3">
-          <input
-            type="text"
-            id="nivel-input"
-            className="form-control"
-            placeholder=""
-            value={formValues.nivel}
-            onChange={handleInputChange}
-            name="nivel"
-          />
-          <label htmlFor="nivel-input" className="form-label">
-            Nível
-          </label>
-        </div>
-
-        <div className="form-floating mt-3">
-          <input
-            type="text"
-            id="senha-input"
-            className="form-control"
-            placeholder=""
-            value={formValues.senha}
-            onChange={handleInputChange}
-            name="senha"
-          />
-          <label htmlFor="senha-input" className="form-label">
-            Senha
-          </label>
-        </div>
-
-        <div className="container-btn-modal my-3">
+        <div className="container-btn-modal mt-4">
           <button className="btn modal-btn-save" type="submit">
             Salvar
           </button>
@@ -460,7 +494,6 @@ const saveEditedUser = async (event) => {
 
 
 {/* editUser */}
-{/* editUser */}
 {selectedUser && (
   <Dialog
     className="modal-open"
@@ -473,10 +506,17 @@ const saveEditedUser = async (event) => {
     <DialogContent className="dialogContent">
       <div className="container-img-radius mb-4 d-flex justify-content-center">
         <div className="img-radius">
-          <i className="fa-solid fa-user"></i>
+          {/* Exibindo a imagem do usuário */}
+          {selectedUser.imagemUrl? (
+            <img src={selectedUser.imagemUrl} alt="Perfil" style={{ width: '50px', height: '50px', borderRadius: '50%', objectFit: 'cover' }} />
+          ) : (
+            <i className="fa-solid fa-user"></i>
+          )}
         </div>
       </div>
-      <section className="modal-userDetails">
+      
+      
+            <section className="modal-userDetails">
         <div className="container-group">
           <label htmlFor="aluno">Aluno(a):</label>
           <input
@@ -542,41 +582,44 @@ const saveEditedUser = async (event) => {
           />
         </div>
         <div className="container-group">
-          <label htmlFor="curso">Curso:</label>
+          <label htmlFor="curso" className="text-secondary inputDisabled">Curso:</label>
           <input
-            className="input-editUser"
+            disabled
+            className="input-editUser text-secondary inputDisabled"
             type="text"
             name="cursoNome"
             id="cursoNome"
             value={selectedUser.curso?.nome || ""}
-            onChange={(e) =>
-              setSelectedUser({
-                ...selectedUser,
-                curso: { ...selectedUser.curso, nome: e.target.value },
-              })
-            }
+            // onChange={(e) =>
+            //   setSelectedUser({
+            //     ...selectedUser,
+            //     curso: { ...selectedUser.curso, nome: e.target.value },
+            //   })
+            // }
           />
         </div>
         <div className="container-group">
-          <label htmlFor="duracao">Duração do Curso:</label>
+          <label htmlFor="duracao" className="text-secondary inputDisabled">Duração do Curso:</label>
           <input
-            className="input-editUser"
+            disabled
+            className="input-editUser text-secondary inputDisabled"
             type="text"
             name="cursoDuracao"
             id="cursoDuracao"
             value={selectedUser.curso?.duracao || ""}
-            onChange={(e) =>
-              setSelectedUser({
-                ...selectedUser,
-                curso: { ...selectedUser.curso, duracao: e.target.value },
-              })
-            }
+            // onChange={(e) =>
+            //   setSelectedUser({
+            //     ...selectedUser,
+            //     curso: { ...selectedUser.curso, duracao: e.target.value },
+            //   })
+            // }
           />
         </div>
         <div className="container-group">
-          <label htmlFor="nivel">Nível:</label>
+          <label htmlFor="nivel" className="text-secondary inputDisabled">Nível:</label>
           <input
-            className="input-editUser"
+            disabled
+            className="input-editUser text-secondary inputDisabled"
             type="text"
             name="nivel"
             id="nivel"

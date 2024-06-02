@@ -73,6 +73,11 @@
 
 
 /* modals */
+#form-addUser {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
 
 .dialogTitle, .dialogContent {
     font-family: Poppins;

@@ -192,7 +192,7 @@ export default function EditUsers() {
       );
   
       console.log(editedUser); // user details (with modifies)
-      toast.success(`Curso ${selectedUser.nome} (${selectedUser.duracao} horas de duração) atualizado com sucesso`);
+      toast.success(`Curso ${selectedUser.nome} (${selectedUser.duracao} horas de duração) editado com sucesso`);
   
       // use os dados retornados pela API para atualizar o estado
       setUserDetails((prevDetails) =>
@@ -203,6 +203,7 @@ export default function EditUsers() {
   
       handleCloseEditUser();
     } catch (error) {
+      toast.error(`Erro ao atualizar o curso ${selectedUser.nome} (${selectedUser.duracao} horas de duração)`)
       console.log("Erro ao atualizar o curso:", error);
     }
   };

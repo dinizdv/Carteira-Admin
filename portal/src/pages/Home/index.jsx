@@ -5,8 +5,11 @@ import '../../App.css';
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
+import Transacao from '../Transacao'
+
 
 export default function Home(){ 
+    console.log(Transacao)
     const [openModal, setOpenModal] = useState(false);
 
     const openIntegrantes = () => {
@@ -129,7 +132,7 @@ return(
                                         <div class="col-10">
                                             <div class="p-3 m-1">
                                                 <h3><i class="fa-solid fa-user"></i> Usuários</h3>
-                                                <p class="mb-0">Editar, adicionar, excluir</p>
+                                                <p class="mb-0">Matrícula, nome e curso</p>
                                             </div>
                                         </div>
                                         <div class="col-6 align-self-end text-end">
@@ -146,7 +149,7 @@ return(
                                         <div class="col-10">
                                             <div class="p-3 m-1">
                                             <h3><i class="fa-solid fa-book"></i> Cursos</h3>
-                                                <p class="mb-0">Nome, horário</p>
+                                                <p class="mb-0">Nome e duração</p>
                                             </div>
                                         </div>
                                         <div class="col-6 align-self-end text-end">
@@ -162,7 +165,7 @@ return(
                                     <div class="row g-0 w-100">
                                         <div class="col-10">
                                             <div class="p-3 m-1">
-                                            <h3><i class="fa-solid fa-x"></i> Transações</h3>
+                                            <h3><i class="fa-solid fa-qrcode"></i> Transações</h3>
                                                 <p class="mb-0">Entradas e saídas</p>
                                             </div>
                                         </div>
@@ -180,7 +183,7 @@ return(
                                         <div class="col-10">
                                             <div class="p-3 m-1">
                                             <h3><i class="fa-solid fa-bell"></i> Notificações</h3>
-                                                <p class="mb-0">Notificações gerais, notificações individuais</p>
+                                                <p class="mb-0">Mensagem e destinatário</p>
                                             </div>
                                         </div>
                                         <div class="col-6 align-self-end text-end">
@@ -284,6 +287,9 @@ return(
         </div>
   </DialogContent>
 </Dialog>
+
+
+
 
 
                                 <li class="list-inline-item">
