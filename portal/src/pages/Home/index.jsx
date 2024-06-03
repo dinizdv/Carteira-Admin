@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom'
 import './home.css';
 import '../../App.css';
@@ -6,9 +6,13 @@ import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
 import Transacao from '../Transacao'
-
+import Plot from 'react-plotly.js';
+import axios from 'axios';
 
 export default function Home(){ 
+    const [userDetails, setUserDetails] = useState([]);
+
+
     console.log(Transacao)
     const [openModal, setOpenModal] = useState(false);
 
@@ -24,6 +28,59 @@ function logout (){
     localStorage.clear() // cleaning the token
     window.location.href = '/' // redirect to login page
 }
+
+function useToken() {
+    const token = localStorage.getItem("keyToken");
+    if (token) {
+      return JSON.parse(token);
+    }
+    return null;
+}
+
+const token = useToken();
+
+useEffect(() => {
+    if (token) {
+      console.log("Token encontrado:", token);
+      fetchUserDetails(token);
+    } else {
+      console.log("Token não encontrado...");
+    }
+}, [token]);
+
+// get transacoes
+const [transactionsByDay, setTransactionsByDay] = useState({});
+
+const fetchUserDetails = async (token) => {
+  try {
+    const response = await axios.get(
+      "https://apicontroleacesso-1.onrender.com/transacao",
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    const content = response.data.content;
+    let transactionsByWeekday = {};
+
+    content.forEach(transaction => {
+      const dayOfWeek = transaction.diaSemana.toUpperCase(); // Convertendo para maiúsculas para padronizar
+      if (transactionsByWeekday[dayOfWeek]) {
+        transactionsByWeekday[dayOfWeek]++;
+      } else {
+        transactionsByWeekday[dayOfWeek] = 1;
+      }
+    });
+
+    setTransactionsByDay(transactionsByWeekday);
+
+    setUserDetails(content);
+  } catch (error) {
+    console.log("Erro ao buscar detalhes do usuário:", error);
+  }
+};
 
 
 
@@ -195,6 +252,52 @@ return(
                     </div>
 
                     
+                    {/* <Plot
+  data={[
+    {
+      x: Object.keys(transactionsByDay),
+      y: Object.values(transactionsByDay),
+      type: 'bar',
+      marker: {color: '#3D9EF4'},
+    },
+  ]}
+  layout={{
+    font: {family: 'poppins'},
+    width: 500,
+    height: 300,
+    title: '<b>Quantidade de Transações (ENTRADA E SAÍDA) por dia</b>',
+    xaxis: {
+      tickmode: 'array',
+      tickvals: Object.keys(transactionsByDay),
+      ticktext: Object.keys(transactionsByDay).map(day => day.replace(/_/g, ' ').toUpperCase()),
+    },
+  }}
+/> */}
+
+<Plot
+  data={[
+    {
+      values: Object.values(transactionsByDay), 
+      labels: Object.keys(transactionsByDay), 
+      type: 'pie',
+      marker: {colors: ['#3D9EF4']}, 
+    },
+  ]}
+  layout={{
+    font: {
+        family: 'Poppins',
+        size: 16, 
+        color: '#ffffff',
+      },
+    width: 600,
+    height: 400,
+    title: '<b>Quantidade de Transações (ENTRADA E SAÍDA) por dia</b>', 
+    paper_bgcolor: 'rgba(0,0,0,0)', // Fundo do conteúdo do gráfico
+    plot_bgcolor: 'rgba(0,0,0,0)', // Fundo do gráfico inteiro
+  }}
+/>
+
+
 
                     {/* <div class="card border-0">
                         <div class="card-header">
