@@ -219,6 +219,10 @@ hr {
     font-size: 1.1rem;
 }
 
+#iframeHome {
+    width: 300px;
+}
+
 /* Footer and Nav */
 
 @media (max-width:767.98px) {

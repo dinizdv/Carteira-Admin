@@ -61,7 +61,7 @@ export default function EditUsers() {
       setUserDetails(response.data.content);
       setLoading(false) // loading state
     } catch (error) {
-      console.log("Erro ao buscar detalhes do usuário:", error);
+      console.log("Erro ao buscar detalhes do curso:", error);
     }
   };
 

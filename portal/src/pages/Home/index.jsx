@@ -10,7 +10,9 @@ import Plot from 'react-plotly.js';
 import axios from 'axios';
 
 export default function Home(){ 
+    const [loading, setLoading] = useState(true)
     const [userDetails, setUserDetails] = useState([]);
+    const [courseDetails, setCourseDetails] = useState([]);
 
 
     console.log(Transacao)
@@ -43,12 +45,13 @@ useEffect(() => {
     if (token) {
       console.log("Token encontrado:", token);
       fetchUserDetails(token);
+      fetchCourseDetails(token);
     } else {
       console.log("Token não encontrado...");
     }
 }, [token]);
 
-// get transacoes
+// get transacoes + graph
 const [transactionsByDay, setTransactionsByDay] = useState({});
 
 const fetchUserDetails = async (token) => {
@@ -62,11 +65,12 @@ const fetchUserDetails = async (token) => {
       }
     );
 
+    setLoading(false)
     const content = response.data.content;
     let transactionsByWeekday = {};
 
     content.forEach(transaction => {
-      const dayOfWeek = transaction.diaSemana.toUpperCase(); // Convertendo para maiúsculas para padronizar
+      const dayOfWeek = transaction.diaSemana.toUpperCase(); // convertendo para maiúsculas para padronizar
       if (transactionsByWeekday[dayOfWeek]) {
         transactionsByWeekday[dayOfWeek]++;
       } else {
@@ -78,10 +82,46 @@ const fetchUserDetails = async (token) => {
 
     setUserDetails(content);
   } catch (error) {
-    console.log("Erro ao buscar detalhes do usuário:", error);
+    console.log("Erro ao buscar detalhes das transações:", error);
   }
 };
 
+
+  // get courses + graph
+  const [coursesCount, setCoursesCount] = useState({});
+
+  const fetchCourseDetails = async (token) => {
+    try {
+      const response = await axios.get(
+        "https://apicontroleacesso-1.onrender.com/curso",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+  
+      const content = response.data.content;
+      let coursesCount = {};
+  
+      content.forEach(course => {
+        course.usuarios.forEach(usuario => {
+          const courseName = usuario.curso.nome;
+          if (coursesCount[courseName]) {
+            coursesCount[courseName]++;
+          } else {
+            coursesCount[courseName] = 1;
+          }
+        });
+      });
+  
+      setCoursesCount(coursesCount);
+      console.log(coursesCount);
+    } catch (error) {
+      console.log("Erro ao buscar detalhes do curso:", error);
+    }
+  };
+  
 
 
 return(
@@ -251,30 +291,22 @@ return(
                         </div>
                     </div>
 
-                    
-                    {/* <Plot
-  data={[
-    {
-      x: Object.keys(transactionsByDay),
-      y: Object.values(transactionsByDay),
-      type: 'bar',
-      marker: {color: '#3D9EF4'},
-    },
-  ]}
-  layout={{
-    font: {family: 'poppins'},
-    width: 500,
-    height: 300,
-    title: '<b>Quantidade de Transações (ENTRADA E SAÍDA) por dia</b>',
-    xaxis: {
-      tickmode: 'array',
-      tickvals: Object.keys(transactionsByDay),
-      ticktext: Object.keys(transactionsByDay).map(day => day.replace(/_/g, ' ').toUpperCase()),
-    },
-  }}
-/> */}
+                
+
+
+<div className="container d-flex">
+    
+            {/* loading animation */}
+            {loading && 
+                
+                <div className="container-loadingData mt-0">
+                  <p className="loadingData">Carregando os dados...</p>
+                  <iframe src="https://lottie.host/embed/d40e20f0-b3d7-4c31-9c25-89a36ac33038/ZryRBBWA7J.json"></iframe>
+                </div>
+                }
 
 <Plot
+
   data={[
     {
       values: Object.values(transactionsByDay), 
@@ -292,56 +324,40 @@ return(
     width: 600,
     height: 400,
     title: '<b>Quantidade de Transações (ENTRADA E SAÍDA) por dia</b>', 
-    paper_bgcolor: 'rgba(0,0,0,0)', // Fundo do conteúdo do gráfico
-    plot_bgcolor: 'rgba(0,0,0,0)', // Fundo do gráfico inteiro
+    paper_bgcolor: 'rgba(0,0,0,0)', 
+    plot_bgcolor: 'rgba(0,0,0,0)', 
   }}
+
 />
 
 
 
-                    {/* <div class="card border-0">
-                        <div class="card-header">
-                            <h5 class="card-title">
-                                Basic Table
-                            </h5>
-                            <h6 class="card-subtitle text-muted">
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum ducimus,
-                                necessitatibus reprehenderit itaque!
-                            </h6>
-                        </div>
+<Plot className="ms-5"
+  data={[
+    {
+      values: Object.values(coursesCount),
+      labels: Object.keys(coursesCount), 
+      type: 'pie',
+      marker: {colors: ['#3D9EF4']}, // segmentos do gráfico
+    },
+  ]}
+  layout={{
+    font: {
+      family: 'Poppins',
+      size: 16,
+      color: '#ffffff', 
+    },
+    width: 600,
+    height: 400,
+    title: 'Quantidade de Usuários por Curso', 
+    paper_bgcolor: 'rgba(0,0,0,0)',
+    plot_bgcolor: 'rgba(0,0,0,0)', 
+  }}
+/>
+</div>
 
-                        <div class="card-body">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">#</th>
-                                        <th scope="col">First</th>
-                                        <th scope="col">Last</th>
-                                        <th scope="col">Handle</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <th scope="row">1</th>
-                                        <td>Mark</td>
-                                        <td>Otto</td>
-                                        <td>@mdo</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">2</th>
-                                        <td>Jacob</td>
-                                        <td>Thornton</td>
-                                        <td>@fat</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">3</th>
-                                        <td colspan="2">Larry the Bird</td>
-                                        <td>@twitter</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div> */}
+
+
                 </div>
             </main>
                   
