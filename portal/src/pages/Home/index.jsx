@@ -222,7 +222,7 @@ return(
                         <h4 class="text-light">Dashboard do Administrador</h4>
                     </div>
                     <div class="row">
-                        <div class="col-12 col-md-6 col-xl-3 d-flex">
+                        <div class="col-12 col-md-6 col-xl d-flex">
                             <Link to="editarUsuarios" class="card flex-fill border-0 illustration card-info bg-primary text-light">
                                 <div class="card-body p-0 d-flex flex-fill">
                                     <div class="row g-0 w-100">
@@ -239,7 +239,7 @@ return(
                             </Link>
                         </div>
 
-                        <div class="col-12 col-md-6 col-xl-3 d-flex">
+                        <div class="col-12 col-md-6 col-xl d-flex">
                             <Link to="editarCursos" class="card flex-fill border-0 illustration card-info bg-primary text-light">
                                 <div class="card-body p-0 d-flex flex-fill">
                                     <div class="row g-0 w-100">
@@ -256,7 +256,24 @@ return(
                             </Link>
                         </div>
 
-                        <div class="col-12 col-md-6 col-xl-3 d-flex">
+                        <div class="col-12 col-md-6 col-xl d-flex">
+                            <Link to="horarios" class="card flex-fill border-0 illustration card-info bg-primary text-light">
+                                <div class="card-body p-0 d-flex flex-fill">
+                                    <div class="row g-0 w-100">
+                                        <div class="col-10">
+                                            <div class="p-3 m-1">
+                                            <h3><i class="fa-solid fa-qrcode"></i> Horários</h3>
+                                                <p class="mb-0">Entradas e saídas</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-6 align-self-end text-end">
+                                            </div>
+                                    </div>
+                                </div>
+                            </Link>
+                        </div>
+
+                        <div class="col-12 col-md-6 col-xl d-flex">
                             <Link to="transacoes" class="card flex-fill border-0 illustration card-info bg-primary text-light">
                                 <div class="card-body p-0 d-flex flex-fill">
                                     <div class="row g-0 w-100">
@@ -273,7 +290,7 @@ return(
                             </Link>
                         </div>
 
-                        <div class="col-12 col-md-6 col-xl-3 d-flex">
+                        <div class="col-12 col-md-6 col-xl d-flex">
                             <Link to="notificacoes" class="card flex-fill border-0 illustration card-info bg-primary text-light">
                                 <div class="card-body p-0 d-flex flex-fill">
                                     <div class="row g-0 w-100">
@@ -301,7 +318,7 @@ return(
                 
                 <div className="container-loadingData mt-0">
                   <p className="loadingData">Carregando os dados...</p>
-                  <iframe src="https://lottie.host/embed/d40e20f0-b3d7-4c31-9c25-89a36ac33038/ZryRBBWA7J.json"></iframe>
+                  <iframe src="https://lottie.host/embed/d40e20f0-b3d7-4c31-9c25-89a36ac33038/ZryRBBWA7J.json" id="animation"></iframe>
                 </div>
                 }
 
@@ -323,7 +340,7 @@ return(
       },
     width: 600,
     height: 400,
-    title: '<b>Quantidade de Transações (ENTRADA E SAÍDA) por dia</b>', 
+    title: 'Quantidade de Transações (ENTRADA E SAÍDA) por dia', 
     paper_bgcolor: 'rgba(0,0,0,0)', 
     plot_bgcolor: 'rgba(0,0,0,0)', 
   }}

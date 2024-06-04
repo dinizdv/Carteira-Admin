@@ -223,6 +223,10 @@ hr {
     width: 300px;
 }
 
+#animation {
+    width: 600px;
+}
+
 /* Footer and Nav */
 
 @media (max-width:767.98px) {
