@@ -246,7 +246,7 @@ export default function Notifications() {
                             <option selected disabled>Aluno destinatário</option>
                             {userDetails.map((user) => (
                                 <option key={user.id} value={user.id}>{user.nome}</option>
-                            ))}
+                            ))} cv
                         </select>
                     </div>
 

@@ -13,11 +13,13 @@ export default function Horarios() {
   const [openEditUser, setOpenEditUser] = useState(false);
   const [openDeleteUser, setOpenDeleteUser] = useState(false);
   const [userDetails, setUserDetails] = useState([]);
+  const [courseDetails, setCourseDetails] = useState([]);
   const [selectedUser, setSelectedUser] = useState(null);
   const [formValues, setFormValues] = useState({
     diaSemana : '',
     horario_entrada: '',
     horario_saida: '',
+    curso: ''
   });
   
 
@@ -37,6 +39,7 @@ export default function Horarios() {
     if (token) {
       console.log("Token encontrado:", token);
       fetchUserDetails(token);
+      fetchCourseDetails(token);
     } else {
       console.log("Token não encontrado...");
     }
@@ -76,7 +79,6 @@ export default function Horarios() {
       horario_entrada: user.horario_entrada,
       horario_saida: user.horario_saida,
       curso: user.curso.nome,
-      duracao: user.curso.duracao,
     });
     setOpenEditUser(true);
   };
@@ -121,26 +123,34 @@ export default function Horarios() {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormValues({
-      ...formValues,
-      [name]: value,
-    });
+    if (selectedUser) {
+      setSelectedUser({
+       ...selectedUser,
+        [name]: value,
+      });
+    } else {
+      setFormValues({
+       ...formValues,
+        [name]: value,
+      });
+    }
   };
-
+  
+  
   const addUser = async (event) => {
     event.preventDefault();
+  
+    const newUser = {
+      diaSemana: formValues.diaSemana,
+      horario_entrada: formValues.horario_entrada,
+      horario_saida: formValues.horario_saida,
+      curso: formValues.curso,
+    };
+  
     try {
       const response = await axios.post(
         "https://apicontroleacesso-1.onrender.com/horario",
-        {
-          id: formValues.id,
-          nome: formValues.nome,
-          matricula: formValues.matricula,
-          email: formValues.email,
-          cpf: formValues.cpf,
-          dataNascimento: formValues.dataNascimento,
-          nivel: formValues.nivel,
-        },
+        newUser,
         {
           headers: {
             Accept: "*/*",
@@ -148,43 +158,44 @@ export default function Horarios() {
           },
         }
       );
-
-      if (response.status !== 200 && response.status !== 201) {
+  
+      if (response.status!== 200 && response.status!== 201) {
         throw new Error(`HTTP Error status: ${response.status}`);
       }
-
-      const newUser = response.data;
-      setUserDetails([...userDetails, newUser]);
+  
+      // atualiza o estado userDetails com o novo usuário
+      setUserDetails((prevDetails) => [...prevDetails, response.data]);
+  
       console.log('Usuário adicionado com sucesso!');
-      toast.success(`Usuário ${formValues.nome} (matrícula: ${formValues.matricula}) adicionado com sucesso`);
+      toast.success(`Usuário adicionado com sucesso`);
       handleCloseAddUser();
     } catch (error) {
       console.log('Erro ao adicionar usuário: ', error);
+      toast.error("Erro ao adicionar o usuário:", error);
     }
   };
   
   const saveEditedUser = async (event) => {
     event.preventDefault();
-
+  
     if (!selectedUser) {
       console.log("Nenhum usuário selecionado para edição");
       return;
     }
-
+  
     try {
       const editedUser = {
-        id: selectedUser.id,
-        nome: selectedUser.nome,
-        dataNascimento: selectedUser.dataNascimento,
-        cpf: selectedUser.cpf,
-        email: selectedUser.email,
-        nivel: selectedUser.nivel,
+        id: selectedUser.id, // certifique-se de incluir o id aqui
+        diaSemana: selectedUser.diaSemana,
+        horario_entrada: selectedUser.horario_entrada,
+        horario_saida: selectedUser.horario_saida,
+        curso: selectedUser.curso
       };
-
+  
       if (selectedUser.senha) {
         editedUser.senha = selectedUser.senha;
       }
-
+  
       const response = await axios.put(
         `https://apicontroleacesso-1.onrender.com/horario`, 
         editedUser,
@@ -196,23 +207,50 @@ export default function Horarios() {
           },
         }
       );
-
+  
       console.log("Usuário editado com sucesso:", response.data);
-
+  
+      // atualiza o estado userDetails com o usuário editado recebido da API
       setUserDetails((prevDetails) =>
         prevDetails.map((user) =>
-          user.id === selectedUser.id ? { ...user, ...editedUser } : user
+          user.id === selectedUser.id? {...user,...editedUser } : user
         )
       );
-
+  
       toast.success(`Usuário ${selectedUser.nome} atualizado com sucesso`);
       handleCloseEditUser();
     } catch (error) {
       toast.error("Erro ao editar o usuário:", error);
-      console.error(error.response ? error.response.data : error.message);
+      console.error(error.response? error.response.data : error.message);
     }
   };
   
+
+    // get courses
+    const fetchCourseDetails = async (token) => {
+        try {
+          const response = await axios.get(
+            "https://apicontroleacesso-1.onrender.com/curso",
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
+    
+          if (!Array.isArray(response.data.content)) {
+            console.error("A resposta da API não contém um array");
+            return;
+          }
+    
+          setCourseDetails(response.data.content);
+          setLoading(false) // loading state
+        } catch (error) {
+          console.log("Erro ao buscar detalhes do curso:", error);
+        }
+      };
+    
+      
       
 // async function obtenerImagenBase64(idUsuario, token) {
 //   try {
@@ -342,7 +380,7 @@ export default function Horarios() {
   onClose={handleCloseAddUser}
 >
   <DialogTitle className="dialogTitle text-center">
-    <h4>Adicionar usuário</h4>
+    <h4>Adicionar horário</h4>
   </DialogTitle>
   <DialogContent className="dialogContent">
     <div className="container-img-radius mb-4 d-flex justify-content-center">
@@ -350,84 +388,106 @@ export default function Horarios() {
         <i className="fa-solid fa-user"></i>
       </div>
     </div>
+    {selectedUser && (
     <section className="modal-userDetails">
-      <form onSubmit={addUser} id="form-addUser">
-        <div className="d-inline-flex">
-          <div className="form-floating mt-3">
-            <input
-              type="text"
-              id="matricula-input"
-              className="form-control"
-              placeholder="informe..."
-              value={formValues.diaSemana}
-              onChange={handleInputChange}
-              name="matricula"
-            />
-            <label htmlFor="matricula-input" className="form-label">
-              Dia da semana
-            </label>
-          </div>
-          <div className="form-floating mt-3 ms-3">
-            <input
-              type="text"
-              id="nome-input"
-              className="form-control"
-              placeholder=""
-              value={formValues.horario_entrada}
-              onChange={handleInputChange}
-              name="nome"
-            />
-            <label htmlFor="nome-input" className="form-label">
-              Horário de entrada
-            </label>
-          </div>
-        </div>
-        <div className="d-inline-flex">
-          <div className="form-floating mt-3">
-            <input
-              type="text"
-              id="curso-input"
-              className="form-control"
-              placeholder=""
-              value={formValues.horario_saida}
-              onChange={handleInputChange}
-              name="curso"
-            />
-            <label htmlFor="curso-input" className="form-label">
-              Horário de saída
-            </label>
-          </div>
-          <div className="form-floating mt-3 ms-3">
-            <input
-              type="text"
-              id="dataNascimento-input"
-              className="form-control"
-              placeholder=""
-              value={formValues.curso}
-              onChange={handleInputChange}
-              name="dataNascimento"
-            />
-            <label htmlFor="dataNascimento-input" className="form-label">
-              Curso
-            </label>
-          </div>
-        </div>
-        
-        
-        <div className="container-btn-modal mt-4">
-          <button className="btn modal-btn-save" type="submit">
-            Salvar
-          </button>
-          <button
-            onClick={handleCloseAddUser}
-            className="btn modal-btn-close ms-2"
-            type="button"
-          >
-            Fechar
-          </button>
-        </div>
-      </form>
+    <form onSubmit={addUser} id="form-addUser">
+  <div className="d-inline-flex">
+    <div className="form-floating mt-3">
+      <input
+        type="text"
+        id="diaSemana-input"
+        className="form-control"
+        placeholder="informe..."
+        value={formValues.diaSemana || ''}
+        onChange={handleInputChange}
+        name="diaSemana"
+      />
+      <label htmlFor="diaSemana-input" className="form-label">
+        Dia da semana
+      </label>
+    </div>
+    <div className="form-floating mt-3 ms-3">
+      <input
+        type="text"
+        id="horarioEntrada-input"
+        className="form-control"
+        placeholder=""
+        value={formValues.horario_entrada || ''}
+        onChange={handleInputChange}
+        name="horario_entrada"
+      />
+      <label htmlFor="horarioEntrada-input" className="form-label">
+        Horário de entrada
+      </label>
+    </div>
+  </div>
+  <div className="d-inline-flex">
+    <div className="form-floating mt-3">
+      <input
+        type="text"
+        id="horarioSaida-input"
+        className="form-control"
+        placeholder=""
+        value={formValues.horario_saida || ''}
+        onChange={handleInputChange}
+        name="horario_saida"
+      />
+      <label htmlFor="horarioSaida-input" className="form-label">
+        Horário de saída
+      </label>
+    </div>
+
+<select
+  name="curso"
+  id="curso"
+  className="form-select"
+  value={formValues.curso || ''}
+  onChange={(e) => {
+    setSelectedUser({...selectedUser, curso: courseDetails.find(c => c.id === e.target.value) });
+  }}
+>
+  <option value="">Selecione um curso</option>
+  {courseDetails.map((course) => (
+    <option key={course.id} value={course.id}>
+      {course.nome}
+    </option>
+  ))}
+</select>
+
+
+
+    {/* <div className="form-floating mt-3 ms-3">
+      <input
+        type="text"
+        id="curso-input"
+        className="form-control"
+        placeholder=""
+        value={formValues.curso || ''}
+        onChange={handleInputChange}
+        name="curso"
+      />
+      <label htmlFor="curso-input" className="form-label">
+        Curso
+      </label>
+    </div> */}
+  </div>
+
+  <div className="container-btn-modal mt-4">
+    <button className="btn modal-btn-save" type="submit">
+      Salvar
+    </button>
+    <button
+      onClick={handleCloseAddUser}
+      className="btn modal-btn-close ms-2"
+      type="button"
+    >
+      Fechar
+    </button>
+  </div>
+</form>
+
     </section>
+    )}
   </DialogContent>
 </Dialog>
 
@@ -520,7 +580,7 @@ export default function Horarios() {
             //   setSelectedUser({
             //     ...selectedUser,
             //     curso: { ...selectedUser.curso, nome: e.target.value },
-            //   })
+            //   })  
             // }
           />
         </div>
