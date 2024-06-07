@@ -25,6 +25,7 @@ export default function EditUsers() {
   
 
   console.log(userDetails);
+  console.log(formValues)
 
   function useToken() {
     const token = localStorage.getItem("keyToken");
@@ -84,6 +85,7 @@ export default function EditUsers() {
     });
     setOpenEditUser(true);
   };
+  
   
   const handleCloseEditUser = () => {
     setSelectedUser(null);
@@ -256,7 +258,7 @@ async function obtenerImagenBase64(idUsuario, token) {
   }
 }
 
-obtenerImagenBase64('123', token); 
+obtenerImagenBase64('10000000000', token); 
 
    
   return (
@@ -507,11 +509,14 @@ obtenerImagenBase64('123', token);
       <div className="container-img-radius mb-4 d-flex justify-content-center">
         <div className="img-radius">
           {/* Exibindo a imagem do usuário */}
-          {selectedUser.imagemUrl? (
-            <img src={selectedUser.imagemUrl} alt="Perfil" style={{ width: '50px', height: '50px', borderRadius: '50%', objectFit: 'cover' }} />
-          ) : (
-            <i className="fa-solid fa-user"></i>
-          )}
+          <div className="img-radius">
+  {selectedUser.imagemUrl? (
+    <img src={selectedUser.imagemUrl} alt="Perfil" style={{ width: '50px', height: '50px', borderRadius: '50%', objectFit: 'cover' }} />
+  ) : (
+    <i className="fa-solid fa-user"></i>
+  )}
+</div>
+
         </div>
       </div>
       

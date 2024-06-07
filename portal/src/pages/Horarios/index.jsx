@@ -16,14 +16,11 @@ export default function Horarios() {
   const [courseDetails, setCourseDetails] = useState([]);
   const [selectedUser, setSelectedUser] = useState(null);
   const [formValues, setFormValues] = useState({
-    diaSemana : '',
+    diaSemana: '',
     horario_entrada: '',
     horario_saida: '',
     curso: ''
   });
-  
-
-  console.log(userDetails);
 
   function useToken() {
     const token = localStorage.getItem("keyToken");
@@ -44,6 +41,7 @@ export default function Horarios() {
       console.log("Token não encontrado...");
     }
   }, [token]);
+
   
   const fetchUserDetails = async (token) => {
     try {
@@ -69,7 +67,16 @@ export default function Horarios() {
     }
   };
   
-  const handleClickOpenAddUser = () => setOpenAddUser(true);
+  const handleClickOpenAddUser = () => {
+    // Limpa os valores do formulário ao abrir o modal de adicionar usuário
+    setFormValues({
+      diaSemana: '',
+      horario_entrada: '',
+      horario_saida: '',
+      curso: ''
+    });
+    setOpenAddUser(true);
+  };
   const handleCloseAddUser = () => setOpenAddUser(false);
 
   const handleClickOpenEditUser = (user) => {
@@ -111,13 +118,13 @@ export default function Horarios() {
       );
 
       console.log(userId);
-      toast.success(`Usuário ${selectedUser.nome} (matrícula: ${selectedUser.matricula}) deletado com sucesso`);
+      toast.success(`Horário excluído com sucesso`);
       setUserDetails((prevDetails) =>
         prevDetails.filter((user) => user.id !== userId)
       );
       handleCloseDeleteUser();
     } catch (error) {
-      console.log("Erro ao deletar o usuário: ", error);
+      console.log("Erro ao deletar o horário: ", error);
     }
   };
 
@@ -144,8 +151,10 @@ export default function Horarios() {
       diaSemana: formValues.diaSemana,
       horario_entrada: formValues.horario_entrada,
       horario_saida: formValues.horario_saida,
-      curso: formValues.curso,
+      curso: { id: formValues.curso },
     };
+    
+    
   
     try {
       const response = await axios.post(
@@ -153,17 +162,13 @@ export default function Horarios() {
         newUser,
         {
           headers: {
-            Accept: "*/*",
-            Authorization: `Bearer ${token}`,
-          },
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}` 
+        },
         }
       );
   
-      if (response.status!== 200 && response.status!== 201) {
-        throw new Error(`HTTP Error status: ${response.status}`);
-      }
-  
-      // atualiza o estado userDetails com o novo usuário
       setUserDetails((prevDetails) => [...prevDetails, response.data]);
   
       console.log('Usuário adicionado com sucesso!');
@@ -173,8 +178,10 @@ export default function Horarios() {
       console.log('Erro ao adicionar usuário: ', error);
       toast.error("Erro ao adicionar o usuário:", error);
     }
+    console.log(userDetails)
   };
   
+  // edit horarios
   const saveEditedUser = async (event) => {
     event.preventDefault();
   
@@ -252,45 +259,45 @@ export default function Horarios() {
     
       
       
-// async function obtenerImagenBase64(idUsuario, token) {
-//   try {
-//     const respuesta = await fetch(`https://apicontroleacesso-1.onrender.com/usuario/imagem/${idUsuario}`, {
-//       method: 'GET',
-//       headers: {
-//         Accept: "application/json",
-//         "Content-Type": "application/json",
-//         Authorization: `Bearer ${token}`,
-//       },
-//     });
+async function obtenerImagenBase64(idUsuario, token) {
+  try {
+    const respuesta = await fetch(`https://apicontroleacesso-1.onrender.com/usuario/imagem/${idUsuario}`, {
+      method: 'GET',
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
     
-//     if (!respuesta.ok) {
-//       throw new Error(`Error HTTP: ${respuesta.status}`);
-//     }
+    if (!respuesta.ok) {
+      throw new Error(`Error HTTP: ${respuesta.status}`);
+    }
     
-//     const datos = await respuesta.blob(); // Obtener los datos de la imagen como Blob
+    const datos = await respuesta.blob(); // Obtener los datos de la imagen como Blob
     
-//     // Convertir el Blob a una URL de objeto para visualización
-//     const urlObjeto = URL.createObjectURL(datos);
+    // Convertir el Blob a una URL de objeto para visualización
+    const urlObjeto = URL.createObjectURL(datos);
     
-//     // Crear un elemento img y establecer su atributo src con la URL del objeto
-//     const img = document.createElement('img');
-//     img.src = urlObjeto;
+    // Crear un elemento img y establecer su atributo src con la URL del objeto
+    const img = document.createElement('img');
+    img.src = urlObjeto;
     
-//     const reader = new FileReader();
-//     reader.onloadend = function() {
-//       const base64String = reader.result.replace('data:', '').replace(/^.+,/, '');
-//       console.log(base64String); 
-//     };
-//     reader.readAsDataURL(datos);
+    const reader = new FileReader();
+    reader.onloadend = function() {
+      const base64String = reader.result.replace('data:', '').replace(/^.+,/, '');
+      console.log(base64String); 
+    };
+    reader.readAsDataURL(datos);
     
-//     setTimeout(() => URL.revokeObjectURL(urlObjeto), 100);
+    setTimeout(() => URL.revokeObjectURL(urlObjeto), 100);
     
-//   } catch (error) {
-//     console.error('Error al obtener la imagen:', error);
-//   }
-// }
+  } catch (error) {
+    console.error('Error al obtener la imagen:', error);
+  }
+}
 
-// obtenerImagenBase64('123', token); 
+obtenerImagenBase64('10000000000', token); 
 
    
   return (
@@ -388,7 +395,7 @@ export default function Horarios() {
         <i className="fa-solid fa-user"></i>
       </div>
     </div>
-    {selectedUser && (
+    
     <section className="modal-userDetails">
     <form onSubmit={addUser} id="form-addUser">
   <div className="d-inline-flex">
@@ -443,8 +450,11 @@ export default function Horarios() {
   className="form-select"
   value={formValues.curso || ''}
   onChange={(e) => {
-    setSelectedUser({...selectedUser, curso: courseDetails.find(c => c.id === e.target.value) });
+    const courseId = e.target.value;
+    setSelectedUser({...selectedUser, curso: courseDetails.find(c => c.id === courseId) });
+    setFormValues({...formValues, curso: courseId }); // Atualiza apenas com o ID do curso
   }}
+  
 >
   <option value="">Selecione um curso</option>
   {courseDetails.map((course) => (
@@ -487,7 +497,7 @@ export default function Horarios() {
 </form>
 
     </section>
-    )}
+    
   </DialogContent>
 </Dialog>
 
