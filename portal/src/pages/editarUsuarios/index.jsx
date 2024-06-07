@@ -85,6 +85,18 @@ export default function EditUsers() {
     });
     setOpenEditUser(true);
   };
+
+  
+  useEffect(() => {
+    if (selectedUser) {
+      obtenerImagenBase64(selectedUser.id, token).then(imageBase64 => {
+        setSelectedUser(prevState => ({...prevState, imagemUrl: imageBase64}));
+      }).catch(error => {
+        console.error("Erro ao carregar a imagem do usuário:", error);
+      });
+    }
+  }, [selectedUser, token]); // Dependências do useEffect
+  
   
   
   const handleCloseEditUser = () => {
@@ -220,46 +232,36 @@ export default function EditUsers() {
   };
   
       
-async function obtenerImagenBase64(idUsuario, token) {
-  try {
-    const respuesta = await fetch(`https://apicontroleacesso-1.onrender.com/usuario/imagem/${idUsuario}`, {
-      method: 'GET',
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    
-    if (!respuesta.ok) {
-      throw new Error(`Error HTTP: ${respuesta.status}`);
+  async function obtenerImagenBase64(idUsuario, token) {
+    try {
+      const respuesta = await fetch(`https://apicontroleacesso-1.onrender.com/usuario/imagem/${idUsuario}`, {
+        method: 'GET',
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      
+      if (!respuesta.ok) {
+        throw new Error(`Error HTTP: ${respuesta.status}`);
+      }
+      
+      const blob = await respuesta.blob(); // Obtém os dados da imagem como Blob
+      
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onloadend = () => resolve(reader.result);
+        reader.onerror = reject;
+        reader.readAsDataURL(blob);
+      });
+      
+    } catch (error) {
+      console.error('Error ao obter a imagem:', error);
+      throw error; // Lança o erro para que possa ser tratado pelo chamador
     }
-    
-    const datos = await respuesta.blob(); // Obtener los datos de la imagen como Blob
-    
-    // Convertir el Blob a una URL de objeto para visualización
-    const urlObjeto = URL.createObjectURL(datos);
-    
-    // Crear un elemento img y establecer su atributo src con la URL del objeto
-    const img = document.createElement('img');
-    img.src = urlObjeto;
-    
-    const reader = new FileReader();
-    reader.onloadend = function() {
-      const base64String = reader.result.replace('data:', '').replace(/^.+,/, '');
-      console.log(base64String); 
-    };
-    reader.readAsDataURL(datos);
-    
-    setTimeout(() => URL.revokeObjectURL(urlObjeto), 100);
-    
-  } catch (error) {
-    console.error('Error al obtener la imagen:', error);
   }
-}
-
-obtenerImagenBase64('10000000000', token); 
-
+  
    
   return (
     <div className="container container-editUsers">
@@ -510,11 +512,12 @@ obtenerImagenBase64('10000000000', token);
         <div className="img-radius">
           {/* Exibindo a imagem do usuário */}
           <div className="img-radius">
-  {selectedUser.imagemUrl? (
-    <img src={selectedUser.imagemUrl} alt="Perfil" style={{ width: '50px', height: '50px', borderRadius: '50%', objectFit: 'cover' }} />
-  ) : (
-    <i className="fa-solid fa-user"></i>
-  )}
+          {selectedUser.imagemUrl? (
+  <img src={selectedUser.imagemUrl} alt="Perfil" className="img-user"/>
+) : (
+  <i className="fa-solid fa-user"></i>
+)}
+
 </div>
 
         </div>

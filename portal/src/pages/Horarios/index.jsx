@@ -258,47 +258,7 @@ export default function Horarios() {
       };
     
       
-      
-async function obtenerImagenBase64(idUsuario, token) {
-  try {
-    const respuesta = await fetch(`https://apicontroleacesso-1.onrender.com/usuario/imagem/${idUsuario}`, {
-      method: 'GET',
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    });
     
-    if (!respuesta.ok) {
-      throw new Error(`Error HTTP: ${respuesta.status}`);
-    }
-    
-    const datos = await respuesta.blob(); // Obtener los datos de la imagen como Blob
-    
-    // Convertir el Blob a una URL de objeto para visualización
-    const urlObjeto = URL.createObjectURL(datos);
-    
-    // Crear un elemento img y establecer su atributo src con la URL del objeto
-    const img = document.createElement('img');
-    img.src = urlObjeto;
-    
-    const reader = new FileReader();
-    reader.onloadend = function() {
-      const base64String = reader.result.replace('data:', '').replace(/^.+,/, '');
-      console.log(base64String); 
-    };
-    reader.readAsDataURL(datos);
-    
-    setTimeout(() => URL.revokeObjectURL(urlObjeto), 100);
-    
-  } catch (error) {
-    console.error('Error al obtener la imagen:', error);
-  }
-}
-
-obtenerImagenBase64('10000000000', token); 
-
    
   return (
     <div className="container container-editUsers">
@@ -390,11 +350,7 @@ obtenerImagenBase64('10000000000', token);
     <h4>Adicionar horário</h4>
   </DialogTitle>
   <DialogContent className="dialogContent">
-    <div className="container-img-radius mb-4 d-flex justify-content-center">
-      <div className="img-radius">
-        <i className="fa-solid fa-user"></i>
-      </div>
-    </div>
+
     
     <section className="modal-userDetails">
     <form onSubmit={addUser} id="form-addUser">
@@ -512,18 +468,7 @@ obtenerImagenBase64('10000000000', token);
     <DialogTitle className="dialogTitle text-center">
       <h4>Editar horários</h4>
     </DialogTitle>
-    <DialogContent className="dialogContent">
-      <div className="container-img-radius mb-4 d-flex justify-content-center">
-        <div className="img-radius">
-          {/* Exibindo a imagem do usuário */}
-          {selectedUser.imagemUrl? (
-            <img src={selectedUser.imagemUrl} alt="Perfil" style={{ width: '50px', height: '50px', borderRadius: '50%', objectFit: 'cover' }} />
-          ) : (
-            <i className="fa-solid fa-user"></i>
-          )}
-        </div>
-      </div>
-      
+    <DialogContent className="dialogContent">    
       
             <section className="modal-userDetails">
         <div className="container-group">
