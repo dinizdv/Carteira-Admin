@@ -141,6 +141,12 @@ a:hover {
     color: #cececf!important;
 }
 
+.a-rocket-coding, .icon-rocket-coding
+{
+    color: #121212!important;
+    font-size: 1rem;
+}
+
 strong {
     color: #e9ecef!important;
 }
@@ -239,8 +245,7 @@ hr {
         margin-left: 0;
     }
 
-    .navbar,
-    footer {
+    .navbar {
         width: 100vw;
     }
 }

@@ -128,8 +128,8 @@ export default function Notifications() {
             );
 
 
-            console.log("Notificação enviada com sucesso:", response.data);
-            toast.success('Notificação enviada com sucesso');
+            console.log(`Notificação enviada com sucesso`, response.data);
+            toast.success(`Notificação enviada com sucesso`);
             // cleaning the textarea
             setTextareaValue('');
 

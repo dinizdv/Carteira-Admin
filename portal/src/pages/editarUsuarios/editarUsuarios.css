@@ -121,6 +121,11 @@
     border-radius: inherit;
 }
 
+#input-file {
+    background-color: #2f97ff!important;
+    color: orange!important;
+}
+
 .modal-userDetails input {
     color: #121212;
 }

@@ -178,6 +178,57 @@ return(
                             </li>
                         </ul>
                     </li>
+
+                    <li class="sidebar-item">
+                        <a href="#" class="sidebar-link" onClick={openIntegrantes}>
+                          <i class="fa-solid fa-rocket pe-2"></i>
+                            Rocket Coding
+                        </a>
+                    </li>
+ {/* modal */}
+ <Dialog
+  className="modal-open"
+  open={openModal} // current state
+  onClose={closeIntegrantes}
+>
+  <DialogTitle className="dialogTitle text-center">
+    <h4 id="integrantesTitle">Integrantes da Rocket Coding</h4>
+  </DialogTitle>
+  <DialogContent className="dialogContent">
+        <li className="li-integrantes">Bruno Diniz</li>
+        <li className="li-integrantesEmail mb-4">bruno.diniz.sesisenaisp@gmail.com</li>
+        <li className="li-integrantes">Luisa Belo</li>
+        <li className="li-integrantesEmail mb-4">luisa.belo.sesisenaisp@gmail.com</li>
+        <li className="li-integrantes">Lucas Fonseca</li>
+        <li className="li-integrantesEmail mb-4">lucas.fonseca.sesisenaisp@gmail.com</li>
+        <li className="li-integrantes">Amanda Maldonado</li>
+        <li className="li-integrantesEmail mb-4">amanda.maldonado.sesisenaisp3@gmail.com</li>
+        <div className="container-btn-modal mt-4">
+
+        <div className="me-auto">
+    <li>
+        <a href="https://www.instagram.com/rocket_coding/" target="_blank" rel="noopener noreferrer" className="a-rocket-coding">
+            <i class="fa-brands fa-instagram ps-1 pe-2 icon-rocket-coding"></i> rocket_coding
+        </a>
+    </li>
+    <li>
+        <a href="mailto:rocketcoding2023@gmail.com" target="_blank" rel="noopener noreferrer" className="a-rocket-coding">
+            <i class="fa-regular fa-envelope ps-1 pe-2 icon-rocket-coding"></i> rocketcoding2023@gmail.com
+        </a>
+    </li>
+</div>
+
+
+          <button
+            onClick={closeIntegrantes}
+            className="btn modal-btn-close ms-2 mb-0"
+            type="button"
+          >
+            Fechar
+          </button>
+        </div>
+  </DialogContent>
+</Dialog>
                     <hr className="mb-0"/>
                     <li class="sidebar-header">
                         SENAI - Guarulhos
@@ -316,13 +367,13 @@ return(
             {/* loading animation */}
             {loading && 
                 
-                <div className="container-loadingData mt-0">
+                <div className="container-loadingData mt-0 me-auto">
                   <p className="loadingData">Carregando os dados...</p>
                   <iframe src="https://lottie.host/embed/d40e20f0-b3d7-4c31-9c25-89a36ac33038/ZryRBBWA7J.json" id="animation"></iframe>
                 </div>
                 }
 
-<Plot
+<Plot className="d-none d-md-block"
 
   data={[
     {
@@ -349,7 +400,7 @@ return(
 
 
 
-<Plot className="ms-5"
+<Plot className="ms-5 d-none d-md-block"
   data={[
     {
       values: Object.values(coursesCount),
@@ -378,67 +429,6 @@ return(
                 </div>
             </main>
                   
-            <footer class="footer">
-                <div class="container-fluid">
-                    <div class="row text-muted">
-                        <div class="col-6 text-start">
-                            <p class="mb-0">
-                                <a href="#" class="text-muted">
-                                    <strong class="px-2">Rocket Coding</strong>
-                                </a>
-                            </p>
-                        </div>
-                        <div class="col-6 text-end">
-                            <ul class="list-inline">
-                            <li class="list-inline-item px-2">
-                                    <a href="#" class="text-muted px-2" onClick={openIntegrantes}>Integrantes</a>
-                                </li>
-
-{/* modal */}
-                                <Dialog
-  className="modal-open"
-  open={openModal} // current state
-  onClose={closeIntegrantes}
->
-  <DialogTitle className="dialogTitle text-center">
-    <h4 id="integrantesTitle">Integrantes da Rocket Coding</h4>
-  </DialogTitle>
-  <DialogContent className="dialogContent">
-        <li className="li-integrantes">Bruno Diniz</li>
-        <li className="li-integrantesEmail mb-4">bruno.diniz.sesisenaisp@gmail.com</li>
-        <li className="li-integrantes">Luisa Belo</li>
-        <li className="li-integrantesEmail mb-4">luisa.belo.sesisenaisp@gmail.com</li>
-        <li className="li-integrantes">Lucas Fonseca</li>
-        <li className="li-integrantesEmail mb-4">lucas.fonseca.sesisenaisp@gmail.com</li>
-        <li className="li-integrantes">Amanda Maldonado</li>
-        <li className="li-integrantesEmail mb-4">amanda.maldonado.sesisenaisp3@gmail.com</li>
-        <div className="container-btn-modal mt-4">
-          <button
-            onClick={closeIntegrantes}
-            className="btn modal-btn-close ms-2 mb-0"
-            type="button"
-          >
-            Fechar
-          </button>
-        </div>
-  </DialogContent>
-</Dialog>
-
-
-
-
-
-                                <li class="list-inline-item">
-                                    <a href="https://www.instagram.com/rocket_coding/" target="blank" class="text-muted px-2">Instagram</a>
-                                </li>
-                                <li class="list-inline-item">
-                                    <a href="mailto:rocketcoding2023@gmail.com" target="blank" class="text-muted px-2">E-mail</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </footer>
         </div>
     </div>
     </div>

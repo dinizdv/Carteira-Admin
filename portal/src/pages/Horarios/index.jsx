@@ -171,12 +171,12 @@ export default function Horarios() {
   
       setUserDetails((prevDetails) => [...prevDetails, response.data]);
   
-      console.log('Usuário adicionado com sucesso!');
-      toast.success(`Usuário adicionado com sucesso`);
+      console.log('Horário adicionado com sucesso!');
+      toast.success(`Horário adicionado com sucesso`);
       handleCloseAddUser();
     } catch (error) {
-      console.log('Erro ao adicionar usuário: ', error);
-      toast.error("Erro ao adicionar o usuário:", error);
+      console.log('Erro ao adicionar horário: ', error);
+      toast.error("Erro ao adicionar o horário:", error);
     }
     console.log(userDetails)
   };
@@ -215,7 +215,7 @@ export default function Horarios() {
         }
       );
   
-      console.log("Usuário editado com sucesso:", response.data);
+      console.log("Horário editado com sucesso:", response.data);
   
       // atualiza o estado userDetails com o usuário editado recebido da API
       setUserDetails((prevDetails) =>
@@ -224,10 +224,10 @@ export default function Horarios() {
         )
       );
   
-      toast.success(`Usuário ${selectedUser.nome} atualizado com sucesso`);
+      toast.success(`Horário editado com sucesso`);
       handleCloseEditUser();
     } catch (error) {
-      toast.error("Erro ao editar o usuário:", error);
+      toast.error("Erro ao editar o horário:", error);
       console.error(error.response? error.response.data : error.message);
     }
   };
@@ -339,7 +339,7 @@ export default function Horarios() {
         </div>
       </div>
 
-{/* addUser */}
+{/* addHorario */}
       <Dialog
   className="modal-open"
   id="modal-addUser"
@@ -354,7 +354,6 @@ export default function Horarios() {
     
     <section className="modal-userDetails">
     <form onSubmit={addUser} id="form-addUser">
-  <div className="d-inline-flex">
     <div className="form-floating mt-3">
       <input
         type="text"
@@ -369,7 +368,7 @@ export default function Horarios() {
         Dia da semana
       </label>
     </div>
-    <div className="form-floating mt-3 ms-3">
+    <div className="form-floating mt-3">
       <input
         type="text"
         id="horarioEntrada-input"
@@ -383,8 +382,6 @@ export default function Horarios() {
         Horário de entrada
       </label>
     </div>
-  </div>
-  <div className="d-inline-flex">
     <div className="form-floating mt-3">
       <input
         type="text"
@@ -402,8 +399,8 @@ export default function Horarios() {
 
 <select
   name="curso"
-  id="curso"
-  className="form-select"
+  id="select-addHorario"
+  className="form-select mt-3"
   value={formValues.curso || ''}
   onChange={(e) => {
     const courseId = e.target.value;
@@ -412,7 +409,7 @@ export default function Horarios() {
   }}
   
 >
-  <option value="">Selecione um curso</option>
+  <option value="" selected disabled>Selecione um curso</option>
   {courseDetails.map((course) => (
     <option key={course.id} value={course.id}>
       {course.nome}
@@ -436,7 +433,6 @@ export default function Horarios() {
         Curso
       </label>
     </div> */}
-  </div>
 
   <div className="container-btn-modal mt-4">
     <button className="btn modal-btn-save" type="submit">

@@ -183,12 +183,12 @@ export default function EditUsers() {
   
   const saveEditedUser = async (event) => {
     event.preventDefault();
-
+  
     if (!selectedUser) {
       console.log("Nenhum usuário selecionado para edição");
       return;
     }
-
+  
     try {
       const editedUser = {
         id: selectedUser.id,
@@ -197,14 +197,15 @@ export default function EditUsers() {
         cpf: selectedUser.cpf,
         email: selectedUser.email,
         nivel: selectedUser.nivel,
+        foto: selectedUser.imagemUrl, // Inclui a imagem editada como string base64
       };
-
+  
       if (selectedUser.senha) {
         editedUser.senha = selectedUser.senha;
       }
-
+  
       const response = await axios.put(
-        `https://apicontroleacesso-1.onrender.com/usuario`, 
+        `https://apicontroleacesso-1.onrender.com/usuario`,
         editedUser,
         {
           headers: {
@@ -214,24 +215,24 @@ export default function EditUsers() {
           },
         }
       );
-
+  
       console.log("Usuário editado com sucesso:", response.data);
-
+  
       setUserDetails((prevDetails) =>
         prevDetails.map((user) =>
-          user.id === selectedUser.id ? { ...user, ...editedUser } : user
+          user.id === selectedUser.id? {...user,...editedUser } : user
         )
       );
-
+  
       toast.success(`Usuário ${selectedUser.nome} atualizado com sucesso`);
       handleCloseEditUser();
     } catch (error) {
       toast.error("Erro ao editar o usuário:", error);
-      console.error(error.response ? error.response.data : error.message);
+      console.error(error.response? error.response.data : error.message);
     }
   };
-  
-      
+    
+  // get img    
   async function obtenerImagenBase64(idUsuario, token) {
     try {
       const respuesta = await fetch(`https://apicontroleacesso-1.onrender.com/usuario/imagem/${idUsuario}`, {
@@ -263,7 +264,53 @@ export default function EditUsers() {
   }
   
    
-  return (
+  const handleImageUpload = async (event) => {
+    event.preventDefault();
+    const file = event.target.files[0];
+    if (!file) {
+      console.log("Nenhum arquivo foi selecionado.");
+      return;
+    }
+  
+    // Cria um objeto FormData e adiciona o arquivo
+    const formData = new FormData();
+    formData.append("foto", file);
+  
+    // Adicione outros campos necessários ao FormData
+    Object.keys(formValues).forEach(key => {
+      if (key!== 'imagem') { // Supondo que 'imagem' seja o campo para a imagem original
+        formData.append(key, formValues[key]);
+      }
+    });
+  
+    try {
+      const response = await axios.put(
+        `https://apicontroleacesso-1.onrender.com/usuario/upload/${selectedUser.id}`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+  
+      console.log("Resposta do servidor:", response);
+      // Atualiza o estado com a nova imagem aqui
+      setSelectedUser(prevState => ({
+       ...prevState,
+        imagemUrl: response.data.foto, // Assumindo que a resposta inclua a URL da imagem atualizada
+      }));
+    } catch (error) {
+      console.error("Erro ao atualizar a imagem do usuário:", error);
+      toast.error("Erro ao atualizar a imagem do usuário: " + (error.response? error.response.data : error.message));
+    }
+  };
+  
+  
+  
+  
+    return (
     <div className="container container-editUsers">
       <Link
         to={"/Home"}
@@ -351,10 +398,24 @@ export default function EditUsers() {
     <h4>Adicionar usuário</h4>
   </DialogTitle>
   <DialogContent className="dialogContent">
-    <div className="container-img-radius mb-4 d-flex justify-content-center">
-      <div className="img-radius">
-        <i className="fa-solid fa-user"></i>
-      </div>
+    
+  <div className="container-img-radius mb-4 d-flex justify-content-center">
+  {/* displays img */}
+  <div className="img-radius">
+  {selectedUser && selectedUser.imagemUrl? (
+  <img src={selectedUser.imagemUrl} alt="Perfil" className="img-user"/>
+) : (
+  <i className="fa-solid fa-user"></i>
+)}
+
+    {/* <input
+      type="file"
+      accept="image/*"
+      onChange={handleImageUpload}
+    />
+    <button onClick={handleImageUpload}>Adicionar Imagem</button> */}
+  </div>
+
     </div>
     <section className="modal-userDetails">
       <form onSubmit={addUser} id="form-addUser">
@@ -510,7 +571,7 @@ export default function EditUsers() {
     <DialogContent className="dialogContent">
       <div className="container-img-radius mb-4 d-flex justify-content-center">
         <div className="img-radius">
-          {/* Exibindo a imagem do usuário */}
+          {/* displays img */}
           <div className="img-radius">
           {selectedUser.imagemUrl? (
   <img src={selectedUser.imagemUrl} alt="Perfil" className="img-user"/>
@@ -521,6 +582,18 @@ export default function EditUsers() {
 </div>
 
         </div>
+
+
+</div>
+
+<div className="mt-2 mb-4 d-flex justify-content-center">
+  <input
+    className="btn modal-btn-save"
+    id="input-file"
+    type="file"
+    accept="image/*"
+    onChange={handleImageUpload}
+  />
       </div>
       
       
